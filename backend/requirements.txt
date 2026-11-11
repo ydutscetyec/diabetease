@@ -1,5 +1,4 @@
-# Core runtime. Pure-Python wheels only: no compiler needed on any platform.
-# These are the only dependencies required to run the API and the website.
+# Core runtime. Pure-Python wheels only.
 fastapi>=0.115,<1.0
 uvicorn[standard]>=0.34,<1.0
 sqlalchemy>=2.0.36,<3.0
