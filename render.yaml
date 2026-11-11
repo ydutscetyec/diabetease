@@ -1,0 +1,22 @@
+# Render blueprint. Verify current free-tier terms before relying on them;
+# this file was written without network access to check them.
+services:
+  - type: web
+    name: diabetease
+    runtime: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: cd backend && python seed.py && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD_HASH
+        sync: false
+      - key: STORE_ASSESSMENTS
+        value: "false"
+      - key: DATABASE_URL
+        sync: false

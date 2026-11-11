@@ -1,0 +1,13 @@
+# Model pipeline only: ml/make_synthetic.py, ml/train.py, and loading a trained
+# artifact for inference. NOT needed to run the API or the website.
+#
+# These packages contain compiled C/C++ extensions. Version floors are loose on
+# purpose so pip can pick a release that ships a prebuilt wheel for YOUR Python
+# version. Pinning an exact version is what forces a source build.
+#
+# If pip still tries to compile, your Python is newer than any release with
+# wheels. Install Python 3.12 and use it for this file.
+scikit-learn>=1.5
+pandas>=2.2
+numpy>=1.26
+joblib>=1.4

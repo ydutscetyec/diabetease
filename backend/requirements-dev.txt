@@ -1,0 +1,2 @@
+# Test tooling. Install alongside requirements.txt to run the suite.
+pytest>=8.3,<9.0

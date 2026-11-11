@@ -1,0 +1,3 @@
+name,facility_type,municipality,address,latitude,longitude,contact,services_confirmed,source,verified_on,notes
+EXAMPLE – delete this row,Hospital,Surallah,"Purok 1, Barangay Centrala",6.37412,124.74688,(083) 000 0000,"glucose,hba1c",phone call to records office,2026-11-04,example only
+EXAMPLE – services not yet checked,Rural health unit,Banga,,,,,,,,"name confirmed from DOH list; services still to verify"

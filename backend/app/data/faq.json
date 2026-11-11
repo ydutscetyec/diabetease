@@ -1,0 +1,466 @@
+{
+  "_note": "Reviewed answer corpus for Candie. Every entry is either general medical information from the cited guideline bodies, or a fact taken from the DiabetEASE manuscript. Nothing here is generated at runtime. Local-language triggers are included because many users in South Cotabato speak Hiligaynon or Cebuano; a native speaker should review them before the defence.",
+  "refusal_patterns": [
+    "insulin dose",
+    "how much insulin",
+    "units of insulin",
+    "what dose",
+    "dosage",
+    "should i stop taking",
+    "should i take",
+    "prescribe",
+    "prescription",
+    "do i have diabetes",
+    "am i diabetic",
+    "diagnose me",
+    "is it diabetes",
+    "pila ka insulin",
+    "unsa nga tambal",
+    "ano gamot",
+    "anong gamot"
+  ],
+  "emergency_patterns": [
+    "vomit",
+    "nagsuka",
+    "cannot breathe",
+    "can't breathe",
+    "unconscious",
+    "passing out",
+    "collapsed",
+    "not waking",
+    "unresponsive",
+    "gasping"
+  ],
+  "topics": [
+    {
+      "id": "emergency",
+      "source": "CDC-DKA",
+      "keywords": [
+        "emergency",
+        "ketoacidosis",
+        "dka",
+        "fruity breath",
+        "very sleepy",
+        "drowsy and thirsty"
+      ],
+      "answer": "Vomiting, stomach pain, fast or deep breathing, fruity-smelling breath, or unusual drowsiness, especially with great thirst and frequent urination, can mean diabetic ketoacidosis. Severe symptoms can appear quickly and it is a medical emergency. Go to an emergency department or call 911 now. Do not wait and do not finish the assessment first."
+    },
+    {
+      "id": "what_is_diabetes",
+      "source": "ADA-S2-2026",
+      "keywords": [
+        "what is diabetes",
+        "define diabetes",
+        "diabetes mean",
+        "explain diabetes",
+        "ano ang diabetes",
+        "unsa ang diabetes",
+        "types of diabetes",
+        "kinds of diabetes",
+        "difference between the types"
+      ],
+      "answer": "Diabetes means blood glucose is too high, but the two main types happen for opposite reasons. In Type 1, the immune system destroys the cells that make insulin, so the body has too little insulin. In Type 2, the body still makes insulin but responds to it poorly. Type 2 is far more common overall; Type 1 is the one this system is about, and it is not caused by diet or weight."
+    },
+    {
+      "id": "what_is_t1d",
+      "source": "ADA-S2-2026",
+      "keywords": [
+        "what is type 1",
+        "type 1 diabetes",
+        "what is t1d",
+        "t1d",
+        "about type 1",
+        "autoimmune",
+        "beta cell",
+        "ano ang type 1",
+        "unsa ang type 1",
+        "why does type 1 happen",
+        "cause of type 1"
+      ],
+      "answer": "Type 1 diabetes is an autoimmune disease: the immune system destroys the beta cells in the pancreas that produce insulin, so the body makes too little insulin or none at all. This is different from Type 2, where insulin is produced but used poorly. Type 1 is not caused by eating sugar, and treatment with insulin is lifelong."
+    },
+    {
+      "id": "symptoms",
+      "source": "CDC-DKA",
+      "keywords": [
+        "symptom",
+        "signs",
+        "thirsty",
+        "urinating",
+        "weight loss",
+        "blurred",
+        "tired",
+        "uhaw",
+        "kauhaw",
+        "nagniwang",
+        "pag-ihi"
+      ],
+      "answer": "The common early signs are heavy thirst, passing urine much more often, losing weight without trying, tiredness, blurred vision and constant hunger. None is specific on its own, which is why a glucose test matters."
+    },
+    {
+      "id": "type_difference",
+      "source": "ADA-S2-2026",
+      "keywords": [
+        "difference",
+        "type 2",
+        "type two",
+        "which type",
+        "t1 vs t2"
+      ],
+      "answer": "Type 1 is autoimmune destruction of beta cells, usually appearing in children and young adults, needing insulin from diagnosis. Type 2 involves insulin resistance and develops differently. Glucose tests cannot tell them apart; antibody testing and clinical judgement do."
+    },
+    {
+      "id": "hba1c",
+      "source": "ADA-S2-2026",
+      "keywords": [
+        "hba1c",
+        "a1c",
+        "glycated",
+        "average sugar"
+      ],
+      "answer": "HbA1c reflects average blood glucose over roughly three months. The published diagnostic cut-off is 6.5 percent or above, and 5.7 to 6.4 percent is the intermediate range. It shows that glucose is abnormal, not which type of diabetes it is."
+    },
+    {
+      "id": "glucose",
+      "source": "ADA-S2-2026",
+      "keywords": [
+        "glucose",
+        "blood sugar",
+        "fasting",
+        "asukal sa dugo",
+        "random sugar",
+        "fbs"
+      ],
+      "answer": "A fasting glucose of 126 mg/dL or above, or a random glucose of 200 mg/dL or above with classic symptoms, meets the diagnostic threshold. Fasting 100 to 125 mg/dL is the intermediate range. Unless glucose is unmistakably high, one result has to be confirmed by a second test before it counts as a diagnosis."
+    },
+    {
+      "id": "autoantibodies",
+      "source": "ISPAD-2024",
+      "keywords": [
+        "autoantibod",
+        "gad",
+        "islet",
+        "znt8",
+        "ia-2",
+        "antibody test"
+      ],
+      "answer": "Islet autoantibodies, including GAD, IA-2, ZnT8 and insulin autoantibodies, are the markers of early type 1 diabetes. Two or more, confirmed on two samples, is early-stage disease: most children with them progress to clinical diabetes within 15 years. A single antibody is different, carrying roughly a 15% chance over the same period. The test is not routine in municipal facilities and usually needs a referral."
+    },
+    {
+      "id": "stages",
+      "source": "ISPAD-2024",
+      "keywords": [
+        "stage",
+        "presymptomatic",
+        "before symptoms",
+        "early stage",
+        "silent"
+      ],
+      "answer": "Early type 1 diabetes is described in stages. Stage 1 is two or more islet autoantibodies, confirmed on two samples, with normal glucose and no symptoms. Stage 2 is the same with glucose starting to rise. Stage 3 is glucose that meets the diagnostic criteria, and it can occur with or without symptoms. Stages 1 and 2 are silent, which is why a normal glucose result cannot rule the condition out."
+    },
+    {
+      "id": "family",
+      "source": "ENDOTEXT-T1D",
+      "keywords": [
+        "family",
+        "inherit",
+        "genetic",
+        "hereditary",
+        "parent",
+        "sibling",
+        "namana"
+      ],
+      "answer": "Most people who develop type 1 diabetes, about 85 in 100, have no family history. A parent or sibling with it raises the risk to about 1 in 20, against roughly 1 in 300 in the general population. Those figures come from studies in the United States; no equivalent figure exists for the Philippines. Most relatives never develop it."
+    },
+    {
+      "id": "prevention",
+      "source": "ADA-S2-2026",
+      "keywords": [
+        "prevent",
+        "avoid",
+        "sugar cause",
+        "cure",
+        "too much sweets",
+        "can i stop it"
+      ],
+      "answer": "Type 1 diabetes is not caused by diet and cannot currently be prevented. That is different from Type 2 diabetes, and the confusion between the two is common. Nothing a child or parent did caused it."
+    },
+    {
+      "id": "treatment",
+      "source": "ADA-S2-2026",
+      "keywords": [
+        "treatment",
+        "how treated",
+        "live with",
+        "manage",
+        "insulin pump",
+        "injection"
+      ],
+      "answer": "Type 1 diabetes is managed with insulin, which a doctor prescribes and adjusts, alongside glucose monitoring and education. I cannot advise on any of it. What I can say is that it is manageable and that people with Type 1 diabetes live full lives."
+    },
+    {
+      "id": "model_status",
+      "source": "DiabetEASE",
+      "keywords": [
+        "accurate",
+        "accuracy",
+        "how good",
+        "reliable",
+        "model",
+        "ai",
+        "trained",
+        "algorithm",
+        "machine learning"
+      ],
+      "answer": "No model has been trained for this project yet, so there is no accuracy figure to report. The assessment compares your entries against published diagnostic thresholds instead. When a model exists, its measured metrics will appear on the Research and evaluation page, and never before."
+    },
+    {
+      "id": "why_no_model",
+      "source": "DiabetEASE",
+      "keywords": [
+        "why no model",
+        "no trained model",
+        "why not trained",
+        "no dataset",
+        "dataset",
+        "why rule",
+        "no model"
+      ],
+      "answer": "The study has not secured a dataset that labels Type 1 diabetes specifically, with islet-autoantibody variables, for a Philippine population. Public datasets commonly used in student projects label Type 2 or undifferentiated diabetes. Training on those and calling the output a Type 1 risk model would misstate what it is, so the system uses published thresholds instead."
+    },
+    {
+      "id": "forecasting",
+      "source": "DiabetEASE",
+      "keywords": [
+        "forecast",
+        "predict future",
+        "will i get",
+        "years from now",
+        "prediction horizon"
+      ],
+      "answer": "Forecasting future onset is not implemented. It needs longitudinal data, people followed over time with the date of diagnosis recorded, and the study does not have that. Case-versus-control data can only classify current status. The Risk forecasting page lists everything that would be required."
+    },
+    {
+      "id": "result_meaning",
+      "source": "DiabetEASE",
+      "keywords": [
+        "my result",
+        "what does my result",
+        "risk level",
+        "what does it mean",
+        "tier"
+      ],
+      "answer": "The result is a next-step recommendation, not a risk score or a diagnosis. It says whether anything you entered crosses a published threshold. There are five outcomes: emergency, see a doctor promptly, worth getting tested, not enough information, and nothing crosses a threshold. I cannot interpret your personal results; a clinician has to do that."
+    },
+    {
+      "id": "no_threshold",
+      "source": "DiabetEASE",
+      "keywords": [
+        "nothing crosses",
+        "am i safe",
+        "negative result",
+        "all clear",
+        "normal result"
+      ],
+      "answer": "A result of nothing crosses a threshold is not an all-clear. The autoimmune process begins months to years before glucose becomes abnormal, so a normal glucose result cannot detect early-stage disease. Only islet autoantibody testing can. Come back if thirst, urination, weight loss or fatigue appear or worsen."
+    },
+    {
+      "id": "testing_centers",
+      "source": "DiabetEASE",
+      "keywords": [
+        "testing cent",
+        "where test",
+        "near me",
+        "clinic",
+        "hospital",
+        "laborator",
+        "saan",
+        "asa ko magpa"
+      ],
+      "answer": "Open the Testing centre map page. Records appear only after the research team verifies them, so the list may still be short. Every municipality in the Philippines operates a Rural Health Unit under the Local Government Code, so your municipal health office is the reliable starting point for a blood glucose test."
+    },
+    {
+      "id": "verification",
+      "source": "DiabetEASE",
+      "keywords": [
+        "verified",
+        "unconfirmed",
+        "outdated",
+        "how do you know",
+        "trust the map",
+        "record status",
+        "on the map",
+        "what does verified mean"
+      ],
+      "answer": "Each facility record carries its own source and verification date. Verified means someone confirmed it from an official directory, the facility website or a phone call, and logged the date. Unconfirmed means nobody has checked yet. Outdated means a recheck found something had changed. A service is never shown as confirmed without a source and a date behind it."
+    },
+    {
+      "id": "coverage",
+      "source": "DiabetEASE",
+      "keywords": [
+        "coverage",
+        "municipalities",
+        "which areas",
+        "south cotabato",
+        "area covered"
+      ],
+      "answer": "Ten municipalities in South Cotabato: Surallah, Sto. Nino, Lake Sebu, Norala, T'boli, Banga, Tampakan, Tantangan, Tupi and Polomolok. Facilities outside these are outside the study's defined mapping coverage."
+    },
+    {
+      "id": "privacy",
+      "source": "DiabetEASE",
+      "keywords": [
+        "privacy",
+        "private",
+        "my data",
+        "data private",
+        "store",
+        "save",
+        "keep",
+        "confidential",
+        "who sees",
+        "anonymous"
+      ],
+      "answer": "The assessment collects no name, birth date, address or contact detail. Your answers go to the DiabetEASE server to compute the result and are then discarded, unless an operator explicitly enables storage and you consent. Even then the stored record holds a banded age and counts, never an exact age or an identifier, with a deletion date. The design follows the Data Privacy Act of 2012."
+    },
+    {
+      "id": "how_to_use",
+      "source": "DiabetEASE",
+      "keywords": [
+        "how do i",
+        "how to use",
+        "start",
+        "assessment",
+        "begin",
+        "unsa buhaton"
+      ],
+      "answer": "Open Risk assessment from the menu. Five steps: age and municipality, family history, symptoms, any laboratory results you already have, then a review before the outcome. Anything you do not know can be left blank, and blanks are treated as unknown, never as normal."
+    },
+    {
+      "id": "no_labs",
+      "source": "DiabetEASE",
+      "keywords": [
+        "no lab",
+        "no result",
+        "never tested",
+        "dont have result",
+        "no blood test"
+      ],
+      "answer": "That is normal, and you can still complete the assessment. Without a laboratory value the result will say there is not enough information, which is the honest answer rather than a guess. A fasting or random blood glucose test is inexpensive and widely available, and it settles the question in a way this form cannot."
+    },
+    {
+      "id": "research_objectives",
+      "source": "DiabetEASE",
+      "keywords": [
+        "objective",
+        "objectives",
+        "research objective",
+        "research aim",
+        "purpose of study",
+        "research goal",
+        "aim of the study"
+      ],
+      "answer": "The study aims to design, develop and evaluate DiabetEASE: a multi-parameter Type 1 diabetes risk assessment, testing centre mapping and decision-support system. It evaluates predictive performance, functional quality under ISO/IEC 25010, geographic information accuracy, and user acceptability."
+    },
+    {
+      "id": "research_design",
+      "source": "DiabetEASE",
+      "keywords": [
+        "methodology",
+        "research design",
+        "how was it made",
+        "developmental",
+        "phases"
+      ],
+      "answer": "It uses a developmental research design, in seven phases: requirements analysis, data acquisition and preprocessing, model development, system development, initial evaluation, usability evaluation and revision, then final evaluation and documentation."
+    },
+    {
+      "id": "who_made_it",
+      "source": "DiabetEASE",
+      "keywords": [
+        "who made",
+        "who created",
+        "who developed",
+        "school",
+        "developer",
+        "behind this",
+        "what school"
+      ],
+      "answer": "It is a senior high school research project at Libertad National High School in Surallah, South Cotabato. No university, government agency or medical body endorses it, and it is not clinically validated."
+    },
+    {
+      "id": "limitations",
+      "source": "DiabetEASE",
+      "keywords": [
+        "limitation",
+        "limitations",
+        "what cant",
+        "weakness",
+        "drawback",
+        "delimitation",
+        "scope and limitation"
+      ],
+      "answer": "The main ones: no trained model, so no probability is produced; no forecasting, because longitudinal data is not available; facility records depend on fieldwork and may go out of date; and the system cannot conduct laboratory tests, access medical equipment or perform clinical examinations. None of its output is a diagnosis."
+    },
+    {
+      "id": "what_is_candie",
+      "source": "DiabetEASE",
+      "keywords": [
+        "who are you",
+        "your name",
+        "candie",
+        "are you ai",
+        "are you a real",
+        "chatbot"
+      ],
+      "answer": "I'm Candie, the DiabetEASE health assistant. I answer from a fixed list of reviewed explanations written by the research team, so I will not invent a medical claim. I can explain Type 1 diabetes, walk you through a result you have already recorded, and help you find your way around the site. I cannot diagnose anyone."
+    },
+    {
+      "id": "cost",
+      "source": "PHILHEALTH-KONSULTA",
+      "keywords": [
+        "cost",
+        "price",
+        "how much",
+        "bayad",
+        "libre",
+        "free",
+        "magkano",
+        "tagpila",
+        "test free",
+        "free test",
+        "is it free",
+        "pay for",
+        "pay"
+      ],
+      "answer": "This system does not hold prices, and fees vary by facility. One thing worth knowing: PhilHealth's primary care package, now called YAKAP and formerly Konsulta, lists fasting blood sugar, the glucose tolerance test and HbA1c among its covered laboratory tests when your registered provider's doctor orders them. Ask your municipal health office how to register."
+    },
+    {
+      "id": "complications",
+      "source": "ADA-S2-2026",
+      "keywords": [
+        "complication",
+        "complications",
+        "long term effects",
+        "what happens if untreated",
+        "untreated diabetes",
+        "damage"
+      ],
+      "answer": "Blood glucose that stays high over years can damage the eyes, kidneys, nerves, heart and blood vessels. Keeping glucose close to target greatly reduces that risk, which is why diagnosis and ongoing care matter. Short term, very high glucose with ketones can cause diabetic ketoacidosis, which is a medical emergency. A clinician manages all of this; this system does not."
+    },
+    {
+      "id": "philhealth",
+      "source": "PHILHEALTH-KONSULTA",
+      "keywords": [
+        "philhealth",
+        "yakap",
+        "konsulta",
+        "covered",
+        "insurance",
+        "member",
+        "accredited"
+      ],
+      "answer": "PhilHealth's primary care package, YAKAP (called Konsulta before 2025), covers a check-up plus a set of laboratory tests that includes fasting blood sugar, the glucose tolerance test and HbA1c, ordered by the provider's doctor as needed. You register with one accredited provider. If that clinic has no laboratory, the test may be done at a partner laboratory, so an accredited facility on the map does not always run the test on site."
+    }
+  ]
+}

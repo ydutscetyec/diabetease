@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="auto" data-rail="expanded">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DiabetEASE — Type 1 diabetes risk information and testing-centre mapping</title>
+<meta name="description" content="Type 1 diabetes risk information, testing-centre mapping and decision support for ten municipalities of South Cotabato.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="">
+<link rel="stylesheet" href="/assets/styles.css">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#FFF8F2">
+</head>
+<body>
+
+<div id="boot" class="boot" role="status" aria-live="polite">
+  <img src="/assets/candie-avatar.png" alt="" width="96" height="96">
+  <p class="boot-name">Diabet<i>EASE</i></p>
+  <div class="candyloader" aria-hidden="true"><svg class="sweet" viewBox="0 0 60 36" aria-hidden="true"><path d="M14 18 2 6v24z" fill="#E46B43"/><path d="M46 18 58 6v24z" fill="#E46B43"/><ellipse cx="30" cy="18" rx="17" ry="13" fill="#F91A10"/><path d="M18 9c6 3 6 15 0 18M26 6c6 4 6 20 0 24M34 6c6 4 6 20 0 24M42 9c6 3 6 15 0 18" stroke="#EDB195" stroke-width="3" fill="none" opacity=".9"/><ellipse cx="24" cy="12" rx="5" ry="2.5" fill="#fff" opacity=".55"/></svg><svg class="sweet" viewBox="0 0 60 36" aria-hidden="true"><path d="M14 18 2 6v24z" fill="#06628D"/><path d="M46 18 58 6v24z" fill="#06628D"/><ellipse cx="30" cy="18" rx="17" ry="13" fill="#2AA7C9"/><path d="M18 9c6 3 6 15 0 18M26 6c6 4 6 20 0 24M34 6c6 4 6 20 0 24M42 9c6 3 6 15 0 18" stroke="#EDB195" stroke-width="3" fill="none" opacity=".9"/><ellipse cx="24" cy="12" rx="5" ry="2.5" fill="#fff" opacity=".55"/></svg><svg class="sweet" viewBox="0 0 60 36" aria-hidden="true"><path d="M14 18 2 6v24z" fill="#3C0F0F"/><path d="M46 18 58 6v24z" fill="#3C0F0F"/><ellipse cx="30" cy="18" rx="17" ry="13" fill="#E46B43"/><path d="M18 9c6 3 6 15 0 18M26 6c6 4 6 20 0 24M34 6c6 4 6 20 0 24M42 9c6 3 6 15 0 18" stroke="#EDB195" stroke-width="3" fill="none" opacity=".9"/><ellipse cx="24" cy="12" rx="5" ry="2.5" fill="#fff" opacity=".55"/></svg></div>
+  <p class="boot-msg" id="bootMsg">Starting up</p>
+</div>
+
+<div class="onboard" id="onboard" hidden role="dialog" aria-modal="true"
+     aria-labelledby="obTitle" aria-describedby="obBody">
+  <div class="onboard-card">
+    <button type="button" class="onboard-skip" id="obSkip">Skip</button>
+
+    <div class="onboard-art" aria-hidden="true">
+      <span class="orbit orbit-one"></span>
+      <span class="orbit orbit-two"></span>
+      <img src="/assets/candie.png" alt="" width="120" height="120">
+    </div>
+
+    <p class="eyebrow" id="obStepLabel"></p>
+    <h2 id="obTitle"></h2>
+    <div id="obBody"></div>
+    <div class="onboard-field" id="obField" hidden>
+      <label for="obMuni">Municipality</label>
+      <select id="obMuni"></select>
+    </div>
+
+    <div class="onboard-dots" id="obDots" aria-hidden="true"></div>
+    <div class="onboard-actions">
+      <button type="button" class="btn btn-ghost btn-sm" id="obBack">Back</button>
+      <button type="button" class="btn btn-primary btn-sm" id="obNext">Next</button>
+    </div>
+  </div>
+</div>
+
+<a class="vh" href="#main">Skip to content</a>
+
+<nav class="rail" id="rail" aria-label="Main navigation">
+  <div class="rail-brand">
+    <span class="logo-drop" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C8 7 6 10 6 13a6 6 0 0 0 12 0c0-3-2-6-6-11z"/>
+      </svg>
+    </span>
+    <span class="names">
+      <b>Diabet<i>EASE</i></b>
+      <small>Type 1 diabetes screening support</small>
+    </span>
+  </div>
+
+  <div class="rail-scroll" id="railNav"></div>
+
+  <div class="rail-bottom">
+    <span class="rb-icon" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <path d="m9 12 2 2 4-4"/>
+      </svg>
+    </span>
+    <strong>Your health, your pace.</strong>
+    <p>Private, supportive, and here for you.</p>
+    <span class="rb-priv"><i></i> Your information is private</span>
+  </div>
+
+  <div class="rail-account" id="railAccount" role="button" tabindex="0"
+       aria-label="Guest account">
+    <span class="ra-avatar" id="raAvatar">JD</span>
+    <span>
+      <span class="ra-name" id="raName">Guest account</span>
+      <span class="ra-sub">Personal space</span>
+    </span>
+    <svg class="ra-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
+         stroke-linejoin="round" aria-hidden="true">
+      <path d="m6 9 6 6 6-6"/>
+    </svg>
+  </div>
+
+  <!-- ADDED: railToggle for sidebar collapse -->
+  <div class="rail-foot">
+    <button class="railtoggle" id="railToggle" aria-pressed="false">
+      <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor">
+        <path d="M2 3h12v1.6H2zM2 7.2h12v1.6H2zM2 11.4h12V13H2z"/>
+      </svg>
+      <span>Collapse</span>
+    </button>
+  </div>
+</nav>
+
+<div class="scrim" id="scrim" hidden></div>
+
+<!-- ========================================================== main -->
+<div class="main">
+  <header class="topbar">
+    <button class="burger" id="burger" aria-expanded="false" aria-controls="rail"
+            aria-label="Open navigation">
+      <svg width="18" height="14" viewBox="0 0 18 14" fill="currentColor" aria-hidden="true">
+        <rect width="18" height="2.4" rx="1.2"/>
+        <rect y="5.8" width="18" height="2.4" rx="1.2"/>
+        <rect y="11.6" width="18" height="2.4" rx="1.2"/>
+      </svg>
+    </button>
+
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <span>DiabetEASE</span>
+      <span class="crumb-slash">/</span>
+      <strong id="crumb">Dashboard</strong>
+    </nav>
+
+    <span class="spacer"></span>
+
+    <span class="pill" id="apiPill" title="Backend connection">
+      <span class="dot"></span>
+      <span id="apiPillText">Checking…</span>
+    </span>
+
+    <button class="btn btn-ghost btn-sm" id="authBtn">Sign in</button>
+  </header>
+
+  <main class="work" id="main" tabindex="-1">
+
+  <!-- ====================================================== dashboard -->
+  <section class="view" id="v-dashboard">
+    <div class="dash-title-row">
+      <div>
+        <p class="dash-date" id="todayLabel"></p>
+        <h1>Your health dashboard</h1>
+        <p class="subtitle">A calm place to check in and find the support you need.</p>
+      </div>
+      <span class="chip-step">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7z"/>
+        </svg>
+        One step at a time
+      </span>
+    </div>
+
+    <section class="welcome">
+      <div class="welcome-copy">
+        <p class="welcome-eyebrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+          </svg>
+          Your health, made a little easier
+        </p>
+        <h2>Hi there, it's lovely to see you.</h2>
+        <p>Small steps can make a big difference. I'm Candie, your friendly health assistant — here whenever you need me.</p>
+        <div class="welcome-actions">
+          <button type="button" class="btn btn-primary btn-sm" id="askCandie">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                style="margin-right:6px">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            Ask Candie something
+          </button>
+          <a class="btn btn-light btn-sm" href="#learn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                style="margin-right:6px">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+            Read the basics
+          </a>
+        </div>
+      </div>
+      <div class="mascot-scene">
+        <span class="orbit orbit-one" aria-hidden="true"></span>
+        <span class="orbit orbit-two" aria-hidden="true"></span>
+        <img class="candie-hero" src="/assets/candie.png"
+            alt="Candie, the DiabetEASE assistant" width="160" height="160" loading="lazy">
+        <span class="mascot-caption"><i></i> Candie is here for you</span>
+      </div>
+      <span class="welcome-deco deco-a" aria-hidden="true"></span>
+      <span class="welcome-deco deco-b" aria-hidden="true"></span>
+    </section>
+
+    <div class="section-label">
+      <div>
+        <h2>Your care network</h2>
+        <p>Helpful resources, all in one place.</p>
+      </div>
+      <a class="textlink" href="#centers">
+        Explore services
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="grid g4" id="dashStats"></div>
+
+    <div class="bottom-row">
+      <div class="card">
+        <div class="card-head">
+          <h2>Latest assessment</h2>
+          <span class="spacer"></span>
+          <span class="tag" id="dashAssessTag">None this session</span>
+        </div>
+        <div id="dashAssess"></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h2>Recent activity</h2>
+        </div>
+        <div id="dashActivity"></div>
+      </div>
+    </div>
+
+    <!-- ADDED: dashMuniChart for the municipal facility chart -->
+    <div class="card" style="margin-top:16px">
+      <div class="card-head">
+        <h2>Facility records by municipality</h2>
+        <span class="spacer"></span>
+        <a class="btn btn-ghost btn-sm" href="#centers">Manage</a>
+      </div>
+      <div id="dashMuniChart"></div>
+    </div>
+  </section>
+
+  <!-- ========================================================= guide -->
+  <section class="view" id="v-guide">
+    <div class="pagehead">
+      <p class="eyebrow">HOW THIS WORKS</p><h1>User guide</h1>
+      <p>How to use DiabetEASE, understand your results, and find care.</p>
+    </div>
+
+    <div class="note note-info">
+      <h3>What this is</h3>
+      <p>A research prototype that helps you understand Type&nbsp;1 diabetes risk, find local testing centres, and learn about the condition. It does not replace a doctor and does not diagnose.</p>
+    </div>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3>1. The risk assessment</h3>
+        <p>Five steps, about two minutes: about you, family history, symptoms, laboratory results, and a review before you submit.</p>
+        <p>Leave any field blank if you do not know the answer. Blanks are treated as unknown, never as normal.</p>
+      </div>
+
+      <div class="card">
+        <h3>2. Understanding your result</h3>
+        <p>There are five outcomes:</p>
+        <ul class="guidelist">
+          <li><span class="tag tag-bad">Emergency</span> Seek emergency care now. Nothing else on the page matters.</li>
+          <li><span class="tag tag-warn">See a doctor promptly</span> A value met a published diagnostic threshold, or two or more islet autoantibodies were reported.</li>
+          <li><span class="tag tag-warn">Worth getting tested</span> Nothing met a threshold, but there is enough to justify a glucose test.</li>
+          <li><span class="tag">Not enough information</span> No laboratory value was given, so no assessment is possible.</li>
+          <li><span class="tag">Nothing crosses a threshold</span> Reassuring about today. <strong>Not an all-clear</strong> — early-stage Type&nbsp;1 diabetes is silent on a glucose test.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>3. Finding a testing centre</h3>
+        <p>Open the Testing centre map. Pin colours: <span class="tag tag-ok">teal</span> a confirmed service, <span class="tag tag-warn">orange</span> not yet confirmed, <span class="tag tag-bad">red</span> record outdated. Pharmacies are square teal markers.</p>
+        <p>Filter by municipality, by confirmed service, or switch between testing centres and pharmacies. Call before travelling: most records are still unconfirmed.</p>
+      </div>
+
+      <div class="card">
+        <h3>4. Chatting with Candie</h3>
+        <p>Open Candie from the round button in the corner. She can explain Type&nbsp;1 diabetes, say what a test measures in general, walk through a result you recorded this session, and look up testing centres by municipality.</p>
+        <p>She cannot diagnose you, interpret your own results, or advise on medication or insulin doses. She will say so rather than guess.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>5. Your privacy</h3>
+      <p>No name, birth date, address or contact number is collected anywhere. Assessments are discarded after the result is computed. If an operator enables storage and you consent, the record holds a banded age and summary counts, never an exact age, and carries a deletion date (90 days by default).</p>
+      <p>The design follows data minimisation under the Data Privacy Act of 2012 (RA 10173). A privacy notice alone does not make a system compliant; the controls have to exist and be audited.</p>
+    </div>
+
+    <div class="card">
+      <h3>6. What this system cannot do</h3>
+      <ul class="guidelist">
+        <li>No risk percentage or score. No model has been trained, so none is produced.</li>
+        <li>No forecast of future onset. That needs data following people over time.</li>
+        <li>No confirmation that a listed facility offers a test, unless the record says confirmed with a source and date.</li>
+        <li>No laboratory testing. Values must come from a laboratory you have already visited.</li>
+      </ul>
+    </div>
+
+    <div class="btnrow">
+      <a href="#assess" class="btn btn-primary">Start an assessment</a>
+      <a href="#centers" class="btn btn-ghost">Open the map</a>
+      <a href="#learn" class="btn btn-ghost">Educational resources</a>
+      <button type="button" class="btn btn-ghost" id="replayOnboard">Replay the introduction</button>
+    </div>
+  </section>
+
+  <!-- ===================================================== assessment -->
+  <section class="view" id="v-assess">
+    <div class="pagehead">
+      <p class="eyebrow">A GENTLE CHECK-IN</p><h1>Risk assessment</h1>
+      <p>Five steps. Leave any field blank if the value is unknown.</p>
+    </div>
+
+    <div class="note note-info">
+      <p>Answers are evaluated against diagnostic thresholds published by the American Diabetes Association and the ISPAD staging guidelines.</p>
+    </div>
+
+    <div id="dkaAlert" class="note note-danger" hidden>
+      <h3>Stop and seek emergency care now</h3>
+      <p>Vomiting, stomach pain, deep or rapid breathing, and drowsiness or confusion together with thirst or frequent urination can mean diabetic ketoacidosis. Severe symptoms can appear quickly.</p>
+      <p><strong>Go to the nearest emergency department or call 911 now. Do not finish this form first.</strong></p>
+    </div>
+
+    <div class="assesslayout">
+    <div class="card">
+      <div class="stepper" id="stepper" role="group" aria-label="Assessment progress"></div>
+      <p class="steplabel" id="stepLabel" role="status">Step 1 of 5 · About you</p>
+      <p class="stepnote" id="stepNote"></p>
+
+      <form id="assessForm" novalidate>
+        <fieldset class="step" data-step="1" style="border:0;padding:0;margin:0">
+          <div class="field">
+            <label class="fl" for="age">Age in years</label>
+            <input type="number" id="age" min="1" max="120" inputmode="numeric">
+            <span class="err" id="err-age"></span>
+          </div>
+          <div class="inline">
+            <div class="field">
+              <label class="fl" for="sex">Sex</label>
+                <select id="sex"><option value="">Prefer not to say</option><option>Female</option><option>Male</option></select>
+            </div>
+            <div class="field">
+              <label class="fl" for="muni">Municipality</label>
+                <select id="muni"></select>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="step" data-step="2" hidden style="border:0;padding:0;margin:0">
+          <div class="field">
+            <label class="fl" for="fam">Does a parent, brother or sister have Type 1 diabetes?</label>
+            <select id="fam"><option value="unknown">I do not know</option><option value="no">No</option><option value="yes">Yes</option></select>
+          </div>
+          <div class="field">
+            <label class="fl" for="autoimm">Autoimmune conditions in the family</label>
+            <select id="autoimm"><option value="unknown">I do not know</option><option value="no">None known</option><option value="yes">Yes, at least one</option></select>
+          </div>
+        </fieldset>
+
+        <fieldset class="step" data-step="3" hidden style="border:0;padding:0;margin:0">
+          <h3>Symptoms in the last few weeks</h3>
+          <label class="choice"><input type="checkbox" class="sym" value="thirst"><span>Much more thirsty than usual</span></label>
+          <label class="choice"><input type="checkbox" class="sym" value="urination"><span>Passing urine far more often, including at night</span></label>
+          <label class="choice"><input type="checkbox" class="sym" value="weight_loss"><span>Losing weight without trying</span></label>
+          <label class="choice"><input type="checkbox" class="sym" value="fatigue"><span>Unusually tired or weak</span></label>
+          <label class="choice"><input type="checkbox" class="sym" value="blurred_vision"><span>Blurred vision</span></label>
+          <label class="choice"><input type="checkbox" class="sym" value="hunger"><span>Constantly hungry</span></label>
+
+          <h3 style="margin-top:18px">Urgent signs</h3>
+          <span class="hint">These change what you should do immediately.</span>
+          <label class="choice alarm"><input type="checkbox" class="dka" value="vomiting"><span>Vomiting or persistent nausea</span></label>
+          <label class="choice alarm"><input type="checkbox" class="dka" value="abdominal_pain"><span>Stomach pain</span></label>
+          <label class="choice alarm"><input type="checkbox" class="dka" value="rapid_breathing"><span>Deep or rapid breathing, or fruity-smelling breath</span></label>
+          <label class="choice alarm"><input type="checkbox" class="dka" value="drowsiness"><span>Unusual drowsiness or confusion</span></label>
+        </fieldset>
+
+        <fieldset class="step" data-step="4" hidden style="border:0;padding:0;margin:0">
+          <h3>Laboratory results you already have</h3>
+          <div class="field">
+            <label class="fl" for="gluType">Type of glucose test</label>
+            <select id="gluType">
+              <option value="none">No glucose result</option>
+              <option value="fasting">Fasting (no food for 8 hours)</option>
+              <option value="random">Random / casual</option>
+            </select>
+          </div>
+          <div class="field" id="gluWrap" hidden>
+            <label class="fl" for="glucose">Blood glucose (mg/dL)</label>
+            <input type="number" id="glucose" min="20" max="900" step="1" inputmode="numeric">
+            <span class="err" id="err-glucose"></span>
+            <div class="rangescale" id="gluScale" aria-live="polite"></div>
+          </div>
+          <div class="field">
+            <label class="fl" for="hba1c">HbA1c (%)</label>
+            <input type="number" id="hba1c" min="3" max="20" step="0.1" inputmode="decimal">
+            <span class="err" id="err-hba1c"></span>
+            <div class="rangescale" id="a1cScale" aria-live="polite"></div>
+          </div>
+          <div class="field">
+            <label class="fl" for="aab">Islet autoantibody test</label>
+            <select id="aab">
+              <option value="none">Not tested</option>
+              <option value="negative">Tested, negative</option>
+              <option value="one_positive">Tested, one antibody positive</option>
+              <option value="two_or_more_positive">Tested, two or more positive</option>
+            </select>
+          </div>
+        </fieldset>
+
+        <fieldset class="step" data-step="5" hidden style="border:0;padding:0;margin:0">
+          <h3>Check your answers</h3>
+          <div class="tablewrap"><table id="reviewTable"><tbody></tbody></table></div>
+          <p style="margin-top:12px"><small>Your answers are sent to the server to compute the result. Nothing is stored: no name, no birth date, no identifier.</small></p>
+        </fieldset>
+
+        <div class="stepactions">
+          <button type="button" class="btn btn-ghost" id="backBtn" disabled>Back</button>
+          <button type="button" class="btn btn-primary" id="nextBtn">Continue</button>
+        </div>
+      </form>
+    </div>
+
+    <aside class="assessaside">
+      <span class="asidecircle" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+             stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.6a5.5 5.5 0 0 0-9.3-2.9l-.5.5-.5-.5A5.5 5.5 0 0 0 3.2 13l8.3 8.3 8.3-8.3a5.5 5.5 0 0 0 1-4.4z"/></svg>
+      </span>
+      <h3>Just for your wellbeing</h3>
+      <p>This check helps you decide whether a blood test is worth getting. It is not a diagnosis, and it produces no score.</p>
+      <div class="reassure">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>No name or ID is asked for</span>
+      </div>
+      <div class="reassure">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <span>About two minutes</span>
+      </div>
+      <div class="reassure">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg>
+        <span>Leave anything blank if unsure</span>
+      </div>
+    </aside>
+    </div>
+  </section>
+
+  <!-- ======================================================== results -->
+  <section class="view" id="v-results">
+    <div class="pagehead"><p class="eyebrow">YOUR SCREENING SUMMARY</p><h1>Assessment result</h1><p>Findings and recommended next steps.</p></div>
+    <div id="resultBody"></div>
+  </section>
+
+  <!-- ====================================================== forecast -->
+  <section class="view" id="v-forecast">
+    <div class="pagehead">
+      <p class="eyebrow">NOT YET AVAILABLE</p><h1>Risk forecasting</h1>
+      <p>Projection of Type 1 diabetes risk over a defined time horizon.</p>
+    </div>
+    <div class="banner">
+      <p class="eyebrow">Status</p>
+      <h2>Not available</h2>
+      <p>Forecasting requires longitudinal data and a validated model. Neither is currently available, so no projection is shown.</p>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="card-head"><h2>Requirements</h2></div>
+      <div class="tablewrap"><table>
+        <tr><th>Requirement</th><th>Why</th><th>Status</th></tr>
+        <tr><td>Longitudinal dataset</td><td>Onset prediction requires individuals followed over time with diagnosis dates recorded.</td><td><span class="tag tag-bad">Not secured</span></td></tr>
+        <tr><td>Type 1-specific labels</td><td>Datasets combining Type 1 and Type 2 cannot support a Type 1-specific model.</td><td><span class="tag tag-bad">Not secured</span></td></tr>
+        <tr><td>Islet autoantibody variables</td><td>Published staging of presymptomatic disease is based on antibody status.</td><td><span class="tag tag-bad">Not available locally</span></td></tr>
+        <tr><td>A stated prediction horizon</td><td>Risk estimates require a defined time window; 5-year and lifetime risk differ.</td><td><span class="tag tag-warn">Not yet defined</span></td></tr>
+        <tr><td>Calibration analysis</td><td>Probabilities may only be displayed once checked against observed frequencies.</td><td><span class="tag tag-bad">Not performed</span></td></tr>
+      </table></div>
+      <p style="margin-top:14px"><small>Established screening programmes including TrialNet Pathway to Prevention, Fr1da and ASK use laboratory antibody testing rather than questionnaire-based prediction.</small></p>
+    </div>
+  </section>
+
+  <!-- ==================================================== parameters -->
+  <section class="view" id="v-parameters">
+    <div class="pagehead">
+      <p class="eyebrow">WHAT YOU ENTERED</p><h1>Health parameters</h1>
+      <p>Entered values compared against published reference ranges.</p>
+    </div>
+    <div id="paramBody"></div>
+  </section>
+
+  <!-- ======================================================= centres -->
+  <section class="view" id="v-centers">
+    <div class="pagehead">
+      <div class="row">
+        <div><p class="eyebrow">CARE NEAR YOU</p><h1>Testing centre map</h1><p>Healthcare facilities across the ten covered municipalities.</p></div>
+        <div class="segmented" role="group" aria-label="View mode">
+          <button type="button" id="viewMap" aria-pressed="true">Map</button>
+          <button type="button" id="viewList" aria-pressed="false">List</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid split">
+      <div class="card" id="mapCard">
+        <div class="card-head">
+          <h2>Coverage locator</h2>
+          <span class="spacer"></span>
+          <span class="tag" id="mapModeTag">Map</span>
+          
+        </div>
+        <p class="card-sub" id="mapNote" hidden></p>
+        <div id="leafmap" class="leafmap"></div>
+        <div class="maplegend" id="mapLegend" aria-label="Map key"></div>
+        <div class="locator" id="locator" hidden></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Filters</h2></div>
+        <div class="field">
+          <label class="fl" for="fSearch">Search by name</label>
+          <input type="text" id="fSearch" placeholder="e.g. district hospital">
+        </div>
+        <div class="field">
+          <label class="fl" for="fMuni">Municipality</label>
+          <select id="fMuni"></select>
+        </div>
+        <div class="field">
+          <label class="fl" for="fType">Show</label>
+          <select id="fType">
+            <option value="">Testing centres and pharmacies</option>
+            <option value="testing">Testing centres only</option>
+            <option value="Pharmacy">Pharmacies only</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="fl" for="fSvc">Confirmed service</label>
+          <select id="fSvc">
+            <option value="">Any service</option>
+            <option value="glucose">Blood glucose</option>
+            <option value="hba1c">HbA1c</option>
+            <option value="ogtt">Oral glucose tolerance</option>
+            <option value="autoantibody">Islet autoantibodies</option>
+            <option value="consultation">Diabetes consultation</option>
+            <option value="insulin">Insulin</option>
+            <option value="glucose_supplies">Glucose meters and strips</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="fl" for="fStatus">Record status</label>
+          <select id="fStatus">
+            <option value="">Any status</option>
+            <option value="verified">Verified</option>
+            <option value="unconfirmed">Unconfirmed</option>
+            <option value="outdated">Outdated</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" id="fReset">Clear filters</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="card-head"><h2>Facilities</h2><span class="spacer"></span><span class="tag" id="facCount">—</span></div>
+      <div id="facilityList"></div>
+      <p style="margin-top:12px"><small id="facAttribution"></small></p>
+    </div>
+
+    <details class="card" style="margin-top:16px">
+      <summary style="cursor:pointer; min-height:44px; display:flex; align-items:center; font-weight:600">Add a verified facility record</summary>
+      
+      <div class="inline">
+        <div class="field"><label class="fl" for="nfName">Facility name</label><input type="text" id="nfName"></div>
+        <div class="field"><label class="fl" for="nfType">Type</label>
+          <select id="nfType"><option>Hospital</option><option>Rural health unit</option><option>Diagnostic laboratory</option><option>Clinic</option><option>Pharmacy</option></select></div>
+      </div>
+      <div class="inline">
+        <div class="field"><label class="fl" for="nfMuni">Municipality</label><select id="nfMuni"></select></div>
+        <div class="field"><label class="fl" for="nfContact">Contact number</label><input type="text" id="nfContact"></div>
+      </div>
+      <div class="inline">
+        <div class="field"><label class="fl" for="nfLat">Latitude</label><input type="number" id="nfLat" step="0.00001" placeholder="6.37"></div>
+        <div class="field"><label class="fl" for="nfLon">Longitude</label><input type="number" id="nfLon" step="0.00001" placeholder="124.74"></div>
+      </div>
+      <div class="field"><label class="fl" for="nfAddress">Address</label><input type="text" id="nfAddress"></div>
+      <div class="field"><label class="fl">Services confirmed</label>
+        <label class="choice"><input type="checkbox" class="nfSvc" value="glucose"><span>Blood glucose testing</span></label>
+        <label class="choice"><input type="checkbox" class="nfSvc" value="hba1c"><span>HbA1c testing</span></label>
+        <label class="choice"><input type="checkbox" class="nfSvc" value="autoantibody"><span>Islet autoantibody testing</span></label>
+        <label class="choice"><input type="checkbox" class="nfSvc" value="consultation"><span>Diabetes consultation</span></label>
+        <label class="choice"><input type="checkbox" class="nfSvc" value="insulin"><span>Insulin in stock</span></label>
+        <label class="choice"><input type="checkbox" class="nfSvc" value="glucose_supplies"><span>Glucose meters and strips</span></label>
+      </div>
+      <div class="inline">
+        <div class="field"><label class="fl" for="nfSource">Source</label><input type="text" id="nfSource" placeholder="DOH registry; phone call 2026-11-04"></div>
+        <div class="field"><label class="fl" for="nfDate">Date verified</label><input type="date" id="nfDate"></div>
+      </div>
+      <div class="btnrow"><button type="button" class="btn btn-primary" id="addFacility">Save record</button></div>
+      <div id="facilityFlash" class="note" hidden style="margin-top:12px"></div>
+    </details>
+  </section>
+
+  <!-- ========================================================= learn -->
+  <section class="view" id="v-learn">
+    <div class="pagehead"><p class="eyebrow">LEARN AT YOUR OWN PACE</p><h1>Educational resources</h1><p>Type 1 diabetes, testing and when to seek care.</p></div>
+
+    <div class="note note-danger">
+      <h3>When to go to an emergency department</h3>
+      <p>Vomiting, stomach pain, deep or rapid breathing, fruity-smelling breath, drowsiness or confusion — especially alongside heavy thirst and frequent urination — can mean diabetic ketoacidosis. Go now. Do not wait for an appointment.</p>
+    </div>
+
+    <div class="grid g2">
+      <div class="card"><h3>What it is</h3>
+        <p>The immune system destroys the beta cells in the pancreas that make insulin. Without insulin the body cannot move glucose out of the blood and into cells, so blood glucose climbs while the body starves.</p>
+        <p>It is not caused by eating sugar. Nothing a child or parent did caused it, and no diet or exercise plan prevents it.</p></div>
+      <div class="card"><h3>How it develops</h3>
+        <p>The autoimmune process starts months to years before any symptom appears. Stage 1 is two or more islet autoantibodies with normal glucose; stage 2 adds rising glucose without symptoms; stage 3 is glucose that meets the diagnostic criteria, with or without symptoms.</p>
+        <p>This is why a check like this one cannot rule the condition out — early stages are silent.</p></div>
+      <div class="card"><h3>Family history and genes</h3>
+        <p>About 85 in 100 people who develop Type 1 diabetes have no family history. A parent or sibling with it raises the risk to roughly 1 in 20, against about 1 in 300 generally. Those figures are from studies in the United States; none exists for the Philippines.</p></div>
+      <div class="card"><h3>Islet autoantibodies</h3>
+        <p>GAD65, IA-2, ZnT8 and insulin autoantibodies are the markers used to identify presymptomatic Type 1 diabetes. Two or more persistently positive antibodies defines early-stage disease and needs a clinician to confirm and stage.</p></div>
+      <div class="card"><h3>Glucose and HbA1c tests</h3>
+        <p>Fasting glucose, random glucose, the oral glucose tolerance test and HbA1c are the standard tests. They show whether glucose is abnormal — they do not say which type of diabetes it is. Telling Type 1 from Type 2 needs antibody testing and clinical judgement.</p></div>
+      <div class="card"><h3>Getting tested through PhilHealth</h3>
+        <p>PhilHealth’s primary care package, YAKAP (called Konsulta before 2025), lists fasting blood sugar, the glucose tolerance test and HbA1c among its covered laboratory tests when the doctor at your registered provider orders them.</p>
+        <p>If that clinic has no laboratory, the test may be done at a partner laboratory instead. Your municipal health office can tell you how to register.</p></div>
+      <div class="card"><h3>Risk check, screening, diagnosis</h3>
+        <p>A risk check sorts people by who might benefit from testing. Screening is an actual laboratory test offered to people without symptoms. Diagnosis is a clinician confirming the condition. DiabetEASE only does the first.</p></div>
+    </div>
+
+
+    <div class="card" id="quizCard">
+      <div class="card-head"><h2>Knowledge check</h2><span class="spacer"></span><span class="tag" id="quizScore">0 / 0</span></div>
+      
+      <div id="quizBody"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>Common misconceptions</h2></div>
+      
+      <div class="mythgrid" id="mythGrid"></div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="card-head"><h2>Sources</h2></div>
+      
+      <div id="eduSources"><div class="skel"></div></div>
+      
+    </div>
+  </section>
+
+  <!-- ======================================================= reports -->
+  <section class="view" id="v-reports">
+    <div class="pagehead"><p class="eyebrow">YOUR PERSONAL SPACE</p><h1>Reports and history</h1><p>Assessments completed in this session.</p></div>
+    <div class="note note-info">
+      <p>History is retained for the current session only unless assessment storage is enabled.</p>
+    </div>
+    <div class="card"><div class="card-head"><h2>Session history</h2><span class="spacer"></span>
+      <button class="btn btn-ghost btn-sm" id="clearHistory">Clear history</button></div>
+      <div id="historyBody"></div>
+    </div>
+  </section>
+
+  <!-- ====================================================== research -->
+  <section class="view" id="v-research">
+    <div class="pagehead"><h1>Research and evaluation</h1><p>Model registry, performance metrics and data quality.</p></div>
+    <div class="card">
+      <div class="card-head"><h2>Measured results</h2><span class="spacer"></span><span class="tag" id="resTag">Sign in required</span></div>
+      <div id="researchBody"></div>
+    </div>
+  </section>
+
+
+  <!-- ========================================================== auth -->
+  <section class="view" id="v-account">
+    <div class="pagehead"><h1 id="authTitle">Sign in</h1><p id="authLead">Sign in to access saved assessments and staff tools.</p></div>
+
+    <div class="grid g2">
+      <div class="card">    
+        <div class="segmented" role="group" aria-label="Sign in or create account" style="margin-bottom:16px">
+          <button type="button" id="tabLogin" aria-pressed="true">Sign in</button>
+          <button type="button" id="tabRegister" aria-pressed="false">Create account</button>
+        </div>
+
+        <form id="authForm">
+          <div class="field">
+            <label class="fl" for="authUser">Username</label>
+            <span class="hint" id="authUserHint">Letters, digits, dot, underscore or hyphen.</span>
+            <input type="text" id="authUser" autocomplete="username">
+          </div>
+          <div class="field" id="authNameField" hidden>
+            <label class="fl" for="authName">Display name</label>
+            <input type="text" id="authName" autocomplete="nickname">
+          </div>
+          <div class="field">
+            <label class="fl" for="authPass">Password</label>
+            <span class="hint" id="authPassHint">At least 10 characters.</span>
+            <input type="password" id="authPass" autocomplete="current-password">
+          </div>
+          <div class="btnrow">
+            <button class="btn btn-primary" type="submit" id="authSubmit">Sign in</button>
+            <button class="btn btn-ghost" type="button" id="signOutBtn" hidden>Sign out</button>
+          </div>
+          <p id="authStatus" style="margin-top:12px"></p>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>What an account changes</h2></div>
+        <div class="tablewrap"><table>
+          <tr><th>Role</th><th>Can see</th></tr>
+          <tr><td>No account</td><td>Assessment, testing centres, education, assistant</td></tr>
+          <tr><td>Patient</td><td>The above, plus saved assessments</td></tr>
+          <tr><td>Researcher</td><td>Evaluation metrics, facility record management</td></tr>
+          <tr><td>Admin</td><td>Account management, role assignment</td></tr>
+        </table></div>
+        <div class="note note-info" style="margin-top:14px">
+          <p>An account links saved assessments to you. Assessments are not stored unless storage is enabled and you consent. You can delete your account and its records at any time.</p>
+        </div>
+        <div class="btnrow"><button class="btn btn-ghost btn-sm" id="deleteAccount" hidden>Delete my account and data</button></div>
+      </div>
+    </div>
+
+    <div class="card" id="adminPanel" hidden>
+      <div class="card-head"><h2>Accounts</h2><span class="spacer"></span><span class="tag" id="acctCount">—</span></div>
+      
+      <div class="inline">
+        <div class="field"><label class="fl" for="grantUser">Username</label><input type="text" id="grantUser"></div>
+        <div class="field"><label class="fl" for="grantRole">Role</label>
+          <select id="grantRole"><option value="patient">patient</option><option value="researcher">researcher</option><option value="admin">admin</option></select></div>
+      </div>
+      <div class="btnrow"><button class="btn btn-primary btn-sm" id="grantBtn">Grant role</button></div>
+      <p id="grantStatus" style="margin-top:10px"></p>
+      <div id="accountList" style="margin-top:14px"></div>
+    </div>
+  </section>
+
+  <!-- ====================================================== settings -->
+  <section class="view" id="v-settings">
+    <div class="pagehead"><h1>Settings</h1><p>Display preferences and data handling.</p></div>
+    <div class="grid g2">
+      <div class="card">
+        <div class="card-head"><h2>Display</h2></div>
+        <div class="field">
+          <label class="fl" for="setTheme">Theme</label>
+          <select id="setTheme"><option value="auto">Match my device</option><option value="light">Light</option><option value="dark">Dark</option></select>
+        </div>
+        <div class="field">
+          <label class="fl" for="setDensity">Text size</label>
+          <select id="setDensity"><option value="normal">Normal</option><option value="large">Large</option></select>
+        </div>
+        <label class="choice"><input type="checkbox" id="setMotion"><span>Reduce animation</span></label>
+        <div class="field" style="margin-top:14px">
+          <label class="fl" for="setApi">API base URL</label>
+          <input type="text" id="setApi" placeholder="http://127.0.0.1:8000">
+        </div>
+        <div class="field">
+          <label class="fl" for="setTileProvider">Map tiles</label>
+          <select id="setTileProvider"></select>
+        </div>
+        <div class="field">
+          <label class="fl" for="setTiles">Custom tile URL</label>
+          <span class="hint">Optional. Overrides the choice above.</span>
+          <input type="text" id="setTiles" placeholder="https://{s}.tiles.example.org/{z}/{x}/{y}.png">
+        </div>
+        <div class="btnrow"><button class="btn btn-ghost btn-sm" id="setReset">Reset to defaults</button></div>
+        
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Assistant</h2><span class="spacer"></span><span class="tag" id="aiTag">Checking…</span></div>
+        <p id="aiState"></p>
+        <details id="aiSetup">
+          <summary style="cursor:pointer; min-height:44px; display:flex; align-items:center; font-weight:600">Set up open conversation</summary>
+          <p style="margin-top:12px">Candie answers reviewed topics on her own. To let her answer anything else, run a language model on this computer. It is detected automatically.</p>
+          <ol>
+            <li>Install Ollama from <strong>ollama.com</strong>.</li>
+            <li>In PowerShell: <code>ollama pull llama3.2</code></li>
+            <li>Leave Ollama running and reload this page.</li>
+          </ol>
+          <p>If answers are slow or time out, a smaller model usually fixes it: <code>ollama pull llama3.2:1b</code></p>
+        </details>
+        <div class="btnrow" style="margin-top:12px">
+          <button type="button" class="btn btn-ghost btn-sm" id="aiRecheck">Check again</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="aiDiagnose">Test the model</button>
+        </div>
+        <div id="aiDiagnosis" class="note" hidden style="margin-top:12px"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Privacy</h2></div>
+        <p><strong>Collected:</strong> age, sex, municipality, family history, symptoms and any laboratory values entered. No name, birth date, address, phone number or email is requested.</p>
+        <p><strong>Stored:</strong> nothing by default. When storage is enabled and consented to, records hold a banded age and summary counts with a scheduled deletion date.</p>
+        <p><strong>Transmitted:</strong> answers are sent to the DiabetEASE server only. No third-party service receives them.</p>
+        <p><strong>Legal basis:</strong> data minimisation under Republic Act No. 10173.</p>
+      </div>
+    </div>
+  </section>
+
+  </main>
+</div>
+
+<!-- =========================================================== chat -->
+<button class="chatfab" id="chatFab" aria-expanded="false" aria-controls="chatPanel" aria-label="Open Candie, the DiabetEASE health assistant">
+  <img src="/assets/candie-avatar.png" alt="" width="62" height="62">
+</button>
+
+<div class="chatsheet-scrim" id="chatScrim" hidden></div>
+<div class="chatpanel" id="chatPanel" role="dialog" aria-label="DiabetEASE health assistant">
+  <header>
+    <img class="candie-av" src="/assets/candie-avatar.png" alt="" width="40" height="40">
+    <span><b>Candie</b><small id="chatMode">Local corpus</small></span>
+    <span class="x">
+      <button class="iconbtn" id="chatVoice" title="Read answers aloud" aria-label="Read answers aloud" aria-pressed="false">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.5 4.6 4.4H2v7.2h2.6L8 14.5zM10.6 5.1a4 4 0 0 1 0 5.8l1.1 1.1a5.6 5.6 0 0 0 0-8z"/></svg>
+      </button>
+      <button class="iconbtn" id="chatNew" title="Start a new conversation" aria-label="Start a new conversation">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 2.2A5.8 5.8 0 1 0 13.8 8h-1.6A4.2 4.2 0 1 1 8 3.8V6l3.2-2.4L8 1.2z"/></svg>
+      </button>
+      <button class="iconbtn" id="chatClose" title="Close" aria-label="Close the assistant">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M12.7 4.4 11.6 3.3 8 6.9 4.4 3.3 3.3 4.4 6.9 8l-3.6 3.6 1.1 1.1L8 9.1l3.6 3.6 1.1-1.1L9.1 8z"/></svg>
+      </button>
+    </span>
+  </header>
+  <div class="draghint" aria-hidden="true"></div>
+  <div class="chatlog" id="chatLog" role="log" aria-live="polite"></div>
+  <div class="chatsug" id="chatSug"></div>
+  <form class="chatform" id="chatForm">
+    <label class="vh" for="chatInput">Your question</label>
+    <input type="text" id="chatInput" placeholder="Ask a question" autocomplete="off" maxlength="500">
+    <button class="btn btn-primary btn-sm" type="submit">Send</button>
+  </form>
+  <p class="chatfoot">General information only. Cannot diagnose, interpret personal results, or advise on medication.</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin=""></script>
+<script src="/assets/charts.js"></script>
+<script src="/assets/app.js" defer></script>
+</body>
+</html>

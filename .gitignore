@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.env
+*.db
+*.sqlite3
+backend/ml/artifacts/
+backend/ml/data/*.csv
+!backend/ml/data/.gitkeep
+.pytest_cache/
+.DS_Store
+node_modules/
+*.log
