@@ -2149,7 +2149,7 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
   var SUGGESTIONS = [
 
   ];
-
+  
   function wire() {
     buildNav();
     // ... rest of wire() unchanged ...
