@@ -1918,10 +1918,7 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
     /* Chips are a prompt for the first question. Once anything has been asked
        they are clutter, so visibility follows the conversation, not a one-off
        flag that an early return could skip. */
-    syncSuggestions: function () {
-      var sug = $("chatSug");
-      if (sug) sug.hidden = this.history.length > 0;
-    },
+    syncSuggestions: function () { },
     /* "Explain my latest assessment" is answered from the stored API response,
        never regenerated. If there is no result, it says so rather than inventing. */
     explainLatest: function () {
@@ -2148,18 +2145,14 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
       });
     }
   };
-
+  /* ============================================================ init */
   var SUGGESTIONS = [
-    "What is Type 1 diabetes?",
-    "Explain my latest assessment",
-    "What do these health parameters mean?",
-    "How do I find a testing center?",
-    "When should I seek medical care?"
+
   ];
 
-  /* ============================================================ init */
   function wire() {
     buildNav();
+    // ... rest of wire() unchanged ...
 
     $("burger").addEventListener("click", function () {
       $("rail").classList.contains("open") ? closeRail() : openRail();
@@ -2436,10 +2429,10 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
     });
     var sug = $("chatSug");
     SUGGESTIONS.forEach(function (s) {
-      var b = el("button", null, s);
-      b.type = "button";
-      b.addEventListener("click", function () { Chat.send(s); });
-      sug.appendChild(b);
+        var b = el("button", null, s);
+        b.type = "button";
+        b.addEventListener("click", function () { Chat.send(s); });
+        sug.appendChild(b);
     });
     Chat.greet();
     Drag.attach($("chatPanel"), $("chatPanel").querySelector("header"));
