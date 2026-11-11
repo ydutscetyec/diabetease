@@ -2146,10 +2146,8 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
     }
   };
   /* ============================================================ init */
-  var SUGGESTIONS = [
+  var SUGGESTIONS = [];
 
-  ];
-  
   function wire() {
     buildNav();
     // ... rest of wire() unchanged ...
