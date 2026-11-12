@@ -9,7 +9,7 @@
   var SKEY = "diabetease.settings.v1";
   var Settings = {
     data: { theme: "auto", density: "normal", motion: false, api: "", municipality: "",
-            tileProvider: "esri-street", tileUrl: "", tileAttribution: "" },
+            tileProvider: "osm", tileUrl: "", tileAttribution: "" },
     load: function () {
       try {
         var raw = localStorage.getItem(SKEY);

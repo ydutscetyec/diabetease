@@ -1,1 +1,1 @@
-web: cd backend && python seed.py && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}
+web: cd backend && python seed.py && python import_facilities.py facilities_google_candidates.csv --commit && python import_facilities.py facilities_sto_nino_additions.csv --commit && python import_facilities.py pharmacies_google_candidates.csv --commit && uvicorn app.main:app --host 0.0.0.0 --port $PORT
