@@ -2382,9 +2382,9 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
     $("obBack").addEventListener("click", function () { Onboard.back(); });
     $("obSkip").addEventListener("click", function () { Onboard.close(false); });
     ["replayOnboard", "replayOnboardSettings"].forEach(function (id) {
-      var replay = $(id);
-      if (replay) replay.addEventListener("click", function () { Onboard.open(0); });
-    });
+    var replay = $(id);
+    if (replay) replay.addEventListener("click", function () { Onboard.open(0); });
+  });
     if (replay) replay.addEventListener("click", function () { Onboard.open(0); });
 
     // Keep focus inside the dialog while it is open, and let Escape dismiss it.
