@@ -1,20 +1,20 @@
 services:
-  - type: web
-    name: diabetease
-    runtime: python
-    buildCommand: pip install -r backend/requirements.txt
-    startCommand: cd backend && python seed.py && python import_facilities.py facilities_google_candidates.csv --commit && python import_facilities.py facilities_sto_nino_additions.csv --commit && python import_facilities.py pharmacies_google_candidates.csv --commit && uvicorn app.main:app --host 0.0.0.0 --port $PORT
-    healthCheckPath: /health
-    envVars:
-      - key: PYTHON_VERSION
-        value: "3.12"
-      - key: SECRET_KEY
-        generateValue: true
-      - key: ADMIN_USERNAME
-        sync: false
-      - key: ADMIN_PASSWORD_HASH
-        sync: false
-      - key: STORE_ASSESSMENTS
-        value: "false"
-      - key: DATABASE_URL
-        sync: false
+- type: web
+  name: diabetease
+  runtime: python
+  buildCommand: pip install -r backend/requirements.txt
+  startCommand: cd backend && python seed.py && python import_facilities.py facilities_google_candidates.csv --commit && python import_facilities.py facilities_sto_nino_additions.csv --commit && python import_facilities.py pharmacies_google_candidates.csv --commit && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+  healthCheckPath: /health
+  envVars:
+  - key: PYTHON_VERSION
+    value: "3.12"
+  - key: SECRET_KEY
+    generateValue: true
+  - key: ADMIN_USERNAME
+    sync: false
+  - key: ADMIN_PASSWORD_HASH
+    sync: false
+  - key: STORE_ASSESSMENTS
+    value: "false"
+  - key: DATABASE_URL
+    sync: false
