@@ -1154,65 +1154,13 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
       steps: [
           {
               eyebrow: "WELCOME",
-              title: "How to use DiabetEASE",
+              title: "Welcome to DiabetEASE",
               render: function (host) {
-                  host.appendChild(el("p", null,
-                      "DiabetEASE helps you check if a diabetes test is worth getting and shows you where to get one. Here is a quick guide before you start."));
+                  host.appendChild(el("p", null, "We've placed a full guide on your dashboard that explains every page of the app."));
                   var illus = el("div", "onboard-illustration");
                   illus.innerHTML = '<svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>';
                   host.appendChild(illus);
-              }
-          },
-          {
-              eyebrow: "STEP 1 OF 3",
-              title: "Take the Risk Assessment",
-              render: function (host) {
-                  host.appendChild(el("p", null, "Go to 'Risk assessment' in the menu. It takes 5 steps and about 2 minutes."));
-                  var grid = el("div", "onboard-steps-visual");
-                  [
-                      { t: "About you", d: "Age & location" },
-                      { t: "Symptoms", d: "What you feel" },
-                      { t: "Labs", d: "Blood results" }
-                  ].forEach(function(s) {
-                      var item = el("div", "onboard-step-item");
-                      item.appendChild(el("b", null, s.t));
-                      item.appendChild(el("span", null, s.d));
-                      grid.appendChild(item);
-                  });
-                  host.appendChild(grid);
-                  host.appendChild(el("p", null, "Leave anything blank if you don't know. Blanks are treated as 'unknown', never as 'normal'."));
-              }
-          },
-          {
-              eyebrow: "STEP 2 OF 3",
-              title: "View Results & Find Care",
-              render: function (host) {
-                  host.appendChild(el("p", null, "Your result will tell you the next best step. It is not a diagnosis."));
-                  var grid = el("div", "onboard-steps-visual");
-                  [
-                      { t: "Results", d: "See your tier" },
-                      { t: "Map", d: "Find a clinic" },
-                      { t: "Candie", d: "Ask questions" }
-                  ].forEach(function(s) {
-                      var item = el("div", "onboard-step-item");
-                      item.appendChild(el("b", null, s.t));
-                      item.appendChild(el("span", null, s.d));
-                      grid.appendChild(item);
-                  });
-                  host.appendChild(grid);
-                  host.appendChild(el("p", null, "Use the Testing centre map to find verified facilities near you, or ask Candie in the chat."));
-              }
-          },
-          {
-              eyebrow: "STEP 3 OF 3",
-              title: "Your Privacy is Protected",
-              render: function (host) {
-                  host.appendChild(el("p", null, "We do not ask for your name, birth date, or contact number."));
-                  var illus = el("div", "onboard-illustration");
-                  illus.style.background = "var(--ok-bg)"; illus.style.color = "var(--ok-ink)";
-                  illus.innerHTML = '<svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
-                  host.appendChild(illus);
-                  host.appendChild(el("p", null, "Your answers are used to compute your result and then discarded. Nothing is stored unless you explicitly consent later."));
+                  host.appendChild(el("p", null, "Scroll down on the dashboard to see the 'Explore DiabetEASE' section. It covers the Assessment, Map, Chat, and more."));
               }
           },
           {
@@ -1230,6 +1178,7 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
               }
           }
       ],
+      // ... keep the rest of the Onboard object (shouldShow, markDone, open, close, paint, next, back) exactly as it was ...
       shouldShow: function () {
           try { return localStorage.getItem("diabetease.onboarded") !== "1"; }
           catch (e) { return false; }
