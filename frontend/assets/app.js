@@ -38,7 +38,7 @@
     call: function (path, options, timeoutMs) {
       options = options || {};
       var ctrl = new AbortController();
-      var timer = setTimeout(function () { ctrl.abort(); }, timeoutMs || 70000);
+      var timer = setTimeout(function () { ctrl.abort(); }, timeoutMs || 20000);
       options.signal = ctrl.signal;
       options.headers = Object.assign({ "Content-Type": "application/json" }, options.headers || {});
       return fetch(Api.base() + path, options).then(function (res) {
@@ -2382,10 +2382,9 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
     $("obBack").addEventListener("click", function () { Onboard.back(); });
     $("obSkip").addEventListener("click", function () { Onboard.close(false); });
     ["replayOnboard", "replayOnboardSettings"].forEach(function (id) {
-    var replay = $(id);
-    if (replay) replay.addEventListener("click", function () { Onboard.open(0); });
-  });
-    if (replay) replay.addEventListener("click", function () { Onboard.open(0); });
+      var replay = $(id);
+      if (replay) replay.addEventListener("click", function () { Onboard.open(0); });
+    });
 
     // Keep focus inside the dialog while it is open, and let Escape dismiss it.
     $("onboard").addEventListener("keydown", function (e) {
