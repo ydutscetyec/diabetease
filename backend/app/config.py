@@ -23,7 +23,8 @@ class Settings:
         self.app_name = "DiabetEASE API"
         self.api_version = "v1"
         self.build = os.getenv("DIABETEASE_BUILD", "0.2.0-prototype")
-        self.database_url = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'diabetease.db'}")
+        self.database_url = (os.getenv("DATABASE_URL") or "").strip()
+        self.database_url = self.database_url or f"sqlite:///{BASE_DIR / 'diabetease.db'}"
         self.secret_key = os.getenv("SECRET_KEY", "")
         self.admin_username = os.getenv("ADMIN_USERNAME", "")
         self.admin_password_hash = os.getenv("ADMIN_PASSWORD_HASH", "")

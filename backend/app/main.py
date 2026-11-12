@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import sys
 import time
 from contextlib import asynccontextmanager
 from collections import defaultdict, deque
@@ -25,6 +26,27 @@ log = logging.getLogger("diabetease")
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     Base.metadata.create_all(bind=engine)
+    from pathlib import Path
+    import import_facilities
+    import seed
+    from .database import SessionLocal
+    from .models import Facility, Municipality
+
+    db = SessionLocal()
+    try:
+        need = db.query(Municipality).count() == 0 or db.query(Facility).count() == 0
+    finally:
+        db.close()
+    if need:
+        seed.main()
+        here = Path(__file__).resolve().parent.parent
+        for name in (
+            "facilities_google_candidates.csv",
+            "facilities_sto_nino_additions.csv",
+            "pharmacies_google_candidates.csv",
+        ):
+            sys.argv = ["import_facilities.py", str(here / name), "--commit"]
+            import_facilities.main()
     if not settings.admin_configured:
         log.warning("admin endpoints disabled: SECRET_KEY, ADMIN_USERNAME and "
                     "ADMIN_PASSWORD_HASH are not all set")

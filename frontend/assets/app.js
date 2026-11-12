@@ -38,7 +38,7 @@
     call: function (path, options, timeoutMs) {
       options = options || {};
       var ctrl = new AbortController();
-      var timer = setTimeout(function () { ctrl.abort(); }, timeoutMs || 12000);
+      var timer = setTimeout(function () { ctrl.abort(); }, timeoutMs || 70000);
       options.signal = ctrl.signal;
       options.headers = Object.assign({ "Content-Type": "application/json" }, options.headers || {});
       return fetch(Api.base() + path, options).then(function (res) {
