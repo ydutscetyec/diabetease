@@ -590,9 +590,6 @@ function buildNav() {
       c.appendChild(emptyState("No parameters recorded this session",
         "Any laboratory values you enter are charted here against published reference ranges.", "chart",
         { label: "Start an assessment", href: "#assess" }));
-      var b = el("div", "btnrow"); b.style.justifyContent = "center";
-      var a = el("a", "btn btn-primary btn-sm", "Start assessment"); a.href = "#assess";
-      b.appendChild(a); c.appendChild(b);
       host.appendChild(c);
       return;
     }
