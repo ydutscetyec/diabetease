@@ -1756,7 +1756,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
   background: #FFFFFF; border-color: #D9C6BB; color: #04284D;
   min-height: 44px;
 }
-.welcome-actions .btn-light:hover { background: #F7F2ED; }
+.welcome-actions .btn-light:hover { background: var(--bg); }
 
 /* decorative orbits + mascot */
 .mascot-scene {
@@ -1968,7 +1968,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .btn-ghost {
   background: #FFFFFF; border-color: #D9C6BB; color: #04284D;
 }
-.btn-ghost:hover { background: #F7F2ED; }
+.btn-ghost:hover { background: var(--bg); }
 
 /* ---- Headings ---- */
 h1, h2, h3 { color: #04284D; }

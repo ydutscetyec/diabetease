@@ -1161,6 +1161,45 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
               }
           },
           {
+              eyebrow: "WHAT IT DOES",
+              title: "A check, not a diagnosis",
+              render: function (host) {
+                  var ul = el("ul", "onboard-points");
+                  [["yes", "Compares what you enter against diagnostic thresholds published by the American Diabetes Association."],
+                   ["yes", "Tells you what to do next: see a doctor now, soon, or get a test when you can."],
+                   ["yes", "Shows testing centres and pharmacies near you, with what each has actually been confirmed to offer."],
+                   ["no", "Does not diagnose Type 1 diabetes. Only a clinician can do that."],
+                   ["no", "Does not give a risk percentage or score. No model has been trained, so none is produced."]
+                  ].forEach(function (row) {
+                      var li = el("li");
+                      var mk = el("span", "mk " + (row[0] === "yes" ? "mk-yes" : "mk-no"));
+                      mk.setAttribute("aria-hidden", "true");
+                      mk.innerHTML = row[0] === "yes"
+                          ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
+                          : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+                      li.appendChild(mk);
+                      li.appendChild(el("span", null, row[1]));
+                      ul.appendChild(li);
+                  });
+                  host.appendChild(ul);
+              }
+          },
+          {
+              eyebrow: "YOUR PRIVACY",
+              title: "Nothing is stored",
+              render: function (host) {
+                  host.appendChild(el("p", null,
+                      "You are never asked for a name, birth date, address or contact number. "
+                      + "Your answers are used to work out the result and are then discarded."));
+                  host.appendChild(el("p", null,
+                      "If your school later turns on storage for research, you will be asked to "
+                      + "agree each time, and the record kept holds an age band and counts only "
+                      + "\u2014 never an exact age or anything that identifies you."));
+                  host.appendChild(el("p", null,
+                      "If you feel unwell right now, do not use this. Go to a health centre."));
+              }
+          },
+          {
               eyebrow: "ALMOST THERE",
               title: "Where are you located?",
               render: function (host) {
@@ -1191,6 +1230,8 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
           this.paint();
       },
       close: function (completed) {
+          // Marked done either way: someone who skipped has made a choice, and
+          // showing it again on the next visit would ignore it.
           this.markDone();
           var sel = $("obMuni");
           if (completed && sel && sel.value) {

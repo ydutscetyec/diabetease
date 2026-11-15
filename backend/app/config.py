@@ -42,6 +42,11 @@ class Settings:
         # ON by default in this build, at the project owner's request.
         # Set CLINICAL_OPEN_ANSWERS=false in .env to restrict it again.
         self.clinical_open_answers = os.getenv("CLINICAL_OPEN_ANSWERS", "true").lower() == "true"
+        # On a fresh deployment the database starts empty, so the app seeds
+        # itself from the bundled CSVs at startup. Tests turn this off: a
+        # suite that asserts on an empty facility list cannot share a
+        # database that seeds 58 records before the first test runs.
+        self.auto_seed = os.getenv("AUTO_SEED", "true").lower() == "true"
         self.llm_base_url = os.getenv("LLM_BASE_URL", "")
         self.llm_model = os.getenv("LLM_MODEL", "")
 

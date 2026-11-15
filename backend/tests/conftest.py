@@ -11,6 +11,7 @@ os.environ["ADMIN_USERNAME"] = "tester"
 os.environ["MODEL_PATH"] = str(TMP / "absent-model.joblib")
 os.environ["SERVE_FRONTEND"] = "false"
 os.environ["RATE_LIMIT_PER_MINUTE"] = "10000"
+os.environ["AUTO_SEED"] = "false"   # the suite seeds its own fixtures
 
 from app.security import hash_password  # noqa: E402
 os.environ["ADMIN_PASSWORD_HASH"] = hash_password("correct-horse-battery")

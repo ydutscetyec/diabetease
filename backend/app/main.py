@@ -37,16 +37,22 @@ async def lifespan(_: FastAPI):
         need = db.query(Municipality).count() == 0 or db.query(Facility).count() == 0
     finally:
         db.close()
-    if need:
+    if need and settings.auto_seed:
         seed.main()
         here = Path(__file__).resolve().parent.parent
-        for name in (
-            "facilities_google_candidates.csv",
-            "facilities_sto_nino_additions.csv",
-            "pharmacies_google_candidates.csv",
-        ):
-            sys.argv = ["import_facilities.py", str(here / name), "--commit"]
-            import_facilities.main()
+        # import_facilities reads sys.argv, so restore it afterwards rather
+        # than leaving the process with a rewritten command line.
+        saved_argv = sys.argv
+        try:
+            for name in (
+                "facilities_google_candidates.csv",
+                "facilities_sto_nino_additions.csv",
+                "pharmacies_google_candidates.csv",
+            ):
+                sys.argv = ["import_facilities.py", str(here / name), "--commit"]
+                import_facilities.main()
+        finally:
+            sys.argv = saved_argv
     if not settings.admin_configured:
         log.warning("admin endpoints disabled: SECRET_KEY, ADMIN_USERNAME and "
                     "ADMIN_PASSWORD_HASH are not all set")
