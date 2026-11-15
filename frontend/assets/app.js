@@ -253,6 +253,27 @@ function buildNav() {
     } else {
       btn.textContent = "Sign in";
     }
+    // The account row carried hardcoded "JD" initials from the design
+    // reference. A guest has no initials, and a signed-in user should see
+    // their own, not a stranger's.
+    var av = $("raAvatar"), nm = $("raName"), acct = $("railAccount");
+    if (Auth.token && Auth.username) {
+      var initials = Auth.username.trim().split(/[\s._-]+/).filter(Boolean)
+        .slice(0, 2).map(function (w) { return w[0]; }).join("").toUpperCase();
+      av.textContent = initials || Auth.username[0].toUpperCase();
+      av.removeAttribute("aria-hidden");
+      nm.textContent = Auth.username;
+      acct.setAttribute("aria-label", "Account: " + Auth.username + " (" + Auth.role + ")");
+    } else {
+      av.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" '
+        + 'stroke="currentColor" stroke-width="2" stroke-linecap="round" '
+        + 'stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>'
+        + '<circle cx="12" cy="7" r="4"/></svg>';
+      av.setAttribute("aria-hidden", "true");
+      nm.textContent = "Guest account";
+      acct.setAttribute("aria-label", "Guest account");
+    }
+
     $("signOutBtn").hidden = !Auth.token;
     $("deleteAccount").hidden = !Auth.token;
     $("adminPanel").hidden = Auth.role !== "admin";

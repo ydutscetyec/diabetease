@@ -240,7 +240,8 @@ def test_reference_placeholder_data_was_not_copied():
     """The mockup shipped invented values: districts, a glucose reading, a
     distance, a fake user. None belongs in a system with real records."""
     for placeholder in ("Central District", "North District", "WellSpring",
-                        "198", "1.2 km", "10:42", "Northside Family"):
+                        "198", "1.2 km", "10:42", "Northside Family",
+                        ">JD<", "John Doe"):
         assert placeholder not in HTML, f"placeholder {placeholder!r} copied into markup"
 
 
