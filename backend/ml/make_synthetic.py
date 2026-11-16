@@ -22,10 +22,9 @@ def generate(n: int, seed: int) -> pd.DataFrame:
     rng = np.random.default_rng(seed)
     label = rng.binomial(1, 0.25, n)
     df = pd.DataFrame({
-        # Type 2 shows up in adults, so the age range and the feature set differ
-        # from the type 1 version of this generator: BMI and the count of ADA
-        # risk factors replace the autoantibody count, which has no type 2
-        # meaning. The numbers below are still invented.
+        # Type 2 shows up in adults, so the age range runs 18-75, and the
+        # features are the ones published type 2 risk tools lean on: BMI and a
+        # count of ADA risk factors. The numbers below are still invented.
         "age": rng.integers(18, 75, n),
         "family_history_t2d": rng.binomial(1, np.where(label == 1, 0.35, 0.12)),
         "bmi": np.where(label == 1, rng.normal(28.5, 4.5, n), rng.normal(23.0, 3.2, n)).round(1),

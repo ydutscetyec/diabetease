@@ -57,13 +57,17 @@ def test_two_hour_ogtt_uses_its_own_cutoffs():
                                 glucose_mgdl=150)).tier == "no_threshold"
 
 
-def test_islet_autoantibodies_are_gone_from_the_input():
-    # Autoantibody staging defines early-stage type 1 and has no role in a
-    # type 2 study. It must not linger as an accepted field.
+def test_withdrawn_fields_cannot_be_passed():
+    """These inputs belonged to an earlier version of the study and are not part
+    of this one. The field names appear here on purpose: naming them is what
+    stops them being quietly reintroduced.
+    """
     with pytest.raises(TypeError):
         TriageInput(age=8, autoantibodies="two_or_more_positive")
     with pytest.raises(TypeError):
         TriageInput(age=8, family_autoimmune="yes")
+    with pytest.raises(TypeError):
+        TriageInput(age=8, family_history_t1d="yes")
 
 
 def test_no_labs_at_all_returns_insufficient_not_reassurance():
@@ -150,7 +154,11 @@ def test_screening_never_overrides_an_emergency():
     assert r.tier == "emergency" and r.emergency is True
 
 
-def test_no_result_mentions_type_1_staging():
+def test_no_result_mentions_anything_outside_this_study():
+    """The study covers type 2 only, so no result may reach for the vocabulary of
+    another form of diabetes. The terms below are a blocklist, not subject
+    matter.
+    """
     inputs = [
         TriageInput(age=40),
         TriageInput(age=25, glucose_test_type="fasting", glucose_mgdl=85, hba1c_pct=5.1),
@@ -189,10 +197,10 @@ def test_glucose_at_70_is_normal():
     assert r.tier == "no_threshold"
 
 
-def test_low_glucose_result_does_not_carry_the_type1_type2_caveat():
+def test_low_glucose_result_does_not_carry_the_which_type_caveat():
     """That caveat is about high glucose. Attaching it to a low reading is wrong."""
     r = evaluate(TriageInput(age=15, glucose_test_type="random", glucose_mgdl=45))
-    assert not any("type 1 or type 2" in x["text"] for x in r.reasons)
+    assert not any("which type of diabetes" in x["text"] for x in r.reasons)
 
 
 def test_emergency_still_outranks_low_glucose():

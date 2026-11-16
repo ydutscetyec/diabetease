@@ -202,9 +202,9 @@ OPEN_SYSTEM_PROMPT = (
     "3. Never claim DiabetEASE has a trained model or clinical validation.\n"
     "4. If you are not confident, say so plainly instead of guessing.\n"
     "5. Keep the answer under 120 words, plain language, no markdown.\n"
-    "6. DiabetEASE is about TYPE 2 diabetes (insulin resistance plus declining "
-    "insulin production). Never describe it as autoimmune (that is Type 1), and "
-    "never say it cannot be prevented -- for Type 2 it often can be.\n\n"
+    "6. DiabetEASE is about type 2 diabetes: insulin resistance plus declining "
+    "insulin production. Never describe it as autoimmune, and never say it "
+    "cannot be prevented -- often it can be.\n\n"
     "PROJECT FACTS you may rely on: DiabetEASE is a senior high school research "
     "project at Libertad National High School, Surallah, South Cotabato. It covers "
     "ten municipalities: Surallah, Sto. Nino, Lake Sebu, Norala, T'boli, Banga, "
@@ -267,8 +267,8 @@ CLINICAL_SYSTEM_PROMPT = (
     "5. State general, widely accepted information. If unsure, say so plainly.\n"
     "6. Do not claim DiabetEASE has a trained model or clinical validation.\n"
     "7. Under 120 words, plain language, no markdown.\n"
-    "8. DiabetEASE is about TYPE 2 diabetes (insulin resistance plus declining "
-    "insulin production). Never describe Type 2 as autoimmune."
+    "8. DiabetEASE is about type 2 diabetes: insulin resistance plus declining "
+    "insulin production. Never describe it as autoimmune."
 )
 
 

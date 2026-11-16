@@ -73,42 +73,55 @@ def test_topics_endpoint_reports_llm_state_and_sources(client):
 
 
 def test_llm_is_not_used_when_unconfigured(client):
-    assert ask(client, "what is type 1 diabetes")["mode"] == "rule_based"
+    assert ask(client, "what is type 2 diabetes")["mode"] == "rule_based"
 
 
 def test_general_and_type2_definitions_are_separate_topics(client):
-    """'What is diabetes' and 'what is type 2' are different questions, and the
-    general answer has to name both mechanisms without implying they are the
-    same one. Both have reviewed answers."""
+    """'What is diabetes' and 'what is type 2' are different questions and both
+    have reviewed answers. The general one has to say which form this system
+    covers, and must not imply the numbers identify it."""
     general = ask(client, "what is diabetes")
     assert general["matched_topic"] == "what_is_diabetes"
     assert "responds to it poorly" in general["reply"]
-    assert "Type 1" in general["reply"]
+    assert "clinician" in general["reply"].lower()
 
     t2 = ask(client, "what is type 2 diabetes")
     assert t2["matched_topic"] == "what_is_t2d"
 
 
-def test_type_2_is_never_described_as_autoimmune(client):
-    """The mirror of the old hazard. A model asked about type 2 will sometimes
-    reach for the autoimmune explanation, which belongs to type 1."""
-    for q in ["what is diabetes", "what is type 2 diabetes",
-              "tell me about type 2 diabetes", "what causes type 2"]:
-        reply = ask(client, q)["reply"].lower()
-        before_t1 = reply.split("type 1")[0]
-        # Denying it is fine and in fact wanted; asserting it is the bug.
-        for hit in re.finditer(r"autoimmune", before_t1):
-            window = before_t1[max(0, hit.start() - 24):hit.start()]
-            assert "not" in window, f"{q}: unqualified 'autoimmune' in {window!r}"
-        assert "immune system destroys" not in before_t1, q
+def test_no_reviewed_answer_reaches_for_the_autoimmune_explanation(client):
+    """A model asked about diabetes will sometimes reach for the autoimmune
+    mechanism, which is not what this study is about. No reviewed answer may
+    offer it, and the whole corpus is checked, not just the definitions."""
+    import json
+    from pathlib import Path
+    data = Path(__file__).resolve().parents[1] / "app" / "data"
+    topics = json.loads((data / "faq.json").read_text())["topics"]
+    banned = ("autoimmune", "immune system destroys", "islet", "autoantibod",
+              "ispad", "beta-cell destruction")
+    for t in topics:
+        blob = json.dumps(t).lower()
+        for term in banned:
+            assert term not in blob, f"{t['id']} mentions {term!r}"
+
+
+def test_the_corpus_has_no_type_1_content_at_all(client):
+    """The study covers type 2 only. This walks every reviewed answer and every
+    keyword, so a type 1 topic cannot be reintroduced without failing here."""
+    import json
+    from pathlib import Path
+    data = Path(__file__).resolve().parents[1] / "app" / "data"
+    raw = (data / "faq.json").read_text().lower()
+    for term in ("type 1", "type1", "t1d"):
+        assert term not in raw, f"faq.json still mentions {term!r}"
 
 
 def test_digits_survive_tokenisation(client):
-    """'1' was dropped as too short, so 'what is type 1 diabetes' scored the same
-    as 'what is diabetes'."""
+    """Single digits were dropped as too short, which made 'what is type 2
+    diabetes' score the same as 'what is diabetes'."""
     from app.routers.chatbot import _tokens
-    assert "1" in _tokens("what is type 1 diabetes")
-    assert "2" in _tokens("type 2")
+    assert "2" in _tokens("what is type 2 diabetes")
+    assert "23" in _tokens("is a bmi of 23 enough")
 
 
 def test_clinical_answers_name_a_registered_source(client):
@@ -134,17 +147,17 @@ def test_sources_endpoint_states_how_each_was_checked(client):
 
 
 def test_family_risk_quotes_no_unsourced_number(client):
-    """The type 1 answer quoted US figures and said so. There is no comparable
-    Philippine figure for type 2 here, so the answer must quote none at all
-    rather than borrow one."""
+    """An earlier version of this answer quoted US figures and said so. There is
+    no comparable Philippine figure available here, so the answer must quote
+    none at all rather than borrow one."""
     reply = ask(client, "is type 2 inherited from parents")["reply"]
     assert "no figure specific to the philippines" in reply.lower()
     assert not re.search(r"\b1 in \d+|\d+ in 100|\d+(\.\d+)?\s*%", reply), reply
 
 
 def test_prediabetes_answer_gives_all_three_cutoffs(client):
-    """Prediabetes replaced type 1 staging. It is only useful if it names the
-    bands, because a reader is usually holding a lab slip."""
+    """The prediabetes answer is only useful if it names the bands, because a
+    reader is usually holding a lab slip."""
     reply = ask(client, "what is prediabetes")["reply"]
     for band in ("100 to 125", "140 to 199", "5.7 to 6.4"):
         assert band in reply, band

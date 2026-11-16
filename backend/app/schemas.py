@@ -7,10 +7,10 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 from .services.triage import RISK_FACTORS
 
-# Type 2 is often silent, and where it does show itself the picture is usually
-# slower than in type 1: alongside thirst and urination, the complications of
-# long-standing high glucose turn up as slow-healing wounds, recurrent
-# infections and numbness in the feet.
+# Type 2 is often silent, and where it does show itself the picture builds
+# slowly: alongside thirst and urination, the complications of long-standing
+# high glucose turn up as slow-healing wounds, recurrent infections and
+# numbness in the feet.
 SYMPTOM_CODES = {"thirst", "urination", "weight_loss", "fatigue", "blurred_vision",
                  "hunger", "slow_healing", "frequent_infections", "numbness"}
 URGENT_CODES = {"vomiting", "abdominal_pain", "rapid_breathing", "drowsiness"}

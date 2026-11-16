@@ -144,7 +144,7 @@ def test_the_three_service_code_lists_agree():
     models.py, the ServiceIn.service_code enum in schemas.py, and SERVICE_NAMES
     in facility_lookup.py. A mismatch does not raise anything — it just means a
     service stops validating, or stops having a display name, quietly. The
-    type 1 to type 2 change had to touch all three, and missed one.
+    change of study subject had to touch all three, and missed one.
     """
     import typing
     from app.models import SERVICE_CODES

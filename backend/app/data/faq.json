@@ -1,5 +1,5 @@
 {
-  "_note": "Reviewed answer corpus for Candie. Every entry is either general medical information from the cited guideline bodies, or a fact taken from the DiabetEASE manuscript. Nothing here is generated at runtime. This corpus covers type 2 diabetes; the type 1 staging entries were removed when the study changed, because islet autoantibodies and the stage 1/2/3 scheme have no type 2 counterpart. Local-language triggers are included because many users in South Cotabato speak Hiligaynon or Cebuano; a native speaker should review them before the defence.",
+  "_note": "Reviewed answer corpus for Candie. Every entry is either general medical information from the cited guideline bodies, or a fact taken from the DiabetEASE manuscript. Nothing here is generated at runtime. The study covers type 2 diabetes only. Local-language triggers are included because many users in South Cotabato speak Hiligaynon or Cebuano; a native speaker should review them before the defence.",
   "refusal_patterns": [
     "insulin dose",
     "how much insulin",
@@ -61,7 +61,7 @@
         "kinds of diabetes",
         "difference between the types"
       ],
-      "answer": "Diabetes means blood glucose is too high, and the two main types happen for different reasons. In Type 2, the body still makes insulin but responds to it poorly, and over time the pancreas cannot keep up. In Type 1, the immune system destroys the cells that make insulin. Type 2 is by far the more common of the two and is the one this system is about."
+      "answer": "Diabetes means blood glucose stays too high. In type 2, which is what this system covers and by far the most common form, the body still makes insulin but responds to it poorly, and over the years the pancreas cannot keep up with the extra demand. Other forms exist and are managed differently; which one a person has is a clinician's judgement."
     },
     {
       "id": "what_is_t2d",
@@ -78,7 +78,7 @@
         "why does type 2 happen",
         "cause of type 2"
       ],
-      "answer": "Type 2 diabetes is a progressive loss of the body's ability to use insulin well, usually alongside a gradual decline in how much the pancreas can produce. It is not autoimmune. It often develops over years without symptoms, which is why screening matters: by the time thirst or blurred vision appear, glucose has usually been high for some time. It can often be delayed or prevented, and it can be managed."
+      "answer": "Type 2 diabetes is a progressive loss of the body's ability to use insulin well, usually alongside a gradual decline in how much the pancreas can produce. It often develops over years without symptoms, which is why screening matters: by the time thirst or blurred vision appear, glucose has usually been high for some time. It can often be delayed or prevented, and it can be managed."
     },
     {
       "id": "symptoms",
@@ -97,18 +97,6 @@
         "pag-ihi"
       ],
       "answer": "The common early signs are heavy thirst, passing urine much more often, losing weight without trying, tiredness, blurred vision and constant hunger. None is specific on its own, which is why a glucose test matters."
-    },
-    {
-      "id": "type_difference",
-      "source": "ADA-S2-2026",
-      "keywords": [
-        "difference",
-        "type 1",
-        "type one",
-        "which type",
-        "t1 vs t2"
-      ],
-      "answer": "Type 2 involves insulin resistance and a gradual decline in insulin production, usually appears in adults, and is strongly linked to weight, activity and family history. Type 1 is autoimmune destruction of the insulin-producing cells, usually appears younger, and needs insulin from diagnosis. The glucose tests are the same for both and cannot tell them apart; that is a clinician's judgement."
     },
     {
       "id": "hba1c",
@@ -177,7 +165,7 @@
         "reverse",
         "delay"
       ],
-      "answer": "This is where type 2 differs most from type 1: it can often be delayed or prevented. For adults at high risk, the ADA recommends a diabetes prevention programme aiming at a weight reduction of at least 5 to 7 per cent, together with regular physical activity. In the Diabetes Prevention Program trial, that approach cut new cases by about 58 per cent over roughly three years, more than the medicine arm did. Eating sugar is not the single cause, and blame is not useful, but diet, activity and weight are genuinely things that change the odds."
+      "answer": "Often, yes — and many people assume the opposite, which is worth correcting. For adults at high risk, the ADA recommends a diabetes prevention programme aiming at a weight reduction of at least 5 to 7 per cent, together with regular physical activity. In the Diabetes Prevention Program trial, that approach cut new cases by about 58 per cent over roughly three years, more than the medicine arm did. Eating sugar is not the single cause, and blame is not useful, but diet, activity and weight are genuinely things that change the odds."
     },
     {
       "id": "treatment",

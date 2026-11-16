@@ -156,20 +156,18 @@ docs/
    unconfirmed. Tantangan has no confirmed testing centre.
 2. **No trained model.** Objectives 1 and 2 of the paper cannot be reported as
    written without a dataset from a comparable population.
-   `diabetease-dataset-template.xlsx` gives the format, and its columns changed
-   with the study: BMI and a risk-factor count replace the autoantibody fields.
+   `diabetease-dataset-template.xlsx` gives the format: age, BMI, ancestry, a
+   risk-factor count, symptom count, glucose and HbA1c.
 3. **"Forecasting" in the title** needs data that follows people over time.
 4. **Ethics clearance** before `STORE_ASSESSMENTS` is switched on. With the
    change to type 2 the expected respondents are mostly adults rather than
    minors, which may change what the committee asks for — confirm, do not
    assume.
-5. **Sources.** The type 2 thresholds and screening criteria were checked on
-   16 November 2026 against the ADA Standards of Care 2026, Sections 2 and 3,
-   and the Diabetes Prevention Program trial behind the prevention advice. The
-   earlier type 1 review (11 November 2026) is kept in
-   `docs/VERIFIED_SOURCES.md` as a record of that version; its staging sources
-   no longer apply. Facilities have not been checked against the DOH registry
-   one by one.
+5. **Sources.** The thresholds and screening criteria were checked against the
+   ADA Standards of Care 2026, Sections 2 and 3, and the Diabetes Prevention
+   Program trial behind the prevention advice. What was checked, when, and what
+   the checking corrected is in `docs/VERIFIED_SOURCES.md`. Facilities have not
+   been checked against the DOH registry one by one.
 6. **Deployment.** Not deployed. On a host with a temporary disk, use Postgres
    via `DATABASE_URL` or facility records are lost on redeploy.
 

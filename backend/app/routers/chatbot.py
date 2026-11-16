@@ -171,7 +171,6 @@ TOPIC_TITLES = {
     "risk_factors": "what raises the risk",
     "stages": "the three stages before symptoms",
     "family": "family history and inheritance",
-    "type_difference": "how Type 2 differs from Type 1",
     "prevention": "whether it can be prevented",
     "treatment": "how it is treated",
     "testing_centers": "where to get tested",
