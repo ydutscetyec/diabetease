@@ -960,6 +960,32 @@ a{color:var(--green-ink)}
   border-radius:8px; margin-top:1px}
 .mk-yes{background:var(--ok-bg); color:var(--ok-ink)}
 .mk-no{background:var(--warn-bg); color:var(--warn-ink)}
+/* The navigation step. Each row is a real button, so it is reachable by keyboard
+   and announced as an action rather than as a list item with a picture in it.
+   56px tall because this is the one screen a person uses on a phone before they
+   have any idea where anything is. */
+.onboard-nav{list-style:none; padding:0; margin:14px 0 0; text-align:left}
+.onboard-nav li{margin-bottom:8px}
+.onboard-nav li:last-child{margin-bottom:0}
+.onboard-nav-go{
+  display:flex; align-items:center; gap:12px; width:100%; min-height:56px;
+  padding:10px 12px; text-align:left; cursor:pointer;
+  font:inherit; color:var(--text);
+  background:var(--card); border:1px solid var(--line-strong);
+  border-radius:var(--r-md);
+}
+.onboard-nav-go:hover{background:var(--green-wash); border-color:var(--green)}
+.onboard-nav-go:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
+.onboard-nav-ico{
+  flex:0 0 auto; display:grid; place-items:center; width:34px; height:34px;
+  border-radius:var(--r-sm); background:var(--green-wash); color:var(--green-ink);
+}
+.onboard-nav-txt{display:flex; flex-direction:column; gap:2px; min-width:0}
+.onboard-nav-txt strong{font-size:.92rem; font-weight:600; line-height:1.3}
+.onboard-nav-txt span{font-size:.78rem; line-height:1.45; color:var(--text-2)}
+.onboard-nav-arrow{flex:0 0 auto; margin-left:auto; color:var(--text-2)}
+.onboard-nav-go:hover .onboard-nav-arrow{color:var(--green-ink)}
+
 .onboard-field{text-align:left; margin-top:4px}
 .onboard-field label{display:block; font-weight:600; font-size:.88rem; margin-bottom:6px}
 .onboard-dots{display:flex; justify-content:center; gap:7px; margin:20px 0 16px}

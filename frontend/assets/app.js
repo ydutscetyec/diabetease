@@ -1160,18 +1160,55 @@ function buildNav() {
 
 
   /* ===================================================== onboarding
-     Shown once on a first visit. Four steps, and the middle two carry the
+     Shown once on a first visit. Five steps, and the middle two carry the
      weight: what this does, and plainly what it does not. Someone who
      expects a diagnosis and gets a threshold check has been misled by the
      interface, not by the result.
 
      The municipality it asks for is a preference, not health data: it only
      pre-selects a dropdown, and it is stored with the theme and text-size
-     settings, never sent anywhere. */
-/* ===================================================== onboarding
-A visual, step-by-step guide shown on the first visit. 
-Explains how to use the Assessment, Map, and Chat before the user starts.
-*/
+     settings, never sent anywhere.
+
+     The last step is the only tour: a list of where things are, each row a
+     button that goes there. It comes last on purpose. An introduction that
+     opens with a feature tour teaches someone what the app has before it has
+     told them what it will not do, and for a health tool that order is the
+     wrong way round. */
+  function navItem(id) {
+      for (var g = 0; g < NAV.length; g++) {
+          for (var i = 0; i < NAV[g].items.length; i++) {
+              if (NAV[g].items[i].id === id) return NAV[g].items[i];
+          }
+      }
+      return null;
+  }
+
+  function navRow(iconPath, label, blurb, onGo) {
+      var li = el("li");
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "onboard-nav-go";
+      var ico = el("span", "onboard-nav-ico");
+      ico.setAttribute("aria-hidden", "true");
+      ico.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" '
+          + 'stroke="currentColor" stroke-width="1.8" stroke-linecap="round" '
+          + 'stroke-linejoin="round"><path d="' + iconPath + '"/></svg>';
+      var txt = el("span", "onboard-nav-txt");
+      txt.appendChild(el("strong", null, label));
+      txt.appendChild(el("span", null, blurb));
+      var arrow = el("span", "onboard-nav-arrow");
+      arrow.setAttribute("aria-hidden", "true");
+      arrow.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" '
+          + 'stroke="currentColor" stroke-width="2" stroke-linecap="round" '
+          + 'stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>';
+      b.appendChild(ico);
+      b.appendChild(txt);
+      b.appendChild(arrow);
+      b.addEventListener("click", onGo);
+      li.appendChild(b);
+      return li;
+  }
+
   var Onboard = {
       step: 0,
       lastFocus: null,
@@ -1180,11 +1217,14 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
               eyebrow: "WELCOME",
               title: "Welcome to DiabetEASE",
               render: function (host) {
-                  host.appendChild(el("p", null, "We've placed a full guide on your dashboard that explains every page of the app."));
                   var illus = el("div", "onboard-illustration");
                   illus.innerHTML = '<svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>';
                   host.appendChild(illus);
-                  host.appendChild(el("p", null, "Scroll down on the dashboard to see the 'Explore DiabetEASE' section. It covers the Assessment, Map, Chat, and more."));
+                  host.appendChild(el("p", null,
+                      "Four short screens: what this does, what it does not do, what happens "
+                      + "to your answers, and where everything is. Under a minute."));
+                  host.appendChild(el("p", null,
+                      "You can skip it now and replay it any time from the user guide."));
               }
           },
           {
@@ -1229,6 +1269,7 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
           {
               eyebrow: "ALMOST THERE",
               title: "Where are you located?",
+              field: true,
               render: function (host) {
                   host.appendChild(el("p", null, "Pick your municipality so the map and assessment can start there. This is saved on your device only."));
                   var sel = $("obMuni");
@@ -1239,9 +1280,41 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
                   });
                   sel.value = Settings.data.municipality || "";
               }
+          },
+          {
+              eyebrow: "FINDING YOUR WAY",
+              title: "Where everything is",
+              render: function (host) {
+                  host.appendChild(el("p", null,
+                      "These are the parts you are most likely to want. Go straight to "
+                      + "one now, or press Start and find them in the sidebar."));
+                  var DESTS = [
+                      ["assess", "The five-step check. Most people start here."],
+                      ["centers", "Where to get tested, and what each place has actually been confirmed to do."],
+                      ["learn", "Who should be tested, what the numbers mean, and a short quiz."],
+                      ["guide", "How to read each result, and plainly what this cannot do."]
+                  ];
+                  var ul = el("ul", "onboard-nav");
+                  DESTS.forEach(function (row) {
+                      var item = navItem(row[0]);
+                      if (!item) return;
+                      ul.appendChild(navRow(item.icon, item.label, row[1], function () {
+                          Onboard.close(true);
+                          location.hash = "#" + row[0];
+                      }));
+                  });
+                  // Candie is not a page, so it is not in NAV and is added by hand.
+                  ul.appendChild(navRow(
+                      "M21 12a9 9 0 1 1-3.2-6.9M12 8v4l3 2",
+                      "Ask Candie",
+                      "Questions answered from a reviewed list, with local services looked up by municipality.",
+                      // Chat.open is a boolean on the Chat object, not a method:
+                      // toggle(true) is how it is opened.
+                      function () { Onboard.close(true); Chat.toggle(true); }));
+                  host.appendChild(ul);
+              }
           }
       ],
-      // ... keep the rest of the Onboard object (shouldShow, markDone, open, close, paint, next, back) exactly as it was ...
       shouldShow: function () {
           try { return localStorage.getItem("diabetease.onboarded") !== "1"; }
           catch (e) { return false; }
@@ -1279,7 +1352,9 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
           $("obTitle").textContent = spec.title;
           var body = $("obBody");
           clear(body);
-          $("obField").hidden = this.step !== this.steps.length - 1;
+          // Keyed on the step, not on its position: the navigation step was
+          // added after this one and the field must not follow it.
+          $("obField").hidden = !spec.field;
           spec.render(body);
           var dots = $("obDots");
           clear(dots);

@@ -340,3 +340,47 @@ def test_onboarding_survives_blocked_storage():
     """A browser with storage disabled must not show the dialog on every load."""
     block = JS[JS.index("shouldShow: function"):JS.index("markDone:")]
     assert "catch (e) { return false; }" in block
+
+
+def test_onboarding_tour_comes_after_the_expectations():
+    """The navigation step is a feature tour, and a feature tour must not be the
+    first thing a health tool shows. Someone who sees what the app has before
+    being told what it will not do has had the wrong expectation set by the
+    interface. So: the tour exists, and it is last.
+    """
+    block = JS[JS.index("var Onboard = {"):JS.index("/* ========================================================= account */")]
+    tour = block.index('"FINDING YOUR WAY"')
+    for earlier in ('"WELCOME"', '"WHAT IT DOES"', '"YOUR PRIVACY"'):
+        assert block.index(earlier) < tour, f"{earlier} must come before the tour"
+    # and nothing is declared after it
+    assert block.index('"FINDING YOUR WAY"') == max(
+        block.index(e) for e in ('"WELCOME"', '"WHAT IT DOES"', '"YOUR PRIVACY"',
+                                 '"ALMOST THERE"', '"FINDING YOUR WAY"'))
+
+
+def test_onboarding_field_is_keyed_on_its_step_not_its_position():
+    """The municipality field used to be shown on 'whichever step is last'.
+    Adding a step after it would then have moved the field onto the new one.
+    """
+    block = JS[JS.index("var Onboard = {"):JS.index("/* ========================================================= account */")]
+    assert "field: true" in block
+    assert '$("obField").hidden = !spec.field' in block
+    assert '$("obField").hidden = this.step !== this.steps.length - 1' not in block
+
+
+def test_onboarding_destinations_are_buttons_and_reachable():
+    """Each destination is a real button, so it is keyboard reachable and
+    announced as an action. A div with a click handler is neither.
+    """
+    block = JS[JS.index("function navRow("):JS.index("var Onboard = {")]
+    assert 'b.type = "button"' in block
+    assert "addEventListener" in block
+    # labels and icons come from NAV, so they cannot drift from the sidebar
+    nav_block = JS[JS.index("function navItem("):JS.index("function navRow(")]
+    assert "NAV[g].items[i].id === id" in nav_block
+
+
+def test_onboarding_destination_rows_are_large_touch_targets():
+    i = CSS.index(".onboard-nav-go")
+    assert "min-height:56px" in CSS[i:i + 400]
+    assert "focus-visible" in CSS[i:i + 900], "destination rows need a visible focus ring"
