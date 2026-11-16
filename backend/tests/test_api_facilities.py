@@ -152,9 +152,11 @@ def test_the_three_service_code_lists_agree():
     from app.services.facility_lookup import SERVICE_NAMES
 
     enum = set(typing.get_args(ServiceIn.model_fields["service_code"].annotation))
+    expected = {"glucose", "hba1c", "ogtt", "lipid_profile", "consultation",
+                "insulin", "glucose_supplies", "oral_medication"}
     assert set(SERVICE_CODES) == enum, (
         f"models.py vs schemas.py: {set(SERVICE_CODES) ^ enum}")
     assert enum == set(SERVICE_NAMES), (
         f"schemas.py vs facility_lookup.py: {enum ^ set(SERVICE_NAMES)}")
-    # and nothing type-1-specific survives in any of them
-    assert "autoantibody" not in enum
+    # an allowlist, so a service from outside this study cannot be added quietly
+    assert enum == expected, f"unexpected service codes: {enum ^ expected}"

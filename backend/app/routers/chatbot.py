@@ -62,7 +62,7 @@ _CLINICAL = {
     "ketoacidosis", "dka", "blood", "test", "result", "results", "lab",
     "risk", "healthy", "health", "doctor", "hospital", "clinic", "pain",
     "thirst", "thirsty", "urine", "urination", "weight", "fatigue", "vision",
-    "hereditary", "genetic", "immune", "autoimmune", "prognosis", "severe",
+    "hereditary", "genetic", "prognosis", "severe", "condition", "cause",
     "complication", "complications", "screening", "stage", "stages",
     "beta", "cell", "cells", "pancreatitis", "organ", "hormone", "metabolic",
     "metabolism", "kidney", "kidneys", "eye", "eyes", "nerve", "nerves", "heart",

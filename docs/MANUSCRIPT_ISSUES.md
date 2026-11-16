@@ -59,13 +59,13 @@ both exist exactly as you cited them.
 ### References to remove, now the subject has changed
 
 Four of the works cited in the manuscript are about a different form of diabetes
-and no longer support anything the study claims. Leaving them in a type 2
-reference list is the kind of thing a panel notices:
+and no longer support anything the study claims. Leaving them in the reference
+list is the kind of thing a panel notices. Remove all four:
 
-- the presymptomatic-screening review (Bonifacio & Ziegler)
-- the staging statement (Insel et al.)
-- the paediatric staging consensus (Haller et al. / ISPAD)
-- the insulin-dosing decision support system (the one miscited as "Nichole S.")
+- Bonifacio & Ziegler (2025), Diabetes Obes Metab 27(Suppl 6):28-39
+- Insel et al. (2015), Diabetes Care 38(10):1964-1974
+- Haller et al. (2024), Horm Res Paediatr 97(6):529-545
+- Tyler et al. (2020), Nat Metab 2(7):612-619 -- the one miscited as "Nichole S."
 
 Replace them with the sources this build actually uses: **ADA Standards of Care
 2026, Section 2** for the diagnostic cut-offs and the screening criteria

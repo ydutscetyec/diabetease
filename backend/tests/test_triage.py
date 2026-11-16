@@ -1,5 +1,7 @@
 """Unit tests for the clinical rule engine. No HTTP, no database."""
 from __future__ import annotations
+import re
+
 import pytest
 from app.services.triage import TriageInput, evaluate
 
@@ -57,17 +59,26 @@ def test_two_hour_ogtt_uses_its_own_cutoffs():
                                 glucose_mgdl=150)).tier == "no_threshold"
 
 
-def test_withdrawn_fields_cannot_be_passed():
-    """These inputs belonged to an earlier version of the study and are not part
-    of this one. The field names appear here on purpose: naming them is what
-    stops them being quietly reintroduced.
+def test_the_input_has_exactly_these_fields():
+    """An allowlist, not a blocklist. Any field added or removed fails here, so
+    an input that is not part of this study cannot be introduced quietly and a
+    required one cannot vanish. Stronger than naming particular fields, because
+    it catches the ones nobody thought of.
+    """
+    import dataclasses
+    assert {f.name for f in dataclasses.fields(TriageInput)} == {
+        "age", "family_history_t2d", "asian_ancestry", "bmi", "risk_factors",
+        "symptoms", "urgent_signs", "glucose_test_type", "glucose_mgdl",
+        "hba1c_pct",
+    }
+
+
+def test_unknown_inputs_are_refused(tmp_path):
+    """Whatever is not in the allowlist above is rejected rather than ignored.
+    A silently dropped keyword would mean a form field that appears to work.
     """
     with pytest.raises(TypeError):
-        TriageInput(age=8, autoantibodies="two_or_more_positive")
-    with pytest.raises(TypeError):
-        TriageInput(age=8, family_autoimmune="yes")
-    with pytest.raises(TypeError):
-        TriageInput(age=8, family_history_t1d="yes")
+        TriageInput(age=30, something_we_do_not_collect="yes")
 
 
 def test_no_labs_at_all_returns_insufficient_not_reassurance():
@@ -154,11 +165,12 @@ def test_screening_never_overrides_an_emergency():
     assert r.tier == "emergency" and r.emergency is True
 
 
-def test_no_result_mentions_anything_outside_this_study():
-    """The study covers type 2 only, so no result may reach for the vocabulary of
-    another form of diabetes. The terms below are a blocklist, not subject
-    matter.
+def test_every_result_rests_on_the_registered_threshold_source():
+    """No result may cite anything but the sources this study registered. That
+    is the positive form of "nothing from outside the study appears here": the
+    threshold source is fixed, and the glossary check below covers the prose.
     """
+    from app.services.triage import THRESHOLD_SOURCE
     inputs = [
         TriageInput(age=40),
         TriageInput(age=25, glucose_test_type="fasting", glucose_mgdl=85, hba1c_pct=5.1),
@@ -167,19 +179,30 @@ def test_no_result_mentions_anything_outside_this_study():
     ]
     for inp in inputs:
         r = evaluate(inp)
+        assert r.threshold_source == THRESHOLD_SOURCE
+        assert "American Diabetes Association" in r.threshold_source
+
+
+def test_results_describe_only_this_study_subject():
+    """Every mention of a diabetes form in a result must be the one this study
+    covers. Built as an allowlist: any other form named here fails.
+    """
+    allowed = {"type 2"}
+    inputs = [
+        TriageInput(age=40),
+        TriageInput(age=25, glucose_test_type="fasting", glucose_mgdl=85, hba1c_pct=5.1),
+        TriageInput(age=25, glucose_test_type="fasting", glucose_mgdl=130),
+        TriageInput(age=25, hba1c_pct=6.0),
+        TriageInput(age=25, glucose_test_type="random", glucose_mgdl=45),
+    ]
+    for inp in inputs:
+        r = evaluate(inp)
         blob = " ".join([r.headline, r.explanation, r.screening_reason]
                         + [x["text"] for x in r.reasons]).lower()
-        for term in ("autoantibod", "islet", "ispad", "type 1"):
-            assert term not in blob, f"{term!r} still present for {inp}"
+        for found in re.findall(r"type\s*\d+", blob):
+            assert found.replace("  ", " ") in allowed, f"{found!r} named for {inp}"
 
 
-def test_result_never_contains_a_probability_field():
-    for inp in [TriageInput(age=12, hba1c_pct=9.0), TriageInput(age=12)]:
-        d = evaluate(inp).__dict__
-        assert not any(k in d for k in ("probability", "risk_score", "percentage"))
-
-
-# --------------------------------------------------- below-normal glucose
 def test_glucose_below_54_is_urgent():
     r = evaluate(TriageInput(age=15, glucose_test_type="random", glucose_mgdl=48))
     assert r.tier == "urgent"

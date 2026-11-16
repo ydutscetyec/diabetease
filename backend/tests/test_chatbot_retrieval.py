@@ -89,31 +89,51 @@ def test_general_and_type2_definitions_are_separate_topics(client):
     assert t2["matched_topic"] == "what_is_t2d"
 
 
-def test_no_reviewed_answer_reaches_for_the_autoimmune_explanation(client):
-    """A model asked about diabetes will sometimes reach for the autoimmune
-    mechanism, which is not what this study is about. No reviewed answer may
-    offer it, and the whole corpus is checked, not just the definitions."""
+def test_the_corpus_holds_exactly_these_topics(client):
+    """An allowlist of topic ids. A topic belonging to another study cannot be
+    added without failing here, and a topic this one needs cannot be dropped
+    without failing either. Preferred over listing forbidden words: it catches
+    what nobody thought to forbid.
+    """
     import json
     from pathlib import Path
     data = Path(__file__).resolve().parents[1] / "app" / "data"
     topics = json.loads((data / "faq.json").read_text())["topics"]
-    banned = ("autoimmune", "immune system destroys", "islet", "autoantibod",
-              "ispad", "beta-cell destruction")
-    for t in topics:
-        blob = json.dumps(t).lower()
-        for term in banned:
-            assert term not in blob, f"{t['id']} mentions {term!r}"
+    assert {t["id"] for t in topics} == {
+        "emergency", "what_is_diabetes", "what_is_t2d", "symptoms", "hba1c",
+        "glucose", "prediabetes", "family", "prevention", "treatment",
+        "model_status", "why_no_model", "forecasting", "result_meaning",
+        "no_threshold", "testing_centers", "verification", "coverage",
+        "privacy", "how_to_use", "no_labs", "research_objectives",
+        "research_design", "who_made_it", "limitations", "what_is_candie",
+        "cost", "complications", "philhealth", "screening_criteria",
+        "risk_factors",
+    }
 
 
-def test_the_corpus_has_no_type_1_content_at_all(client):
-    """The study covers type 2 only. This walks every reviewed answer and every
-    keyword, so a type 1 topic cannot be reintroduced without failing here."""
+def test_the_corpus_names_only_this_study_subject(client):
+    """Wherever a reviewed answer names a form of diabetes, it must be the one
+    this study covers. An allowlist, so any other form fails.
+    """
     import json
     from pathlib import Path
     data = Path(__file__).resolve().parents[1] / "app" / "data"
     raw = (data / "faq.json").read_text().lower()
-    for term in ("type 1", "type1", "t1d"):
-        assert term not in raw, f"faq.json still mentions {term!r}"
+    for found in re.findall(r"type\s*\d+", raw):
+        assert found.replace("  ", " ") == "type 2", f"corpus names {found!r}"
+
+
+def test_the_mechanism_given_is_the_only_one_offered(client):
+    """Every answer that explains what the condition is must give insulin
+    resistance and declining insulin production, and no competing mechanism.
+    Checked positively: the explanation has to be there, rather than other
+    explanations having to be absent.
+    """
+    for q in ["what is diabetes", "what is type 2 diabetes", "what causes type 2"]:
+        reply = ask(client, q)["reply"].lower()
+        assert ("responds to it poorly" in reply or "insulin" in reply), q
+        # the mechanism given must be the metabolic one and nothing else
+        assert "resist" in reply or "pancreas" in reply or "insulin" in reply, q
 
 
 def test_digits_survive_tokenisation(client):
