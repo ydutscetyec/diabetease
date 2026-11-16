@@ -93,6 +93,16 @@
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top, 0px);
   color-scheme:light;
+  /* swatch previews for the palette picker: one row of three dots per
+     palette, so a palette can be recognised without switching to it.
+     Declared here rather than inside the palette blocks because the
+     swatch for Ocean has to render while Candy is the active one. */
+  --sw-candy-1:#0C6E5A; --sw-candy-2:#FFA9C9; --sw-candy-3:#A4E5CB;
+  --sw-ocean-1:#0A6A82; --sw-ocean-2:#9ED2EE; --sw-ocean-3:#9FE2DB;
+  --sw-grove-1:#2C6B3A; --sw-grove-2:#BFE3A8; --sw-grove-3:#A6E0C8;
+  --sw-dusk-1:#4A3A9C; --sw-dusk-2:#C9BEF2; --sw-dusk-3:#A9DEEA;
+  --sw-contrast-1:#00497A; --sw-contrast-2:#E8E8E8; --sw-contrast-3:#E0EAE2;
+
 }
 
 /* Dark theme. The two selectors below carry the same values; the first is the
@@ -153,6 +163,16 @@
   --sh-1:0 1px 2px rgba(0,0,0,.35), 0 4px 12px rgba(0,0,0,.3);
   --sh-2:0 2px 6px rgba(0,0,0,.45), 0 12px 28px rgba(0,0,0,.45);
   color-scheme:dark;
+  /* swatch previews for the palette picker: one row of three dots per
+     palette, so a palette can be recognised without switching to it.
+     Declared here rather than inside the palette blocks because the
+     swatch for Ocean has to render while Candy is the active one. */
+  --sw-candy-1:#54D6B4; --sw-candy-2:#4C1229; --sw-candy-3:#0F3A30;
+  --sw-ocean-1:#4DC7DD; --sw-ocean-2:#0E3449; --sw-ocean-3:#0A3C38;
+  --sw-grove-1:#5FCB76; --sw-grove-2:#253D18; --sw-grove-3:#0C3A2F;
+  --sw-dusk-1:#9C8BF5; --sw-dusk-2:#2A2158; --sw-dusk-3:#0A3844;
+  --sw-contrast-1:#7FC8FF; --sw-contrast-2:#2A2A2A; --sw-contrast-3:#10301A;
+
 }
 @media (prefers-color-scheme: dark){
   :root[data-theme="auto"]{
@@ -210,6 +230,16 @@
     --sh-1:0 1px 2px rgba(0,0,0,.35), 0 4px 12px rgba(0,0,0,.3);
     --sh-2:0 2px 6px rgba(0,0,0,.45), 0 12px 28px rgba(0,0,0,.45);
     color-scheme:dark;
+    /* swatch previews for the palette picker: one row of three dots per
+       palette, so a palette can be recognised without switching to it.
+       Declared here rather than inside the palette blocks because the
+       swatch for Ocean has to render while Candy is the active one. */
+    --sw-candy-1:#54D6B4; --sw-candy-2:#4C1229; --sw-candy-3:#0F3A30;
+    --sw-ocean-1:#4DC7DD; --sw-ocean-2:#0E3449; --sw-ocean-3:#0A3C38;
+    --sw-grove-1:#5FCB76; --sw-grove-2:#253D18; --sw-grove-3:#0C3A2F;
+    --sw-dusk-1:#9C8BF5; --sw-dusk-2:#2A2158; --sw-dusk-3:#0A3844;
+    --sw-contrast-1:#7FC8FF; --sw-contrast-2:#2A2A2A; --sw-contrast-3:#10301A;
+
   }
 }
 
@@ -220,11 +250,412 @@ body{
   font-family:var(--font); font-size:15px; line-height:1.55;
   overflow-x:hidden;
 }
+/* ---------------------------------------------------------------- palettes
+   Each palette restates only the 25 tokens that carry its identity. The
+   twelve status tokens -- ok, warn, danger, info -- are NOT restated: in a
+   screening app the colour of the emergency banner carries meaning, and
+   someone who has learned that the red banner means "seek care now" must
+   not meet it in blue because they changed the theme. They are inherited
+   from the blocks above. The one exception is the high-contrast palette,
+   which overrides them because a pale chip cannot meet a 7:1 promise.
+
+   Specificity does the switching: :root[data-palette=x] (0,2,0) beats
+   :root (0,1,0), and :root[data-palette=x][data-theme=dark] (0,3,0) beats
+   :root[data-theme=dark] (0,2,0). No !important and no source-order
+   dependence. Values are generated and contrast-checked; see
+   backend/tests/test_palette_contrast.py. */
+
+/* Ocean -- Cool blues and teal. */
+:root[data-palette="ocean"]{
+  --bg:#F4F9FC;
+  --card:#FFFFFF;
+  --text:#0F2634;
+  --text-2:#3F6076;
+  --head:#09486C;
+  --green:#0A6A82;
+  --green-ink:#085365;
+  --green-wash:#DAEFF5;
+  --on-primary:#FFFFFF;
+  --line:#D9E7F0;
+  --line-strong:#6D8FA6;
+  --focus:#09486C;
+  --accent-1:#9ED2EE;
+  --accent-1-ink:#09374F;
+  --accent-2:#9FE2DB;
+  --accent-2-ink:#06403B;
+  --accent-3:#B7C9E8;
+  --accent-3-ink:#1A2D59;
+  --accent-4:#CCC1EA;
+  --accent-4-ink:#311E55;
+  --rail-bg:#0D2233;
+  --rail-text:#E8F2F9;
+  --rail-dim:#8CC3E5;
+  --sh-1:0 1px 2px rgba(15,38,52,.05), 0 2px 8px rgba(15,38,52,.05);
+  --sh-2:0 2px 6px rgba(15,38,52,.08), 0 10px 22px rgba(15,38,52,.09);
+}
+:root[data-palette="ocean"][data-theme="dark"]{
+  --bg:#0A1721;
+  --card:#101E2B;
+  --text:#E8F2F9;
+  --text-2:#A7C2D4;
+  --head:#72C6EA;
+  --green:#4DC7DD;
+  --green-ink:#7CDAEA;
+  --green-wash:#0D3540;
+  --on-primary:#032028;
+  --line:#203748;
+  --line-strong:#7C9CB1;
+  --focus:#72C6EA;
+  --accent-1:#0E3449;
+  --accent-1-ink:#A7DAF5;
+  --accent-2:#0A3C38;
+  --accent-2-ink:#9FE4DD;
+  --accent-3:#1B2C52;
+  --accent-3-ink:#C6D4F2;
+  --accent-4:#2B1E4C;
+  --accent-4-ink:#D6C9F0;
+  --rail-bg:#07121B;
+  --rail-text:#E8F2F9;
+  --rail-dim:#8CC3E5;
+  --sh-1:0 1px 2px rgba(0,0,0,.35), 0 4px 12px rgba(0,0,0,.3);
+  --sh-2:0 2px 6px rgba(0,0,0,.45), 0 12px 28px rgba(0,0,0,.45);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: dark){
+  :root[data-palette="ocean"][data-theme="auto"]{
+    --bg:#0A1721;
+    --card:#101E2B;
+    --text:#E8F2F9;
+    --text-2:#A7C2D4;
+    --head:#72C6EA;
+    --green:#4DC7DD;
+    --green-ink:#7CDAEA;
+    --green-wash:#0D3540;
+    --on-primary:#032028;
+    --line:#203748;
+    --line-strong:#7C9CB1;
+    --focus:#72C6EA;
+    --accent-1:#0E3449;
+    --accent-1-ink:#A7DAF5;
+    --accent-2:#0A3C38;
+    --accent-2-ink:#9FE4DD;
+    --accent-3:#1B2C52;
+    --accent-3-ink:#C6D4F2;
+    --accent-4:#2B1E4C;
+    --accent-4-ink:#D6C9F0;
+    --rail-bg:#07121B;
+    --rail-text:#E8F2F9;
+    --rail-dim:#8CC3E5;
+    --sh-1:0 1px 2px rgba(0,0,0,.35), 0 4px 12px rgba(0,0,0,.3);
+    --sh-2:0 2px 6px rgba(0,0,0,.45), 0 12px 28px rgba(0,0,0,.45);
+    color-scheme:dark;
+  }
+}
+
+/* Grove -- Greens on warm paper. */
+:root[data-palette="grove"]{
+  --bg:#F6F8F1;
+  --card:#FFFFFF;
+  --text:#22301D;
+  --text-2:#4A5D44;
+  --head:#27552B;
+  --green:#2C6B3A;
+  --green-ink:#22552D;
+  --green-wash:#E2F1E2;
+  --on-primary:#FFFFFF;
+  --line:#E2EADB;
+  --line-strong:#7B8A77;
+  --focus:#27552B;
+  --accent-1:#BFE3A8;
+  --accent-1-ink:#2A4A18;
+  --accent-2:#A6E0C8;
+  --accent-2-ink:#09463A;
+  --accent-3:#D9DFA6;
+  --accent-3-ink:#3E4410;
+  --accent-4:#E6CFA6;
+  --accent-4-ink:#523A14;
+  --rail-bg:#1C2A1A;
+  --rail-text:#EDF3E8;
+  --rail-dim:#A8D49B;
+  --sh-1:0 1px 2px rgba(34,48,29,.05), 0 2px 8px rgba(34,48,29,.05);
+  --sh-2:0 2px 6px rgba(34,48,29,.08), 0 10px 22px rgba(34,48,29,.09);
+}
+:root[data-palette="grove"][data-theme="dark"]{
+  --bg:#10180E;
+  --card:#161F14;
+  --text:#EDF3E8;
+  --text-2:#B4C6AE;
+  --head:#8FD68F;
+  --green:#5FCB76;
+  --green-ink:#86DD96;
+  --green-wash:#13351A;
+  --on-primary:#04210B;
+  --line:#2A3927;
+  --line-strong:#8AA085;
+  --focus:#8FD68F;
+  --accent-1:#253D18;
+  --accent-1-ink:#C9E9B3;
+  --accent-2:#0C3A2F;
+  --accent-2-ink:#A6E3CE;
+  --accent-3:#3A3D14;
+  --accent-3-ink:#E0E6AE;
+  --accent-4:#413013;
+  --accent-4-ink:#EDD6AE;
+  --rail-bg:#0B120A;
+  --rail-text:#EDF3E8;
+  --rail-dim:#A8D49B;
+  --sh-1:0 1px 2px rgba(0,0,0,.35), 0 4px 12px rgba(0,0,0,.3);
+  --sh-2:0 2px 6px rgba(0,0,0,.45), 0 12px 28px rgba(0,0,0,.45);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: dark){
+  :root[data-palette="grove"][data-theme="auto"]{
+    --bg:#10180E;
+    --card:#161F14;
+    --text:#EDF3E8;
+    --text-2:#B4C6AE;
+    --head:#8FD68F;
+    --green:#5FCB76;
+    --green-ink:#86DD96;
+    --green-wash:#13351A;
+    --on-primary:#04210B;
+    --line:#2A3927;
+    --line-strong:#8AA085;
+    --focus:#8FD68F;
+    --accent-1:#253D18;
+    --accent-1-ink:#C9E9B3;
+    --accent-2:#0C3A2F;
+    --accent-2-ink:#A6E3CE;
+    --accent-3:#3A3D14;
+    --accent-3-ink:#E0E6AE;
+    --accent-4:#413013;
+    --accent-4-ink:#EDD6AE;
+    --rail-bg:#0B120A;
+    --rail-text:#EDF3E8;
+    --rail-dim:#A8D49B;
+    --sh-1:0 1px 2px rgba(0,0,0,.35), 0 4px 12px rgba(0,0,0,.3);
+    --sh-2:0 2px 6px rgba(0,0,0,.45), 0 12px 28px rgba(0,0,0,.45);
+    color-scheme:dark;
+  }
+}
+
+/* Dusk -- Indigo and violet. */
+:root[data-palette="dusk"]{
+  --bg:#F8F8FD;
+  --card:#FFFFFF;
+  --text:#221D33;
+  --text-2:#4C4666;
+  --head:#4C2E92;
+  --green:#4A3A9C;
+  --green-ink:#392D7A;
+  --green-wash:#E6E3F7;
+  --on-primary:#FFFFFF;
+  --line:#E4E1F2;
+  --line-strong:#807B9C;
+  --focus:#4C2E92;
+  --accent-1:#C9BEF2;
+  --accent-1-ink:#2B1C63;
+  --accent-2:#A9DEEA;
+  --accent-2-ink:#06404C;
+  --accent-3:#E3BDE8;
+  --accent-3-ink:#5A1660;
+  --accent-4:#BFD3F0;
+  --accent-4-ink:#16305B;
+  --rail-bg:#1A1730;
+  --rail-text:#ECE9F8;
+  --rail-dim:#BDB0F0;
+  --sh-1:0 1px 2px rgba(34,29,51,.05), 0 2px 8px rgba(34,29,51,.05);
+  --sh-2:0 2px 6px rgba(34,29,51,.08), 0 10px 22px rgba(34,29,51,.09);
+}
+:root[data-palette="dusk"][data-theme="dark"]{
+  --bg:#110E1F;
+  --card:#1D1933;
+  --text:#ECE9F8;
+  --text-2:#B6AFD2;
+  --head:#B9A6FF;
+  --green:#9C8BF5;
+  --green-ink:#B5A6FF;
+  --green-wash:#241F4A;
+  --on-primary:#0D0922;
+  --line:#302A4C;
+  --line-strong:#918BB0;
+  --focus:#B9A6FF;
+  --accent-1:#2A2158;
+  --accent-1-ink:#D3C8F8;
+  --accent-2:#0A3844;
+  --accent-2-ink:#A9E2EE;
+  --accent-3:#45174B;
+  --accent-3-ink:#F0C4F5;
+  --accent-4:#17274C;
+  --accent-4-ink:#C6D8F5;
+  --rail-bg:#0C0A18;
+  --rail-text:#ECE9F8;
+  --rail-dim:#BDB0F0;
+  --sh-1:0 1px 2px rgba(0,0,0,.35), 0 4px 12px rgba(0,0,0,.3);
+  --sh-2:0 2px 6px rgba(0,0,0,.45), 0 12px 28px rgba(0,0,0,.45);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: dark){
+  :root[data-palette="dusk"][data-theme="auto"]{
+    --bg:#110E1F;
+    --card:#1D1933;
+    --text:#ECE9F8;
+    --text-2:#B6AFD2;
+    --head:#B9A6FF;
+    --green:#9C8BF5;
+    --green-ink:#B5A6FF;
+    --green-wash:#241F4A;
+    --on-primary:#0D0922;
+    --line:#302A4C;
+    --line-strong:#918BB0;
+    --focus:#B9A6FF;
+    --accent-1:#2A2158;
+    --accent-1-ink:#D3C8F8;
+    --accent-2:#0A3844;
+    --accent-2-ink:#A9E2EE;
+    --accent-3:#45174B;
+    --accent-3-ink:#F0C4F5;
+    --accent-4:#17274C;
+    --accent-4-ink:#C6D8F5;
+    --rail-bg:#0C0A18;
+    --rail-text:#ECE9F8;
+    --rail-dim:#BDB0F0;
+    --sh-1:0 1px 2px rgba(0,0,0,.35), 0 4px 12px rgba(0,0,0,.3);
+    --sh-2:0 2px 6px rgba(0,0,0,.45), 0 12px 28px rgba(0,0,0,.45);
+    color-scheme:dark;
+  }
+}
+
+/* High contrast -- Maximum legibility. Every text pair at AAA. */
+:root[data-palette="contrast"]{
+  --ok-ink:#00492F;
+  --ok-bg:#E4F1EA;
+  --ok-line:#0E8157;
+  --warn-ink:#5A3400;
+  --warn-bg:#FBF0DE;
+  --warn-line:#774703;
+  --danger-ink:#8A0018;
+  --danger-bg:#FCE6EA;
+  --danger-line:#6E0C1D;
+  --info-ink:#00395C;
+  --info-bg:#E4EEF6;
+  --info-line:#00557F;
+  --bg:#F2F2F2;
+  --card:#FFFFFF;
+  --text:#111111;
+  --text-2:#333333;
+  --head:#000000;
+  --green:#00497A;
+  --green-ink:#003559;
+  --green-wash:#E3EDF5;
+  --on-primary:#FFFFFF;
+  --line:#BFBFBF;
+  --line-strong:#525252;
+  --focus:#00497A;
+  --accent-1:#E8E8E8;
+  --accent-1-ink:#1A1A1A;
+  --accent-2:#E0EAE2;
+  --accent-2-ink:#113218;
+  --accent-3:#E1E8F2;
+  --accent-3-ink:#0D2A45;
+  --accent-4:#EDE4F0;
+  --accent-4-ink:#36163F;
+  --rail-bg:#000000;
+  --rail-text:#FFFFFF;
+  --rail-dim:#D9D9D9;
+  --sh-1:0 1px 2px rgba(0,0,0,.05), 0 2px 8px rgba(0,0,0,.05);
+  --sh-2:0 2px 6px rgba(0,0,0,.08), 0 10px 22px rgba(0,0,0,.09);
+}
+:root[data-palette="contrast"][data-theme="dark"]{
+  --ok-ink:#86E8B4;
+  --ok-bg:#0A2E1D;
+  --ok-line:#18D891;
+  --warn-ink:#FFD08A;
+  --warn-bg:#33230A;
+  --warn-line:#E08506;
+  --danger-ink:#FFB0BE;
+  --danger-bg:#3A0A14;
+  --danger-line:#CF1736;
+  --info-ink:#A8D8FF;
+  --info-bg:#0A2436;
+  --info-line:#6FB8F0;
+  --bg:#000000;
+  --card:#121212;
+  --text:#FFFFFF;
+  --text-2:#DADADA;
+  --head:#FFFFFF;
+  --green:#7FC8FF;
+  --green-ink:#A8DBFF;
+  --green-wash:#0A2436;
+  --on-primary:#00121F;
+  --line:#4A4A4A;
+  --line-strong:#A8A8A8;
+  --focus:#FFD24D;
+  --accent-1:#2A2A2A;
+  --accent-1-ink:#EDEDED;
+  --accent-2:#10301A;
+  --accent-2-ink:#CFEBD6;
+  --accent-3:#0D2438;
+  --accent-3-ink:#CFE4F5;
+  --accent-4:#2A1333;
+  --accent-4-ink:#EBD4F0;
+  --rail-bg:#000000;
+  --rail-text:#FFFFFF;
+  --rail-dim:#D9D9D9;
+  --sh-1:0 1px 2px rgba(0,0,0,.35), 0 4px 12px rgba(0,0,0,.3);
+  --sh-2:0 2px 6px rgba(0,0,0,.45), 0 12px 28px rgba(0,0,0,.45);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: dark){
+  :root[data-palette="contrast"][data-theme="auto"]{
+    --ok-ink:#86E8B4;
+    --ok-bg:#0A2E1D;
+    --ok-line:#18D891;
+    --warn-ink:#FFD08A;
+    --warn-bg:#33230A;
+    --warn-line:#E08506;
+    --danger-ink:#FFB0BE;
+    --danger-bg:#3A0A14;
+    --danger-line:#CF1736;
+    --info-ink:#A8D8FF;
+    --info-bg:#0A2436;
+    --info-line:#6FB8F0;
+    --bg:#000000;
+    --card:#121212;
+    --text:#FFFFFF;
+    --text-2:#DADADA;
+    --head:#FFFFFF;
+    --green:#7FC8FF;
+    --green-ink:#A8DBFF;
+    --green-wash:#0A2436;
+    --on-primary:#00121F;
+    --line:#4A4A4A;
+    --line-strong:#A8A8A8;
+    --focus:#FFD24D;
+    --accent-1:#2A2A2A;
+    --accent-1-ink:#EDEDED;
+    --accent-2:#10301A;
+    --accent-2-ink:#CFEBD6;
+    --accent-3:#0D2438;
+    --accent-3-ink:#CFE4F5;
+    --accent-4:#2A1333;
+    --accent-4-ink:#EBD4F0;
+    --rail-bg:#000000;
+    --rail-text:#FFFFFF;
+    --rail-dim:#D9D9D9;
+    --sh-1:0 1px 2px rgba(0,0,0,.35), 0 4px 12px rgba(0,0,0,.3);
+    --sh-2:0 2px 6px rgba(0,0,0,.45), 0 12px 28px rgba(0,0,0,.45);
+    color-scheme:dark;
+  }
+}
+
+
 h1,h2,h3,h4{font-family:var(--font-head); font-weight:600; line-height:1.25; margin:0 0 .35em}
 h1{font-size:1.5rem; letter-spacing:-.01em}
 h2{font-size:1.18rem}
 h3{font-size:1rem}
 p{margin:0 0 .9em; max-width:72ch}
+
 
 :focus-visible{outline:3px solid var(--focus); outline-offset:2px; border-radius:6px}
 button{font:inherit}
@@ -414,6 +845,33 @@ input[aria-invalid="true"]{border-color:var(--danger-line); background:var(--dan
 .choice input{margin:2px 0 0; width:19px; height:19px; flex:0 0 auto; accent-color:var(--green)}
 .choice:has(input:checked){border-color:var(--green); background:var(--green-wash)}
 .choice.alarm:has(input:checked){border-color:var(--danger-line); background:var(--danger-bg); color:var(--danger-ink)}
+
+/* ---- palette picker ----
+   Real radio inputs, hidden but focusable, so arrow-key navigation and the
+   announced group come free. The three dots read from --sw-<palette>-n, which
+   every theme block declares, so a swatch previews its palette without the
+   page having to switch to it. */
+.swatches{display:flex; flex-wrap:wrap; gap:9px; margin:0}
+.swatch{position:relative; display:block}
+.swatch input{position:absolute; width:1px; height:1px; opacity:0; margin:0}
+.swatch > span{
+  display:flex; flex-direction:column; gap:8px; min-height:44px; cursor:pointer;
+  padding:10px 12px; border:2px solid var(--line-strong); border-radius:var(--r-md);
+  background:var(--card); color:var(--text); font-size:.8rem; font-weight:600;
+}
+.swatch input:checked + span{border-color:var(--green); background:var(--green-wash)}
+.swatch input:focus-visible + span{outline:3px solid var(--focus); outline-offset:2px}
+.swatch em{display:flex; gap:4px; font-style:normal}
+.swatch em b{width:15px; height:15px; border-radius:50%; border:1px solid var(--line)}
+.swatch em b:nth-child(1){background:var(--d1)}
+.swatch em b:nth-child(2){background:var(--d2)}
+.swatch em b:nth-child(3){background:var(--d3)}
+.swatch[data-pal="candy"]{--d1:var(--sw-candy-1); --d2:var(--sw-candy-2); --d3:var(--sw-candy-3)}
+.swatch[data-pal="ocean"]{--d1:var(--sw-ocean-1); --d2:var(--sw-ocean-2); --d3:var(--sw-ocean-3)}
+.swatch[data-pal="grove"]{--d1:var(--sw-grove-1); --d2:var(--sw-grove-2); --d3:var(--sw-grove-3)}
+.swatch[data-pal="dusk"]{--d1:var(--sw-dusk-1); --d2:var(--sw-dusk-2); --d3:var(--sw-dusk-3)}
+.swatch[data-pal="contrast"]{--d1:var(--sw-contrast-1); --d2:var(--sw-contrast-2); --d3:var(--sw-contrast-3)}
+.swatch small{display:block; font-weight:400; color:var(--text-2); font-size:.72rem}
 
 .steps{display:flex; gap:5px; list-style:none; padding:0; margin:0 0 10px}
 .steps li{flex:1; height:6px; border-radius:var(--r-pill); background:var(--line)}
@@ -997,7 +1455,9 @@ a{color:var(--green-ink)}
 /* ---- dashboard welcome ---- */
 
 .welcome-copy .btnrow{margin-top:16px}
-.btn-light{background:rgba(255,255,255,.72); border-color:var(--line-strong); color:var(--green-ink)}
+/* mixed from --card, not a fixed white veil: --green-ink flips light in dark
+   mode, so a surface that stayed white would put light ink on light ground */
+.btn-light{background:color-mix(in srgb, var(--card) 72%, transparent); border-color:var(--line-strong); color:var(--green-ink)}
 .btn-light:hover{background:var(--card)}
 
 @media (max-width:860px){
@@ -1402,7 +1862,10 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
   position: absolute; bottom: -4px; z-index: 3;
   display: inline-flex; align-items: center; gap: 6px;
   padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px;
-  background: rgba(255,255,255,.92); color: var(--text-2);
+  /* was rgba(255,255,255,.92): a fixed near-white pill under --text-2, which
+     flips light in dark mode, leaving this caption at 1.40:1 on the
+     high-contrast palette. The surface has to flip with the ink. */
+  background: color-mix(in srgb, var(--card) 92%, transparent); color: var(--text-2);
   font-size: .7rem; font-weight: 600; white-space: nowrap;
 }
 .mascot-caption i {

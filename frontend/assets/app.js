@@ -6,9 +6,23 @@
   "use strict";
 
   /* =================================================== settings (local) */
+
+  /* The palettes the stylesheet defines. Only the id, the name shown to a
+     person and a one-line description live here; every colour stays in CSS, so
+     this list cannot drift out of step with the palette it names. The ids match
+     the :root[data-palette="..."] blocks in styles.css. */
+  var PALETTES = [
+    { id: "candy", label: "Candy", blurb: "Warm pinks and mint" },
+    { id: "ocean", label: "Ocean", blurb: "Cool blues and teal" },
+    { id: "grove", label: "Grove", blurb: "Greens on warm paper" },
+    { id: "dusk", label: "Dusk", blurb: "Indigo and violet" },
+    { id: "contrast", label: "High contrast", blurb: "Every text pair at AAA" }
+  ];
+
   var SKEY = "diabetease.settings.v1";
   var Settings = {
-    data: { theme: "auto", density: "normal", motion: false, api: "", municipality: "",
+    data: { theme: "auto", palette: "candy", density: "normal", motion: false,
+            api: "", municipality: "",
             tileProvider: "osm", tileUrl: "", tileAttribution: "" },
     load: function () {
       try {
@@ -23,9 +37,29 @@
     },
     apply: function () {
       var r = document.documentElement;
+      var known = PALETTES.some(function (p) { return p.id === Settings.data.palette; });
+      if (!known) this.data.palette = "candy";   // stored value from an older build
       r.setAttribute("data-theme", this.data.theme);
+      r.setAttribute("data-palette", this.data.palette);
       r.setAttribute("data-density", this.data.density);
       r.setAttribute("data-motion", this.data.motion ? "off" : "on");
+      this.paintBrowserChrome();
+    },
+
+    /* The address bar and task switcher take their colour from a meta tag, and
+       index.html carries one per colour scheme for the default palette so the
+       pre-script paint is right. Once a palette is chosen those are wrong, so
+       read the resolved --bg back out of the cascade rather than keeping a
+       second copy of every background in this file: a copy would drift. */
+    paintBrowserChrome: function () {
+      var bg = getComputedStyle(document.documentElement)
+        .getPropertyValue("--bg").trim();
+      if (!bg) return;
+      var tags = document.querySelectorAll('meta[name="theme-color"]');
+      for (var i = 0; i < tags.length; i++) {
+        tags[i].removeAttribute("media");
+        tags[i].setAttribute("content", bg);
+      }
     }
   };
 
@@ -2384,6 +2418,38 @@ function buildNav() {
     $("setMotion").checked = Settings.data.motion;
     $("setApi").value = Settings.data.api;
     $("setTheme").addEventListener("change", function () { Settings.data.theme = this.value; Settings.save(); });
+
+    /* palette picker: real radios, so arrow keys and the group announcement
+       come from the browser rather than from key handling here */
+    var palBox = $("setPalette");
+    PALETTES.forEach(function (p) {
+      var wrap = document.createElement("label");
+      wrap.className = "swatch";
+      wrap.setAttribute("data-pal", p.id);
+      var input = document.createElement("input");
+      input.type = "radio"; input.name = "palette"; input.value = p.id;
+      input.checked = Settings.data.palette === p.id;
+      var face = document.createElement("span");
+      var dots = document.createElement("em");
+      dots.setAttribute("aria-hidden", "true");
+      dots.appendChild(document.createElement("b"));
+      dots.appendChild(document.createElement("b"));
+      dots.appendChild(document.createElement("b"));
+      face.appendChild(dots);
+      face.appendChild(document.createTextNode(p.label));
+      var sub = document.createElement("small");
+      sub.textContent = p.blurb;
+      face.appendChild(sub);
+      wrap.appendChild(input); wrap.appendChild(face);
+      palBox.appendChild(wrap);
+    });
+    palBox.addEventListener("change", function (e) {
+      if (!e.target || e.target.name !== "palette") return;
+      Settings.data.palette = e.target.value;
+      Settings.save();
+      // the map markers are inline SVG that reference the tokens through var(),
+      // so they re-resolve on their own; nothing to redraw here
+    });
     $("setDensity").addEventListener("change", function () { Settings.data.density = this.value; Settings.save(); });
     $("setMotion").addEventListener("change", function () { Settings.data.motion = this.checked; Settings.save(); });
     $("setApi").addEventListener("change", function () { Settings.data.api = this.value.trim(); Settings.save(); pingHealth(); });
@@ -2405,11 +2471,14 @@ function buildNav() {
       Settings.data.tileUrl = this.value.trim(); Settings.save(); reloadMap();
     });
     $("setReset").addEventListener("click", function () {
-      Settings.data = { theme: "auto", density: "normal", motion: false, api: "", municipality: "",
+      Settings.data = { theme: "auto", palette: "candy", density: "normal", motion: false,
+                        api: "", municipality: "",
                         tileProvider: "esri-street", tileUrl: "", tileAttribution: "" };
       Settings.save();
       $("setTheme").value = "auto"; $("setDensity").value = "normal";
       $("setMotion").checked = false; $("setApi").value = "";
+      var back = palBox.querySelector('input[value="candy"]');
+      if (back) back.checked = true;
     });
 
     /* account */

@@ -103,7 +103,77 @@ PAIRINGS = [
     ("focus", "card", UI, "focus ring on a card"),
 ]
 
-THEMES = [("light", LIGHT), ("dark", DARK), ("auto", AUTO)]
+# Each palette and the grade its text pairings are held to. A palette found in
+# the stylesheet but absent here fails the check below, so adding a palette
+# forces a decision about how legible it has to be rather than inheriting one.
+PALETTE_GRADE = {
+    "candy": TEXT,
+    "ocean": TEXT,
+    "grove": TEXT,
+    "dusk": TEXT,
+    # Retinopathy is a common complication of the disease this app screens for,
+    # so the high-contrast option is held to AAA, not AA.
+    "contrast": 7.0,
+}
+DEFAULT_PALETTE = "candy"
+
+
+def _palette_ids() -> set[str]:
+    return set(re.findall(r':root\[data-palette="([a-z0-9-]+)"\]', CSS))
+
+
+def _resolve(pid: str, theme: str) -> dict[str, str]:
+    """The tokens as the browser resolves them for one palette in one theme.
+
+    Order matters and mirrors the cascade. :root[data-palette=x] and
+    :root[data-theme=dark] are both (0,2,0), so between those two it is source
+    order that decides, and the palette blocks are written after the theme
+    blocks -- hence palette-light is applied after theme-dark here. Each
+    palette's dark block then wins outright at (0,3,0).
+    """
+    out = dict(LIGHT)
+    if theme in ("dark", "auto"):
+        out.update(_tokens(f':root[data-theme="{theme}"]'))
+    if pid != DEFAULT_PALETTE:
+        out.update(_tokens(f':root[data-palette="{pid}"]'))
+        if theme in ("dark", "auto"):
+            out.update(_tokens(f':root[data-palette="{pid}"][data-theme="{theme}"]'))
+    return out
+
+
+THEMES = [
+    (f"{pid}/{theme}", _resolve(pid, theme))
+    for pid in sorted(PALETTE_GRADE)
+    for theme in ("light", "dark", "auto")
+]
+
+
+def test_every_palette_in_the_stylesheet_has_a_declared_grade():
+    missing = _palette_ids() - set(PALETTE_GRADE)
+    assert not missing, (
+        f"palettes in styles.css with no grade in PALETTE_GRADE: {sorted(missing)}. "
+        f"Add each one with the contrast grade it must meet."
+    )
+    assert not set(PALETTE_GRADE) - _palette_ids() - {DEFAULT_PALETTE}, (
+        "PALETTE_GRADE names a palette the stylesheet does not define"
+    )
+
+
+@pytest.mark.parametrize("pid", sorted(PALETTE_GRADE - {DEFAULT_PALETTE} if False else
+                                       set(PALETTE_GRADE) - {DEFAULT_PALETTE}))
+def test_each_palette_restates_in_dark_everything_it_states_in_light(pid):
+    """Otherwise a light value leaks into dark mode, silently.
+
+    :root[data-palette=x] outranks :root[data-theme=dark] on source order, so a
+    token a palette declares for light but forgets for dark keeps its light
+    value on a dark page -- white-on-white, with nothing failing.
+    """
+    light = set(_tokens(f':root[data-palette="{pid}"]'))
+    dark = set(_tokens(f':root[data-palette="{pid}"][data-theme="dark"]'))
+    assert not light - dark, (
+        f"{pid} declares {sorted(light - dark)} for light but not for dark; "
+        f"those would keep their light values on a dark page"
+    )
 
 
 @pytest.mark.parametrize("theme,pal", THEMES)
@@ -111,6 +181,9 @@ THEMES = [("light", LIGHT), ("dark", DARK), ("auto", AUTO)]
 def test_pairing_meets_its_threshold(theme, pal, ink, surface, need, what):
     assert ink in pal, f"{ink} is not declared in the {theme} palette"
     assert surface in pal, f"{surface} is not declared in the {theme} palette"
+    grade = PALETTE_GRADE[theme.split("/")[0]]
+    if need == TEXT:
+        need = grade
     got = ratio(pal[ink], pal[surface])
     assert got >= need, (
         f"{theme}: {what} -- {ink} ({pal[ink]}) on {surface} ({pal[surface]}) "
@@ -132,7 +205,7 @@ def test_the_three_statuses_differ_in_lightness_not_only_hue(theme, pal):
     colour alone -- every marker has its own shape and glyph, every chip its own
     words -- and those are enforced elsewhere in this suite.
     """
-    need = 1.5 if theme == "light" else 1.35
+    need = 1.5 if theme.endswith("/light") else 1.35
     for a, b in (("ok-line", "warn-line"), ("warn-line", "danger-line"),
                  ("ok-line", "danger-line")):
         got = ratio(pal[a], pal[b])
@@ -272,3 +345,58 @@ def test_no_coloured_literal_anywhere_in_the_frontend():
         for hexv in retired:
             assert f"#{hexv}" not in body, (
                 f"{name} still carries the retired colour #{hexv}")
+
+
+def _flipping_tokens() -> set[str]:
+    """Tokens that cross from dark to light (or back) between the themes."""
+    out = set()
+    for name, light in LIGHT.items():
+        dark = DARK.get(name)
+        if not dark:
+            continue
+        if (_lum(light) < 0.4) != (_lum(dark) < 0.4):
+            out.add(name)
+    return out
+
+
+def test_no_rule_puts_a_flipping_ink_on_a_fixed_neutral_veil():
+    """The hole the neutral-veil exemption left open.
+
+    A pure white or pure black background at high alpha is allowed above,
+    because a neutral veil reads the same under any theme. That is true of the
+    veil on its own and false of the pair: .mascot-caption set
+    rgba(255,255,255,.92) and colour --text-2, so the pill stayed white while
+    the ink flipped light, and the caption sat at 1.40:1 on the high-contrast
+    palette. Every pairing in PAIRINGS passed; none of them described this one.
+
+    So a rule may use a fixed neutral veil, or a flipping ink, but not both.
+    Mix the surface from a token instead -- color-mix(in srgb, var(--card) ...)
+    -- and the surface flips with the ink.
+    """
+    flipping = _flipping_tokens()
+    assert flipping, "no flipping tokens found -- the detector is broken"
+
+    body = CSS[CSS.index("h1,h2,h3"):]
+    offenders = []
+    for rule in re.finditer(r"([^{}]+)\{([^{}]*)\}", body):
+        prelude, decls = rule.group(1).strip(), rule.group(2)
+        if prelude.startswith("@") or "print" in prelude:
+            continue
+        veil = None
+        for m in re.finditer(r"background(?:-color)?\s*:\s*[^;]*?"
+                             r"rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([\d.]+)\s*\)", decls):
+            r, g, b, a = int(m.group(1)), int(m.group(2)), int(m.group(3)), float(m.group(4))
+            if r == g == b and a >= 0.5:
+                veil = f"rgba({r},{g},{b},{a})"
+        if not veil:
+            continue
+        ink = re.search(r"(?<![-\w])color\s*:\s*var\(\s*--([a-z0-9-]+)", decls)
+        if ink and ink.group(1) in flipping:
+            offenders.append(f"{prelude[:60]} -- {veil} under --{ink.group(1)}")
+
+    assert not offenders, (
+        "a fixed neutral background with an ink that flips between themes:\n  "
+        + "\n  ".join(offenders)
+        + "\nmix the background from a token instead, e.g. "
+          "color-mix(in srgb, var(--card) 92%, transparent)"
+    )
