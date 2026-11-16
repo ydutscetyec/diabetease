@@ -224,10 +224,10 @@ function buildNav() {
       a.appendChild(el("span", "lbl", it.label));
       var candy = el("span", "navcandy");
       candy.setAttribute("aria-hidden", "true");
-      candy.innerHTML = '<svg width="22" height="14" viewBox="0 0 60 36"><path d="M14 18 2 6v24z" fill="#E46B43"/>'
-        + '<path d="M46 18 58 6v24z" fill="#E46B43"/><ellipse cx="30" cy="18" rx="17" ry="13" fill="#F91A10"/>'
+      candy.innerHTML = '<svg width="22" height="14" viewBox="0 0 60 36"><path d="M14 18 2 6v24z" fill="var(--warn-line)"/>'
+        + '<path d="M46 18 58 6v24z" fill="var(--warn-line)"/><ellipse cx="30" cy="18" rx="17" ry="13" fill="var(--danger-line)"/>'
         + '<path d="M18 9c6 3 6 15 0 18M26 6c6 4 6 20 0 24M34 6c6 4 6 20 0 24M42 9c6 3 6 15 0 18" '
-        + 'stroke="#EDB195" stroke-width="3" fill="none"/><ellipse cx="24" cy="12" rx="5" ry="2.5" '
+        + 'stroke="var(--rail-dim)" stroke-width="3" fill="none"/><ellipse cx="24" cy="12" rx="5" ry="2.5" '
         + 'fill="#fff" opacity=".6"/></svg>';
       a.appendChild(candy);
       box.appendChild(a);
@@ -806,23 +806,23 @@ function buildNav() {
      The legend is built from this same table, so the two cannot drift apart. */
   var MARKERS = {
     verified: {
-      label: "Service confirmed", fill: "#06628D", ink: "#FFFFFF", shape: "pin", solid: true,
+      label: "Service confirmed", fill: "var(--ok-line)", ink: "var(--rail-text)", shape: "pin", solid: true,
       glyph: '<path d="M8.6 13.2l2.6 2.6 4.6-5.2" fill="none" stroke="INK" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>'
     },
     unconfirmed: {
-      label: "Not yet confirmed", fill: "#E46B43", ink: "#8A3414", shape: "pin", solid: false,
+      label: "Not yet confirmed", fill: "var(--warn-line)", ink: "var(--warn-ink)", shape: "pin", solid: false,
       glyph: '<text x="12" y="17" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="INK">?</text>'
     },
     outdated: {
-      label: "Record outdated", fill: "#F91A10", ink: "#A60F08", shape: "pin", solid: false,
+      label: "Record outdated", fill: "var(--danger-line)", ink: "var(--danger-ink)", shape: "pin", solid: false,
       glyph: '<path d="M8.4 12.6h7.2" fill="none" stroke="INK" stroke-width="2.4" stroke-linecap="round"/>'
     },
     pharmacy: {
-      label: "Pharmacy", fill: "#2AA7C9", ink: "#04284D", shape: "square", solid: true,
+      label: "Pharmacy", fill: "var(--info-line)", ink: "var(--rail-text)", shape: "square", solid: true,
       glyph: '<path d="M12 7.6v8M8 11.6h8" fill="none" stroke="INK" stroke-width="2.4" stroke-linecap="round"/>'
     },
     municipality: {
-      label: "Nothing mapped here yet", fill: "#04284D", ink: "#04284D", shape: "circle", solid: false,
+      label: "Nothing mapped here yet", fill: "var(--text-2)", ink: "var(--text-2)", shape: "circle", solid: false,
       glyph: '<circle cx="12" cy="12" r="2.4" fill="INK"/>'
     }
   };
@@ -839,9 +839,14 @@ function buildNav() {
     }
     // Solid markers are filled; hollow ones keep a white centre so the glyph
     // stays legible and the outline reads as "not filled in yet".
+    // Tokens rather than literals, and every consumer injects this SVG into
+    // the DOM (divIcon html, innerHTML) rather than serialising it to a data
+    // URI, so var() resolves and the markers follow a theme change live.
+    // The ring stays a light value in both themes because a marker sits on a
+    // map tile, not on an app surface.
     body += m.solid
-      ? ' fill="' + m.fill + '" stroke="#FFFFFF" stroke-width="1.6"/>'
-      : ' fill="#FFFFFF" stroke="' + m.fill + '" stroke-width="2.4"/>';
+      ? ' fill="' + m.fill + '" stroke="var(--rail-text)" stroke-width="1.6"/>'
+      : ' fill="var(--card)" stroke="' + m.fill + '" stroke-width="2.4"/>';
     var h = m.shape === "pin" ? 24 : 24;
     return '<svg xmlns="http://www.w3.org/2000/svg" width="' + size + '" height="'
       + Math.round(size * h / 24) + '" viewBox="0 0 24 24" aria-hidden="true">'

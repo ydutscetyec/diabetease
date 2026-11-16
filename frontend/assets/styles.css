@@ -1,27 +1,30 @@
 /* ===========================================================================
-   DiabetEASE design system — single source of truth for the palette.
+   DiabetEASE design system — the single source of truth for colour.
 
-   Colours come from the supplied swatches:
-     #3C0F0F maroon  #F91A10 red  #E46B43 orange  #EDB195 peach
-     #2AA7C9 cyan    #06628D teal #04284D navy
-   Roles were assigned by measured contrast, not by order of the swatches:
-     navy   text and sidebar               14.8:1 on white
-     maroon headings                        16.6:1
-     teal   buttons and links, white label   6.7:1
-     red, orange, cyan  fills and borders ONLY — all three fail as text on
-     white (4.1, 3.2, 2.8), so text on them uses navy or a darkened ink.
+   Every colour in this file is declared in the three :root blocks below and
+   used by token everywhere else. A literal outside them has silently opted out
+   of the dark theme, which is how the previous two palettes each left text
+   unreadable; backend/tests/test_palette_contrast.py now fails on one.
 
-   This block replaces the two competing :root blocks the stylesheet used to
-   carry (an earlier candy-pastel palette, then these swatches declared later
-   to override it). Every value below is the one that was already winning, so
-   the rendered result is unchanged — but there is now one place to edit.
+   Roles were assigned by measured contrast, not by taste, and the measurements
+   live in that test rather than in this comment, so they cannot go stale:
+     32 pairings x 3 themes, 4.5:1 for body text, 3:1 for large text and for
+     the boundary of anything a person operates.
 
-   Naming note: --pink/--mint/--sky/--lavender keep the names they had under an
-   earlier palette, so the name describes the slot rather than the hue exactly.
-   Each is a FILL and has an ink partner (--pink-ink and so on) that flips with
-   it; that pairing is what makes the dark theme possible, so never write one
-   without the other. There are four, matching the four tone tiles the product
-   actually renders.
+   Two rules carry the whole design:
+
+   1. Every candy hue is a FILL with an ink partner (--pink / --pink-ink) that
+      flips with it. One token cannot be both a tile background and text on a
+      dark ground, which is exactly why the previous dark theme could not work.
+      There are four, matching the four tone tiles the product renders.
+
+   2. Anything that signals state uses a *-line token, never a candy wash. A
+      pastel light enough to carry dark ink is never dark enough to be seen on
+      white, so one value cannot do both jobs.
+
+   --pink/--mint/--sky/--lavender keep names from an earlier palette, so a name
+   describes its slot rather than its hue exactly. --rail-* stay dark in BOTH
+   themes on purpose, so the workspace is the brightest thing on screen.
    =========================================================================== */
 
 :root{
@@ -672,8 +675,15 @@ a{color:var(--green-ink)}
 
 .view.active .pagehead h1{display:inline-flex; align-items:center; gap:10px}
 .view.active .pagehead h1::after{
+  /* A data URI cannot read a custom property, so the sweet is a MASK and the
+     colour comes from a token -- which is also why it follows a theme change.
+     At 30x18 the silhouette is all that reads anyway; the three-colour version
+     this replaced had the previous palette's hexes baked in and no way to
+     follow the current one. */
   content:""; display:inline-block; width:30px; height:18px; flex:0 0 auto;
-  background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 36'%3E%3Cpath d='M14 18 2 6v24z' fill='%23E46B43'/%3E%3Cpath d='M46 18 58 6v24z' fill='%23E46B43'/%3E%3Cellipse cx='30' cy='18' rx='17' ry='13' fill='%23F91A10'/%3E%3Cpath d='M18 9c6 3 6 15 0 18M26 6c6 4 6 20 0 24M34 6c6 4 6 20 0 24M42 9c6 3 6 15 0 18' stroke='%23EDB195' stroke-width='3' fill='none' opacity='.9'/%3E%3Cellipse cx='24' cy='12' rx='5' ry='2.5' fill='%23fff' opacity='.55'/%3E%3C/svg%3E");
+  background:var(--pink);
+  -webkit-mask:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 36'%3E%3Cpath d='M14 18 2 6v24z'/%3E%3Cpath d='M46 18 58 6v24z'/%3E%3Cellipse cx='30' cy='18' rx='17' ry='13'/%3E%3C/svg%3E");
+  mask:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 36'%3E%3Cpath d='M14 18 2 6v24z'/%3E%3Cpath d='M46 18 58 6v24z'/%3E%3Cellipse cx='30' cy='18' rx='17' ry='13'/%3E%3C/svg%3E");
   animation:candybob 2.2s ease-in-out infinite;
 }
 

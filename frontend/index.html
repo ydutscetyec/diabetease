@@ -11,14 +11,15 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="">
 <link rel="stylesheet" href="/assets/styles.css">
 <link rel="manifest" href="/manifest.webmanifest">
-<meta name="theme-color" content="#FFF8F2">
+<meta name="theme-color" content="#FFF6F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1C0E20" media="(prefers-color-scheme: dark)">
 </head>
 <body>
 
 <div id="boot" class="boot" role="status" aria-live="polite">
   <img src="/assets/candie-avatar.png" alt="" width="96" height="96">
   <p class="boot-name">Diabet<i>EASE</i></p>
-  <div class="candyloader" aria-hidden="true"><svg class="sweet" viewBox="0 0 60 36" aria-hidden="true"><path d="M14 18 2 6v24z" fill="#E46B43"/><path d="M46 18 58 6v24z" fill="#E46B43"/><ellipse cx="30" cy="18" rx="17" ry="13" fill="#F91A10"/><path d="M18 9c6 3 6 15 0 18M26 6c6 4 6 20 0 24M34 6c6 4 6 20 0 24M42 9c6 3 6 15 0 18" stroke="#EDB195" stroke-width="3" fill="none" opacity=".9"/><ellipse cx="24" cy="12" rx="5" ry="2.5" fill="#fff" opacity=".55"/></svg><svg class="sweet" viewBox="0 0 60 36" aria-hidden="true"><path d="M14 18 2 6v24z" fill="#06628D"/><path d="M46 18 58 6v24z" fill="#06628D"/><ellipse cx="30" cy="18" rx="17" ry="13" fill="#2AA7C9"/><path d="M18 9c6 3 6 15 0 18M26 6c6 4 6 20 0 24M34 6c6 4 6 20 0 24M42 9c6 3 6 15 0 18" stroke="#EDB195" stroke-width="3" fill="none" opacity=".9"/><ellipse cx="24" cy="12" rx="5" ry="2.5" fill="#fff" opacity=".55"/></svg><svg class="sweet" viewBox="0 0 60 36" aria-hidden="true"><path d="M14 18 2 6v24z" fill="#3C0F0F"/><path d="M46 18 58 6v24z" fill="#3C0F0F"/><ellipse cx="30" cy="18" rx="17" ry="13" fill="#E46B43"/><path d="M18 9c6 3 6 15 0 18M26 6c6 4 6 20 0 24M34 6c6 4 6 20 0 24M42 9c6 3 6 15 0 18" stroke="#EDB195" stroke-width="3" fill="none" opacity=".9"/><ellipse cx="24" cy="12" rx="5" ry="2.5" fill="#fff" opacity=".55"/></svg></div>
+  <div class="candyloader" aria-hidden="true"><svg class="sweet" viewBox="0 0 60 36" aria-hidden="true"><path d="M14 18 2 6v24z" fill="var(--warn-line)"/><path d="M46 18 58 6v24z" fill="var(--warn-line)"/><ellipse cx="30" cy="18" rx="17" ry="13" fill="var(--danger-line)"/><path d="M18 9c6 3 6 15 0 18M26 6c6 4 6 20 0 24M34 6c6 4 6 20 0 24M42 9c6 3 6 15 0 18" stroke="var(--rail-dim)" stroke-width="3" fill="none" opacity=".9"/><ellipse cx="24" cy="12" rx="5" ry="2.5" fill="#fff" opacity=".55"/></svg><svg class="sweet" viewBox="0 0 60 36" aria-hidden="true"><path d="M14 18 2 6v24z" fill="var(--green)"/><path d="M46 18 58 6v24z" fill="var(--green)"/><ellipse cx="30" cy="18" rx="17" ry="13" fill="var(--mint-ink)"/><path d="M18 9c6 3 6 15 0 18M26 6c6 4 6 20 0 24M34 6c6 4 6 20 0 24M42 9c6 3 6 15 0 18" stroke="var(--rail-dim)" stroke-width="3" fill="none" opacity=".9"/><ellipse cx="24" cy="12" rx="5" ry="2.5" fill="#fff" opacity=".55"/></svg><svg class="sweet" viewBox="0 0 60 36" aria-hidden="true"><path d="M14 18 2 6v24z" fill="var(--head)"/><path d="M46 18 58 6v24z" fill="var(--head)"/><ellipse cx="30" cy="18" rx="17" ry="13" fill="var(--warn-line)"/><path d="M18 9c6 3 6 15 0 18M26 6c6 4 6 20 0 24M34 6c6 4 6 20 0 24M42 9c6 3 6 15 0 18" stroke="var(--rail-dim)" stroke-width="3" fill="none" opacity=".9"/><ellipse cx="24" cy="12" rx="5" ry="2.5" fill="#fff" opacity=".55"/></svg></div>
   <p class="boot-msg" id="bootMsg">Starting up</p>
 </div>
 
@@ -320,7 +321,7 @@
 
     <div class="note note-info">
       <h3>What this is</h3>
-      <p>A research prototype that helps you understand Type&nbsp;1 diabetes risk, find local testing centres, and learn about the condition. It does not replace a doctor and does not diagnose.</p>
+      <p>A research prototype that helps you understand Type&nbsp;2 diabetes risk, find local testing centres, and learn about the condition. It does not replace a doctor and does not diagnose.</p>
     </div>
 
     <div class="grid g2">
@@ -338,7 +339,7 @@
           <li><span class="tag tag-warn">See a doctor promptly</span> A value met a published diagnostic threshold, or a glucose reading was clinically low.</li>
           <li><span class="tag tag-warn">Worth getting tested</span> Nothing met a threshold, but there is enough to justify a glucose test.</li>
           <li><span class="tag">Not enough information</span> No laboratory value was given, so no assessment is possible.</li>
-          <li><span class="tag">Nothing crosses a threshold</span> Reassuring about today. <strong>Not an all-clear</strong> — early-stage Type&nbsp;1 diabetes is silent on a glucose test.</li>
+          <li><span class="tag">Nothing crosses a threshold</span> Reassuring about today. <strong>Not an all-clear</strong> — Type&nbsp;2 diabetes develops over years and is usually silent until glucose is already high, so the guideline asks for repeat testing rather than one result.</li>
         </ul>
       </div>
 
@@ -350,7 +351,7 @@
 
       <div class="card">
         <h3>4. Chatting with Candie</h3>
-        <p>Open Candie from the round button in the corner. She can explain Type&nbsp;1 diabetes, say what a test measures in general, walk through a result you recorded this session, and look up testing centres by municipality.</p>
+        <p>Open Candie from the round button in the corner. She can explain Type&nbsp;2 diabetes, say what a test measures in general, walk through a result you recorded this session, and look up testing centres by municipality.</p>
         <p>She cannot diagnose you, interpret your own results, or advise on medication or insulin doses. She will say so rather than guess.</p>
       </div>
     </div>

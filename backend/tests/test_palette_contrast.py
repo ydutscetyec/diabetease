@@ -209,3 +209,65 @@ def test_no_rule_outside_the_palette_carries_a_coloured_literal():
     assert not offenders, (
         "coloured literals outside the palette; use a token, with color-mix if "
         f"it needs alpha: {offenders}")
+
+
+# The stylesheet is not the only place a colour can hide. These three checks
+# exist because each of them caught something real: the browser chrome colour
+# was still the FIRST palette's page colour, the map legend was drawn from
+# literals in JavaScript, and a decorative sweet had a palette baked into a
+# data URI with no way to follow the current one.
+
+JS = (Path(__file__).resolve().parents[2] / "frontend" / "assets" / "app.js").read_text()
+HTML = (Path(__file__).resolve().parents[2] / "frontend" / "index.html").read_text()
+MANIFEST = (Path(__file__).resolve().parents[2] / "frontend" / "manifest.webmanifest").read_text()
+
+
+def test_browser_chrome_colour_matches_the_page_background():
+    """A <meta theme-color> and the manifest cannot use a custom property, so
+    they are the one place a literal is unavoidable -- and therefore the one
+    place a stale palette survives unnoticed. Both must equal --bg.
+    """
+    light = LIGHT["bg"].upper()
+    dark = DARK["bg"].upper()
+    metas = re.findall(r'<meta name="theme-color" content="(#[0-9A-Fa-f]{6})"', HTML)
+    assert metas, "no theme-color meta found"
+    assert [m.upper() for m in metas] == [light, dark], (
+        f"theme-color {metas} should be light {light} then dark {dark}")
+    for key in ("background_color", "theme_color"):
+        got = re.search(rf'"{key}"\s*:\s*"(#[0-9A-Fa-f]{{6}})"', MANIFEST)
+        assert got, f"{key} missing from the manifest"
+        assert got.group(1).upper() == light, (
+            f"manifest {key} is {got.group(1)}, should be --bg {light}")
+
+
+def test_the_script_draws_markers_from_tokens():
+    """The map legend and every pin are built from one table in app.js. It held
+    the previous palette's hexes, so the map kept rendering in it while the rest
+    of the app moved on. Every consumer injects the SVG into the DOM rather than
+    serialising it, so var() resolves and the markers follow a theme change.
+    """
+    table = JS[JS.index("var MARKERS = {"):JS.index("function markerSvg(")]
+    assert not re.search(r"#[0-9A-Fa-f]{6}", table), (
+        "the marker table carries a colour literal: "
+        f"{re.findall(r'#[0-9A-Fa-f]{6}', table)}")
+    for role in ("--ok-line", "--warn-line", "--danger-line", "--info-line"):
+        assert f"var({role})" in table, f"{role} is not used by any marker"
+
+
+def test_no_coloured_literal_anywhere_in_the_frontend():
+    """Entities and encodings are how the earlier audits were fooled: "Type&nbsp;1"
+    hid from a search for "Type 1", and %23E46B43 inside a data URI hid from a
+    search for #E46B43. This decodes before it looks.
+    """
+    import html as html_mod
+    import urllib.parse
+
+    retired = {"fff8f2", "04284d", "2aa7c9", "e6b5c3", "c2ded0", "06628d",
+               "e46b43", "f91a10", "edb195", "3c0f0f", "1d4e73", "5e9a7b"}
+    for name, text in (("index.html", HTML), ("app.js", JS),
+                       ("manifest.webmanifest", MANIFEST), ("styles.css", CSS)):
+        decoded = urllib.parse.unquote(html_mod.unescape(text)).lower()
+        body = decoded[decoded.index("h1,h2,h3"):] if name == "styles.css" else decoded
+        for hexv in retired:
+            assert f"#{hexv}" not in body, (
+                f"{name} still carries the retired colour #{hexv}")

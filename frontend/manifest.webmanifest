@@ -1,11 +1,11 @@
 {
   "name": "DiabetEASE",
   "short_name": "DiabetEASE",
-  "description": "Type 1 diabetes risk information and testing-centre finder for ten municipalities of South Cotabato. Research prototype.",
+  "description": "Type 2 diabetes screening information and testing-centre finder for ten municipalities of South Cotabato. Research prototype.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#FFF8F2",
-  "theme_color": "#FFF8F2",
+  "background_color": "#FFF6F2",
+  "theme_color": "#FFF6F2",
   "icons": [
     {
       "src": "/assets/icon-192.png",
