@@ -24,43 +24,59 @@
 
 :root{
   /* surfaces */
-  --bg:#FBF6F2;
+  --bg:#FFF6F2;
   --card:#FFFFFF;
 
-  /* accents (fills, borders and icons — see contrast note above) */
-  --pink:#EDB195;
-  --mint:#CDEBF4;
-  --sky:#D7ECF4;
-  --lavender:#F7DCCD;
-  --yellow:#FBE3D6;
-
   /* text */
-  --text:#04284D;
-  --text-2:#44566B;
-  --head:#3C0F0F;
+  --text:#3A1E2B;
+  --text-2:#6E4354;
+  --head:#A8114B;
 
-  /* teal: links, primary buttons, "verified" */
-  --green:#06628D;
-  --green-ink:#06628D;
-  --green-wash:#E4F2F8;
+  /* primary action: links, filled buttons, verified */
+  --green:#0C6E5A;
+  --green-ink:#0A5A4A;
+  --green-wash:#DEF4EC;
+  --on-primary:#FFFFFF;
 
-  --line:#EBDFD7;
-  --line-strong:#D9C6BB;
-  --focus:#2AA7C9;
+  /* lines and focus */
+  --line:#F6DCE5;
+  --line-strong:#AD7F94;
+  --focus:#A8114B;
 
-  --danger-ink:#A60F08; --danger-bg:#FDE8E6; --danger-line:#F91A10;
-  --warn-ink:#8A3414;   --warn-bg:#FCEEE6;   --warn-line:#E46B43;
-  --info-ink:#06628D;   --info-bg:#E6F5FA;   --info-line:#2AA7C9;
-  --ok-ink:#06628D;     --ok-bg:#E4F2F8;     --ok-line:#2AA7C9;
+  /* candy fills, each with the ink that is legible on it */
+  --pink:#FFA9C9;
+  --pink-ink:#73102F;
+  --mint:#A4E5CB;
+  --mint-ink:#0A4738;
+  --sky:#A6D8F2;
+  --sky-ink:#0A3B58;
+  --lavender:#D3B4EA;
+  --lavender-ink:#3C1860;
+  --yellow:#FFDF8A;
+  --yellow-ink:#5A3C00;
 
-  /* navy sidebar, so the workspace stays the brightest thing on screen */
-  --rail-bg:#04284D;
-  --rail-text:#E7EEF5;
-  --rail-dim:#EDB195;
+  /* status: a lightness ramp, not only a hue change */
+  --ok-ink:#0A5A4A;
+  --ok-bg:#DEF4EC;
+  --ok-line:#2AA07E;
+  --warn-ink:#6F3A08;
+  --warn-bg:#FFF0DD;
+  --warn-line:#A25613;
+  --danger-ink:#8F0B29;
+  --danger-bg:#FFE7ED;
+  --danger-line:#8C0E34;
+  --info-ink:#0E4E75;
+  --info-bg:#E7F4FD;
+  --info-line:#2A80BE;
+
+  /* the sidebar, dark in both themes */
+  --rail-bg:#2B1336;
+  --rail-text:#F7E8F0;
+  --rail-dim:#FFB5D2;
 
   --r-sm:8px; --r-md:12px; --r-lg:18px; --r-pill:999px;
-  --sh-1:0 1px 2px rgba(4,40,77,.06), 0 2px 8px rgba(4,40,77,.05);
-  --sh-2:0 2px 6px rgba(4,40,77,.08), 0 10px 22px rgba(4,40,77,.09);
+  --sh-1:0 1px 2px rgba(58,30,43,.05), 0 2px 8px rgba(58,30,43,.05);
+  --sh-2:0 2px 6px rgba(58,30,43,.08), 0 10px 22px rgba(58,30,43,.09);
 
   --font:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-head:"Fredoka", "Inter", system-ui, sans-serif;
@@ -78,30 +94,116 @@
    explicit choice, the second the system preference when the user left the
    theme on "auto". */
 :root[data-theme="dark"]{
-  --bg:#071A2E; --card:#0C2540; --line:#1C3A5A; --line-strong:#2A4C70;
-  --text:#EAF1F8; --text-2:#A9BDD1; --head:#F4C9B4;
-  --green:#2AA7C9; --green-ink:#7FD0E6; --green-wash:#0F3350;
-  --danger-ink:#FFB1AB; --danger-bg:#3A1210; --danger-line:#F91A10;
-  --warn-ink:#F6BFA6;   --warn-bg:#3A1D12;   --warn-line:#E46B43;
-  --info-ink:#9ADCEE;   --info-bg:#0F3350;   --info-line:#2AA7C9;
-  --ok-ink:#9ADCEE;     --ok-bg:#0F3350;     --ok-line:#2AA7C9;
-  --rail-bg:#041A31; --rail-text:#E7EEF5; --rail-dim:#EDB195;
-  --focus:#EDB195;
-  --sh-1:0 1px 2px rgba(0,0,0,.3), 0 4px 12px rgba(0,0,0,.25);
-  --sh-2:0 2px 6px rgba(0,0,0,.35), 0 12px 28px rgba(0,0,0,.4);
+  /* surfaces */
+  --bg:#1C0E20;
+  --card:#2A1831;
+
+  /* text */
+  --text:#F9EAF1;
+  --text-2:#D2AFC1;
+  --head:#FFAECC;
+
+  /* primary action: links, filled buttons, verified */
+  --green:#54D6B4;
+  --green-ink:#7FE7CA;
+  --green-wash:#123A31;
+  --on-primary:#07241D;
+
+  /* lines and focus */
+  --line:#3E2344;
+  --line-strong:#9C78A6;
+  --focus:#FFAECC;
+
+  /* candy fills, each with the ink that is legible on it */
+  --pink:#4C1229;
+  --pink-ink:#FFC2D8;
+  --mint:#0F3A30;
+  --mint-ink:#8FE8CC;
+  --sky:#0E3146;
+  --sky-ink:#A9DCF7;
+  --lavender:#331A4A;
+  --lavender-ink:#DCBFF2;
+  --yellow:#3A2A08;
+  --yellow-ink:#FFE0A0;
+
+  /* status: a lightness ramp, not only a hue change */
+  --ok-ink:#7FE7CA;
+  --ok-bg:#123A31;
+  --ok-line:#2D7561;
+  --warn-ink:#FFCE97;
+  --warn-bg:#3A2110;
+  --warn-line:#BD7935;
+  --danger-ink:#FFB3C4;
+  --danger-bg:#3C101F;
+  --danger-line:#FF7396;
+  --info-ink:#9FD7F7;
+  --info-bg:#0E2F47;
+  --info-line:#4FA8DC;
+
+  /* the sidebar, dark in both themes */
+  --rail-bg:#190A20;
+  --rail-text:#F7E8F0;
+  --rail-dim:#FFB5D2;
+
+  --sh-1:0 1px 2px rgba(0,0,0,.35), 0 4px 12px rgba(0,0,0,.3);
+  --sh-2:0 2px 6px rgba(0,0,0,.45), 0 12px 28px rgba(0,0,0,.45);
   color-scheme:dark;
 }
 @media (prefers-color-scheme: dark){
   :root[data-theme="auto"]{
-    --bg:#071A2E; --card:#0C2540; --line:#1C3A5A; --line-strong:#2A4C70;
-    --text:#EAF1F8; --text-2:#A9BDD1; --head:#F4C9B4;
-    --green:#2AA7C9; --green-ink:#7FD0E6; --green-wash:#0F3350;
-    --danger-ink:#FFB1AB; --danger-bg:#3A1210; --danger-line:#F91A10;
-    --warn-ink:#F6BFA6;   --warn-bg:#3A1D12;   --warn-line:#E46B43;
-    --info-ink:#9ADCEE;   --info-bg:#0F3350;   --info-line:#2AA7C9;
-    --ok-ink:#9ADCEE;     --ok-bg:#0F3350;     --ok-line:#2AA7C9;
-    --rail-bg:#041A31;
-    --focus:#EDB195;
+    /* surfaces */
+    --bg:#1C0E20;
+    --card:#2A1831;
+
+    /* text */
+    --text:#F9EAF1;
+    --text-2:#D2AFC1;
+    --head:#FFAECC;
+
+    /* primary action: links, filled buttons, verified */
+    --green:#54D6B4;
+    --green-ink:#7FE7CA;
+    --green-wash:#123A31;
+    --on-primary:#07241D;
+
+    /* lines and focus */
+    --line:#3E2344;
+    --line-strong:#9C78A6;
+    --focus:#FFAECC;
+
+    /* candy fills, each with the ink that is legible on it */
+    --pink:#4C1229;
+    --pink-ink:#FFC2D8;
+    --mint:#0F3A30;
+    --mint-ink:#8FE8CC;
+    --sky:#0E3146;
+    --sky-ink:#A9DCF7;
+    --lavender:#331A4A;
+    --lavender-ink:#DCBFF2;
+    --yellow:#3A2A08;
+    --yellow-ink:#FFE0A0;
+
+    /* status: a lightness ramp, not only a hue change */
+    --ok-ink:#7FE7CA;
+    --ok-bg:#123A31;
+    --ok-line:#2D7561;
+    --warn-ink:#FFCE97;
+    --warn-bg:#3A2110;
+    --warn-line:#BD7935;
+    --danger-ink:#FFB3C4;
+    --danger-bg:#3C101F;
+    --danger-line:#FF7396;
+    --info-ink:#9FD7F7;
+    --info-bg:#0E2F47;
+    --info-line:#4FA8DC;
+
+    /* the sidebar, dark in both themes */
+    --rail-bg:#190A20;
+    --rail-text:#F7E8F0;
+    --rail-dim:#FFB5D2;
+
+    --sh-1:0 1px 2px rgba(0,0,0,.35), 0 4px 12px rgba(0,0,0,.3);
+    --sh-2:0 2px 6px rgba(0,0,0,.45), 0 12px 28px rgba(0,0,0,.45);
     color-scheme:dark;
   }
 }
@@ -201,8 +303,8 @@ button{font:inherit}
 }
 .pill .dot{width:8px;height:8px;border-radius:50%;background:var(--text-2);flex:0 0 auto}
 .pill.is-ok .dot{background:var(--green)}
-.pill.is-warn .dot{background:#E8C64A}
-.pill.is-bad .dot{background:#D4607C}
+.pill.is-warn .dot{background:var(--warn-line)}
+.pill.is-bad .dot{background:var(--danger-line)}
 
 .burger{
   display:none; min-height:40px; min-width:40px; align-items:center; justify-content:center;
@@ -239,12 +341,12 @@ button{font:inherit}
 .stat .v{font-family:var(--font-head); font-size:1.45rem; font-weight:600; margin:8px 0 2px; line-height:1.15}
 
 .banner{
-  border-radius:var(--r-lg); padding:26px 22px; color:#F7EDF6;
-  background:#3A2E42;
+  border-radius:var(--r-lg); padding:26px 22px; color:var(--rail-text);
+  background:var(--rail-bg);
   box-shadow:var(--sh-2);
 }
-.banner h2{color:#fff; margin-bottom:.3em}
-.banner p{color:#E4D6E6; margin-bottom:0}
+.banner h2{color:var(--rail-text); margin-bottom:.3em}
+.banner p{color:var(--rail-dim); margin-bottom:0}
 .banner .eyebrow{font-size:.71rem; letter-spacing:.14em; text-transform:uppercase; color:var(--mint); margin-bottom:8px}
 
 /* ---------------------------------------------------------------- notes */
@@ -352,7 +454,7 @@ tr:last-child td{border-bottom:0}
 .chatfab{
   position:fixed; z-index:45; right:18px; bottom:calc(18px + env(safe-area-inset-bottom,0px));
   width:58px; height:58px; border-radius:50%; cursor:pointer;
-  background:var(--mint); border:2px solid var(--card); color:#07301E;
+  background:var(--mint); border:2px solid var(--card); color:var(--mint-ink);
   box-shadow:var(--sh-2); display:grid; place-items:center;
 }
 .chatpanel{
@@ -371,7 +473,7 @@ tr:last-child td{border-bottom:0}
 .iconbtn:hover{background:var(--bg)}
 .chatlog{flex:1; overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:9px; background:var(--bg)}
 
-:root[data-theme="dark"] .bubble.me{background:#2F5A7C; color:#EAF5FD}
+:root[data-theme="dark"] .bubble.me{background:var(--green); color:var(--on-primary)}
 
 .bubble p{margin:0 0 .5em; max-width:none} .bubble p:last-child{margin:0}
 .chatsug{display:flex; flex-wrap:wrap; gap:6px; padding:10px 14px 0}
@@ -414,6 +516,8 @@ tr:last-child td{border-bottom:0}
   .main{margin-left:0}
   .view{display:none !important}
   .view#v-results{display:block !important}
+  /* Literal values on purpose: paper is white whatever the screen theme says,
+     so print must NOT follow the tokens. */
   body{background:#fff}
   .card{box-shadow:none; border:1px solid #999; break-inside:avoid}
   .view#v-results::after{
@@ -463,8 +567,14 @@ tr:last-child td{border-bottom:0}
 
 .pin-dot{
   display:grid; place-items:center; width:26px; height:26px; border-radius:50% 50% 50% 0;
-  transform:rotate(-45deg); border:2px solid #fff; box-shadow:0 2px 6px rgba(0,0,0,.3);
-  font-size:.62rem; font-weight:700; color:#fff;
+  /* The pin sits on a map tile, not on an app surface, so its ring and glyph
+     stay a light value in both themes rather than following --card. Known
+     residual: a light glyph on the lightest status fill measures about 3.3:1,
+     under AA for text this small. Status is also carried by the pin's shape,
+     the legend and the popup. */
+  transform:rotate(-45deg); border:2px solid var(--rail-text);
+  box-shadow:0 2px 6px rgba(0,0,0,.3);
+  font-size:.62rem; font-weight:700; color:var(--rail-text);
 }
 .pin-dot span{transform:rotate(45deg)}
 
@@ -498,7 +608,7 @@ tr:last-child td{border-bottom:0}
 /* -------------------------------------------------------------- avatar */
 .whoami{display:flex; align-items:center; gap:8px; font-size:.82rem; color:var(--text-2)}
 .rolebadge{font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em;
-  padding:2px 7px; border-radius:999px; background:var(--lavender); color:#3B2A63}
+  padding:2px 7px; border-radius:999px; background:var(--lavender); color:var(--lavender-ink)}
 
 /* --------------------------------------------------- draggable chat */
 .chatpanel.dragging{transition:none; user-select:none}
@@ -535,38 +645,38 @@ a{color:var(--green-ink)}
 
 /* buttons: white labels on teal; the old dark-green label failed on teal */
 
-.btn-soft{background:var(--pink); border-color:#E09B7A; color:#04284D}
-.segmented button[aria-pressed="true"]{background:var(--green); color:#FFFFFF}
-.chatfab{background:var(--card); border:3px solid #2AA7C9}
+.btn-soft{background:var(--pink); border-color:var(--pink); color:var(--pink-ink)}
+.segmented button[aria-pressed="true"]{background:var(--green); color:var(--on-primary)}
+.chatfab{background:var(--card); border:3px solid var(--mint-ink)}
 
-.banner{background:#04284D}
-.banner .eyebrow{color:#EDB195}
+.banner{background:var(--rail-bg)}
+.banner .eyebrow{color:var(--rail-dim)}
 .modebanner{background:var(--warn-bg); border-bottom-color:var(--warn-line)}
 
 /* sidebar: navy, so the workspace stays the brightest thing on screen */
 
 .rail a[aria-current="page"]{
-  background:#2AA7C9; color:#04284D; border-left-color:#EDB195; font-weight:700;
+  background:var(--mint); color:var(--mint-ink); border-left-color:var(--rail-dim); font-weight:700;
 }
 
 .rail-foot{border-top-color:rgba(255,255,255,.10)}
-.railtoggle{color:#A9BDD1; border-color:rgba(255,255,255,.15)}
+.railtoggle{color:var(--rail-dim); border-color:rgba(255,255,255,.15)}
 .railtoggle:hover{background:rgba(255,255,255,.07)}
 .topbar{border-bottom-color:var(--line)}
 
 /* status chips follow the palette: teal = verified, orange = unconfirmed,
    red = outdated. Every chip also carries a text label. */
-.tag-ok{background:#E4F2F8; border-color:#2AA7C9; color:#06628D}
-.tag-warn{background:#FCEEE6; border-color:#E46B43; color:#8A3414}
-.tag-bad{background:#FDE8E6; border-color:#F91A10; color:#A60F08}
+.tag-ok{background:var(--ok-bg); border-color:var(--ok-line); color:var(--green-ink)}
+.tag-warn{background:var(--warn-bg); border-color:var(--warn-line); color:var(--warn-ink)}
+.tag-bad{background:var(--danger-bg); border-color:var(--danger-line); color:var(--danger-ink)}
 
 /* map pins */
-.pin-verified{background:#06628D}
-.pin-unconfirmed{background:#E46B43}
-.pin-outdated{background:#F91A10}
-.pin-muni{background:#04284D}
-.pin-pharmacy{background:#2AA7C9; border-radius:6px 6px 6px 0}
-.pin-pharmacy span{color:#04284D}
+.pin-verified{background:var(--green)}
+.pin-unconfirmed{background:var(--warn-line)}
+.pin-outdated{background:var(--danger-line)}
+.pin-muni{background:var(--rail-bg)}
+.pin-pharmacy{background:var(--info-line); border-radius:6px 6px 6px 0}
+.pin-pharmacy span{color:var(--rail-text)}
 
 /* ------------------------------------------------------- candy markers */
 /* A wrapped sweet beside the active page, in the sidebar and on the title. */
@@ -583,10 +693,10 @@ a{color:var(--green-ink)}
 }
 
 /* ---------------------------------------------------------- candy loader */
-.boot{background:#04284D}
-.boot-name{color:#FFFFFF}
-.boot-name i{color:#EDB195}
-.boot-msg{color:#A9BDD1}
+.boot{background:var(--rail-bg)}
+.boot-name{color:var(--rail-text)}
+.boot-name i{color:var(--rail-dim)}
+.boot-msg{color:var(--rail-dim)}
 .boot-bar{display:none}
 .candyloader{position:relative; width:150px; height:64px}
 .candyloader .sweet{
@@ -614,11 +724,11 @@ a{color:var(--green-ink)}
 /* The avatar is a bust crop on a transparent square. A circle with a soft
    fill frames it; object-fit:cover inside the circle keeps the head whole
    while the circle hides the hand and tablet at the corners. */
-.chatfab{width:62px; height:62px; padding:0; overflow:hidden; background:#CDEBF4}
+.chatfab{width:62px; height:62px; padding:0; overflow:hidden; background:var(--mint)}
 .chatfab img{width:100%; height:100%; object-fit:cover; display:block}
-.candie-av{width:40px; height:40px; border-radius:50%; object-fit:cover; background:#CDEBF4; flex:0 0 auto}
+.candie-av{width:40px; height:40px; border-radius:50%; object-fit:cover; background:var(--mint); flex:0 0 auto}
 .candie-hero{width:150px; height:150px; object-fit:contain}
-.boot img{width:96px; height:96px; border-radius:50%; object-fit:cover; background:#CDEBF4}
+.boot img{width:96px; height:96px; border-radius:50%; object-fit:cover; background:var(--mint)}
 
 /* ------------------------------------------------------- range scale */
 .rangescale{margin-top:10px}
@@ -631,12 +741,12 @@ a{color:var(--green-ink)}
 .rs-track{position:relative; display:flex; height:16px; border-radius:999px; overflow:hidden;
   border:1px solid var(--line-strong)}
 .rs-band{height:100%}
-.rs-band.b-low{background:#2AA7C9}
-.rs-band.b-normal{background:#CDEBF4}
-.rs-band.b-mid{background:#E46B43}
-.rs-band.b-high{background:#F91A10}
+.rs-band.b-low{background:var(--info-line)}
+.rs-band.b-normal{background:var(--mint)}
+.rs-band.b-mid{background:var(--warn-line)}
+.rs-band.b-high{background:var(--danger-line)}
 .rs-marker{position:absolute; top:-6px; width:4px; height:28px; margin-left:-2px;
-  background:#04284D; border-radius:2px; box-shadow:0 0 0 2px #fff}
+  background:var(--rail-bg); border-radius:2px; box-shadow:0 0 0 2px var(--card)}
 .rs-ticks{position:relative; height:16px; margin-top:4px; font-size:.7rem; color:var(--text-2)}
 .rs-ticks span{position:absolute; transform:translateX(-50%); white-space:nowrap}
 .rs-ticks span.edge-l{transform:none}
@@ -644,29 +754,29 @@ a{color:var(--green-ink)}
 .rs-labels{display:flex; flex-wrap:wrap; gap:6px 14px; margin-top:6px; font-size:.75rem; color:var(--text-2)}
 .rs-labels i{display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:5px; vertical-align:-1px}
 .rs-read{margin-top:8px; font-size:.86rem; font-weight:600}
-.rs-read.t-low{color:#06628D}
+.rs-read.t-low{color:var(--green-ink)}
 .rs-read.t-normal{color:var(--text)}
-.rs-read.t-mid{color:#8A3414}
-.rs-read.t-high{color:#A60F08}
+.rs-read.t-mid{color:var(--warn-ink)}
+.rs-read.t-high{color:var(--danger-ink)}
 .rs-note{margin-top:4px; font-size:.75rem; color:var(--text-2)}
 
 /* ----------------------------------------------------- map legend */
 
 .maplegend .lg{display:inline-block; width:12px; height:12px; border-radius:50% 50% 50% 0;
-  transform:rotate(-45deg); margin-right:7px; vertical-align:-1px; border:1.5px solid #fff;
+  transform:rotate(-45deg); margin-right:7px; vertical-align:-1px; border:1.5px solid var(--card);
   box-shadow:0 0 0 1px var(--line-strong)}
-.lg-verified{background:#06628D}
-.lg-unconfirmed{background:#E46B43}
-.lg-outdated{background:#F91A10}
-.lg-muni{background:#04284D}
-.lg-pharmacy{background:#2AA7C9; border-radius:3px !important}
+.lg-verified{background:var(--green)}
+.lg-unconfirmed{background:var(--warn-line)}
+.lg-outdated{background:var(--danger-line)}
+.lg-muni{background:var(--rail-bg)}
+.lg-pharmacy{background:var(--info-line); border-radius:3px !important}
 
 /* services, readable at a glance */
 .svcrow{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px}
 .svc{display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:8px;
   font-size:.8rem; font-weight:600; border:1px solid}
-.svc.yes{background:#E4F2F8; border-color:#2AA7C9; color:#04284D}
-.svc.yes::before{content:"\2713"; font-weight:800; color:#06628D}
+.svc.yes{background:var(--ok-bg); border-color:var(--ok-line); color:var(--ok-ink)}
+.svc.yes::before{content:"\2713"; font-weight:800; color:var(--green-ink)}
 .svc.no{background:transparent; border-style:dashed; border-color:var(--line-strong); color:var(--text-2); font-weight:500}
 .svc.no::before{content:"?"; font-weight:800}
 .svchead{font-size:.72rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
@@ -674,8 +784,8 @@ a{color:var(--green-ink)}
 .leaflet-popup-content .svcrow{margin-top:6px}
 .leaflet-popup-content .svc{font-size:.74rem; padding:3px 8px}
 .pop-type{display:inline-block; font-size:.68rem; font-weight:700; text-transform:uppercase;
-  letter-spacing:.06em; padding:2px 7px; border-radius:6px; background:#04284D; color:#fff; margin-bottom:6px}
-.pop-type.ph{background:#2AA7C9; color:#04284D}
+  letter-spacing:.06em; padding:2px 7px; border-radius:6px; background:var(--rail-bg); color:var(--rail-text); margin-bottom:6px}
+.pop-type.ph{background:var(--info-line); color:var(--rail-text)}
 
 /* ---------------------------------------------- nearby list on results */
 .nearrow{padding:12px 0; border-bottom:1px solid var(--line)}
@@ -860,10 +970,10 @@ a{color:var(--green-ink)}
 .rail-note{margin:16px 10px 0; padding:15px 14px; border:1px solid rgba(255,255,255,.14);
   border-radius:var(--r-lg); background:rgba(255,255,255,.06)}
 .note-icon{display:grid; place-items:center; width:31px; height:31px; margin-bottom:11px;
-  border-radius:10px; background:rgba(42,167,201,.22); color:#9ADCEE}
-.rail-note strong{display:block; font-family:var(--font-head); font-size:.84rem; color:#FFFFFF}
-.rail-note p{margin:5px 0 11px; color:#A9BDD1; font-size:.72rem; line-height:1.55; max-width:none}
-.privacy-label{display:flex; align-items:center; gap:7px; color:#9ADCEE; font-size:.68rem}
+  border-radius:10px; background:rgba(42,167,201,.22); color:var(--rail-dim)}
+.rail-note strong{display:block; font-family:var(--font-head); font-size:.84rem; color:var(--rail-text)}
+.rail-note p{margin:5px 0 11px; color:var(--rail-dim); font-size:.72rem; line-height:1.55; max-width:none}
+.privacy-label{display:flex; align-items:center; gap:7px; color:var(--rail-dim); font-size:.68rem}
 .privacy-label i{width:7px; height:7px; border-radius:50%; background:var(--mint); flex:0 0 auto}
 :root[data-rail="collapsed"] .rail-note{display:none}
 @media (max-width:1023px){ :root[data-rail="collapsed"] .rail-note{display:block} }
@@ -872,7 +982,7 @@ a{color:var(--green-ink)}
 
 .welcome-copy .btnrow{margin-top:16px}
 .btn-light{background:rgba(255,255,255,.72); border-color:var(--line-strong); color:var(--green-ink)}
-.btn-light:hover{background:#FFFFFF}
+.btn-light:hover{background:var(--card)}
 
 @media (max-width:860px){
   .welcome{flex-direction:column; align-items:flex-start; padding:22px}
@@ -1048,9 +1158,9 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 
 /* ---- Sidebar: dark navy ---- */
 .rail {
-  background: #04284D;
-  border-right-color: #04284D;
-  color: #E7EEF5;
+  background: var(--rail-bg);
+  border-right-color: var(--green-ink);
+  color: var(--rail-text);
 }
 .rail-brand {
   border-bottom-color: rgba(255,255,255,.10);
@@ -1059,16 +1169,16 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 }
 .rail-brand .logo-drop {
   width: 36px; height: 36px; flex: 0 0 auto;
-  background: #CDEBF4; border-radius: 50%;
+  background: var(--mint); border-radius: 50%;
   display: grid; place-items: center;
 }
-.rail-brand .logo-drop svg { color: #06628D; }
-.rail-brand b { color: #FFFFFF; font-size: 1.1rem; letter-spacing: -.01em; }
-.rail-brand b i { font-style: normal; color: #EDB195; }
-.rail-brand small { color: #A9BDD1; font-size: .66rem; }
+.rail-brand .logo-drop svg { color: var(--green-ink); }
+.rail-brand b { color: var(--rail-text); font-size: 1.1rem; letter-spacing: -.01em; }
+.rail-brand b i { font-style: normal; color: var(--rail-dim); }
+.rail-brand small { color: var(--rail-dim); font-size: .66rem; }
 
 .rail-group > h4 {
-  color: #A9BDD1;
+  color: var(--rail-dim);
   font-size: .62rem;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -1078,7 +1188,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 }
 
 .rail a {
-  color: #E7EEF5;
+  color: var(--rail-text);
   border-left: 0;
   border-radius: 10px;
   margin: 2px 8px;
@@ -1087,15 +1197,15 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 }
 .rail a:hover { background: rgba(255,255,255,.07); }
 .rail a[aria-current="page"] {
-  background: #CDEBF4;
-  color: #04284D;
+  background: var(--mint);
+  color: var(--mint-ink);
   font-weight: 600;
   border-left: 0;
 }
-.rail a[aria-current="page"] .ico { color: #04284D; }
-.rail a[aria-current="page"] .lbl { color: #04284D; }
-.rail a .ico { color: #7FD0E6; }
-.rail a .lbl { color: #E7EEF5; }
+.rail a[aria-current="page"] .ico { color: var(--mint-ink); }
+.rail a[aria-current="page"] .lbl { color: var(--mint-ink); }
+.rail a .ico { color: var(--rail-dim); }
+.rail a .lbl { color: var(--rail-text); }
 
 /* candy icon on the active item, right-aligned */
 .rail a[aria-current="page"] .navcandy { display: inline-block; margin-left: auto; }
@@ -1113,22 +1223,22 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
   width: 32px; height: 32px; border-radius: 10px;
   background: rgba(42,167,201,.22);
   display: grid; place-items: center;
-  color: #9ADCEE; margin-bottom: 10px;
+  color: var(--rail-dim); margin-bottom: 10px;
 }
 .rail-bottom strong {
-  display: block; color: #FFFFFF; font-family: var(--font-head);
+  display: block; color: var(--rail-text); font-family: var(--font-head);
   font-size: .88rem; margin-bottom: 4px;
 }
 .rail-bottom p {
-  color: #A9BDD1; font-size: .72rem; margin: 0 0 10px; line-height: 1.5;
+  color: var(--rail-dim); font-size: .72rem; margin: 0 0 10px; line-height: 1.5;
   max-width: none;
 }
 .rail-bottom .rb-priv {
   display: flex; align-items: center; gap: 7px;
-  color: #9ADCEE; font-size: .68rem;
+  color: var(--rail-dim); font-size: .68rem;
 }
 .rail-bottom .rb-priv i {
-  width: 7px; height: 7px; border-radius: 50%; background: #CDEBF4; flex: 0 0 auto;
+  width: 7px; height: 7px; border-radius: 50%; background: var(--mint); flex: 0 0 auto;
 }
 
 .rail-account {
@@ -1140,33 +1250,33 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .rail-account:hover { background: rgba(255,255,255,.05); }
 .rail-account .ra-avatar {
   width: 32px; height: 32px; border-radius: 50%;
-  background: #EDB195; color: #04284D;
+  background: var(--rail-dim); color: var(--pink-ink);
   display: grid; place-items: center;
   font-weight: 700; font-size: .78rem; flex: 0 0 auto;
 }
 .rail-account .ra-name {
-  color: #FFFFFF; font-size: .84rem; font-weight: 600;
+  color: var(--rail-text); font-size: .84rem; font-weight: 600;
   display: block; line-height: 1.2;
 }
 .rail-account .ra-sub {
-  color: #A9BDD1; font-size: .7rem; display: block;
+  color: var(--rail-dim); font-size: .7rem; display: block;
 }
 .rail-account .ra-chevron {
-  margin-left: auto; color: #A9BDD1;
+  margin-left: auto; color: var(--rail-dim);
 }
 
 /* ---- Top bar: lighter, breadcrumb style ---- */
 .topbar {
-  background: #FBF6F2;
-  border-bottom: 1px solid #EBDFD7;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
   min-height: 56px;
 }
 .topbar .crumbs {
   display: flex; align-items: center; gap: 8px;
   font-size: .82rem; color: var(--text-2);
 }
-.topbar .crumbs strong { color: #04284D; font-weight: 600; }
-.topbar .crumbs .crumb-slash { color: #D9C6BB; }
+.topbar .crumbs strong { color: var(--text); font-weight: 600; }
+.topbar .crumbs .crumb-slash { color: var(--line-strong); }
 .topbar .spacer { margin-left: auto; }
 .topbar .pill {
   background: var(--ok-bg);
@@ -1176,39 +1286,39 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 }
 .topbar .pill .dot { background: var(--green); }
 .topbar #authBtn {
-  background: #FFFFFF;
-  border-color: #D9C6BB;
-  color: #04284D;
+  background: var(--card);
+  border-color: var(--line-strong);
+  color: var(--text);
   font-weight: 600;
 }
 
 /* ---- Main area: cream background ---- */
-.work { background: #FBF6F2; }
+.work { background: var(--bg); }
 
 /* ---- Dashboard date label + title row ---- */
 .dash-date {
   font-size: .7rem; font-weight: 700; letter-spacing: .14em;
-  text-transform: uppercase; color: #06628D; margin-bottom: 6px;
+  text-transform: uppercase; color: var(--green-ink); margin-bottom: 6px;
 }
 .dash-title-row {
   display: flex; align-items: flex-end; justify-content: space-between;
   gap: 16px; flex-wrap: wrap; margin-bottom: 22px;
 }
-.dash-title-row h1 { margin: 0; font-size: 1.75rem; color: #04284D; letter-spacing: -.01em; }
-.dash-title-row .subtitle { color: #44566B; margin: 4px 0 0; font-size: .92rem; }
+.dash-title-row h1 { margin: 0; font-size: 1.75rem; color: var(--text); letter-spacing: -.01em; }
+.dash-title-row .subtitle { color: var(--text-2); margin: 4px 0 0; font-size: .92rem; }
 .chip-step {
   display: inline-flex; align-items: center; gap: 7px;
   padding: 7px 14px; border-radius: 999px;
-  background: #FFFFFF; border: 1px solid #D9C6BB;
-  color: #04284D; font-size: .82rem; font-weight: 600;
+  background: var(--card); border: 1px solid var(--line-strong);
+  color: var(--text); font-size: .82rem; font-weight: 600;
 }
-.chip-step svg { color: #E46B43; }
+.chip-step svg { color: var(--warn-line); }
 
 /* ---- Welcome card: mint gradient ---- */
 .welcome {
   position: relative; overflow: hidden;
-  background: linear-gradient(108deg, #E4F2F8 0%, #FFFFFF 55%, #CDEBF4 140%);
-  border: 1px solid #D9C6BB;
+  background: linear-gradient(108deg, var(--ok-bg) 0%, var(--card) 55%, var(--mint) 140%);
+  border: 1px solid var(--line-strong);
   border-radius: 18px;
   padding: 32px 36px;
   min-height: 220px;
@@ -1220,24 +1330,24 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .welcome-eyebrow {
   display: flex; align-items: center; gap: 7px;
   font-size: .64rem; font-weight: 800; letter-spacing: .14em;
-  text-transform: uppercase; color: #06628D; margin-bottom: 10px;
+  text-transform: uppercase; color: var(--green-ink); margin-bottom: 10px;
 }
 .welcome-copy h2 {
   margin: 0 0 10px; font-size: clamp(1.4rem, 3.4vw, 1.75rem);
-  color: #04284D; letter-spacing: -.01em; line-height: 1.2;
+  color: var(--text); letter-spacing: -.01em; line-height: 1.2;
 }
 .welcome-copy > p {
-  margin: 0; color: #44566B; font-size: .92rem; line-height: 1.6;
+  margin: 0; color: var(--text-2); font-size: .92rem; line-height: 1.6;
   max-width: 46ch;
 }
 .welcome-actions { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
 .welcome-actions .btn-primary {
-  background: #06628D; color: #FFFFFF; border-color: #06628D;
+  background: var(--green); color: var(--on-primary); border-color: var(--green);
   min-height: 44px;
 }
-.welcome-actions .btn-primary:hover { background: #04284D; border-color: #04284D; }
+.welcome-actions .btn-primary:hover { background: var(--green-ink); border-color: var(--green-ink); }
 .welcome-actions .btn-light {
-  background: #FFFFFF; border-color: #D9C6BB; color: #04284D;
+  background: var(--card); border-color: var(--line-strong); color: var(--text);
   min-height: 44px;
 }
 .welcome-actions .btn-light:hover { background: var(--bg); }
@@ -1253,16 +1363,16 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
   width: 160px; height: 160px; object-fit: contain;
 }
 .orbit {
-  position: absolute; border: 1px solid #D9C6BB; border-radius: 50%;
+  position: absolute; border: 1px solid var(--line-strong); border-radius: 50%;
   opacity: .7;
 }
 .orbit-one { width: 180px; height: 180px; }
-.orbit-two { width: 140px; height: 140px; border-color: #CDEBF4; }
+.orbit-two { width: 140px; height: 140px; border-color: var(--mint); }
 .mascot-caption {
   position: absolute; bottom: -4px; z-index: 3;
   display: inline-flex; align-items: center; gap: 6px;
-  padding: 6px 12px; border: 1px solid #EBDFD7; border-radius: 999px;
-  background: rgba(255,255,255,.92); color: #44566B;
+  padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px;
+  background: rgba(255,255,255,.92); color: var(--text-2);
   font-size: .7rem; font-weight: 600; white-space: nowrap;
 }
 .mascot-caption i {
@@ -1270,7 +1380,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 }
 .welcome-deco {
   position: absolute; width: 120px; height: 120px;
-  border: 1px solid #CDEBF4; border-radius: 50%; opacity: .5;
+  border: 1px solid var(--mint); border-radius: 50%; opacity: .5;
 }
 .deco-a { top: -80px; right: 220px; }
 .deco-b { bottom: -86px; left: 40%; }
@@ -1286,11 +1396,11 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
   display: flex; align-items: flex-end; justify-content: space-between;
   gap: 16px; margin: 28px 0 14px; flex-wrap: wrap;
 }
-.section-label h2 { margin: 0 0 3px; font-size: 1.1rem; color: #04284D; }
+.section-label h2 { margin: 0 0 3px; font-size: 1.1rem; color: var(--text); }
 .section-label p { margin: 0; color: var(--text-2); font-size: .82rem; }
 .textlink {
   display: inline-flex; align-items: center; gap: 6px;
-  color: #06628D; font-size: .8rem; font-weight: 700;
+  color: var(--green-ink); font-size: .8rem; font-weight: 700;
   text-decoration: none; white-space: nowrap;
 }
 .textlink:hover { text-decoration: underline; }
@@ -1299,8 +1409,8 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .stat {
   display: flex; align-items: flex-start; gap: 12px;
   min-height: 108px;
-  background: #FFFFFF;
-  border: 1px solid #EBDFD7;
+  background: var(--card);
+  border: 1px solid var(--line);
   border-radius: 14px;
   padding: 16px;
   box-shadow: 0 1px 2px rgba(4,40,77,.04);
@@ -1316,28 +1426,28 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 }
 .stat-body { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
 .stat .v {
-  margin: 2px 0 0; font-size: 1.55rem; color: #04284D;
+  margin: 2px 0 0; font-size: 1.55rem; color: var(--text);
   font-family: var(--font-head); font-weight: 600;
 }
 .stat .v.sm { font-size: 1rem; margin-top: 4px; }
 .stat .n { font-size: .74rem; color: var(--text-2); }
 
-.tone-mint   { background: #E4F2F8; color: #06628D; }
-.tone-blue   { background: #D7ECF4; color: var(--info-ink); }
-.tone-peach  { background: #FCEEE6; color: #8A3414; }
-.tone-lav    { background: #FBE3D6; color: #8A3414; }
+.tone-mint   { background: var(--mint); color: var(--mint-ink); }
+.tone-blue   { background: var(--sky); color: var(--info-ink); }
+.tone-peach  { background: var(--warn-bg); color: var(--pink-ink); }
+.tone-lav    { background: var(--lavender); color: var(--lavender-ink); }
 
 /* ---- Bottom row cards ---- */
 .bottom-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
 @media (max-width: 900px) { .bottom-row { grid-template-columns: 1fr; } }
 .bottom-row .card {
-  background: #FFFFFF; border: 1px solid #EBDFD7; border-radius: 14px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
   padding: 18px; box-shadow: 0 1px 2px rgba(4,40,77,.04);
 }
 .bottom-row .card-head {
   display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
 }
-.bottom-row .card-head h2 { margin: 0; font-size: 1rem; color: #04284D; }
+.bottom-row .card-head h2 { margin: 0; font-size: 1rem; color: var(--text); }
 .bottom-row .card-head .spacer { margin-left: auto; }
 .bottom-row .card-head .tag { font-size: .72rem; }
 
@@ -1348,14 +1458,14 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 }
 .chatpanel header {
   padding: 14px 16px;
-  background: #FFFFFF;
-  border-bottom: 1px solid #EBDFD7;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
 }
 .chatpanel header .candie-av {
   width: 36px; height: 36px; border-radius: 50%;
-  background: #CDEBF4; object-fit: cover;
+  background: var(--mint); object-fit: cover;
 }
-.chatpanel header b { font-size: 1rem; color: #04284D; }
+.chatpanel header b { font-size: 1rem; color: var(--text); }
 .chatpanel header small { color: var(--green); font-size: .72rem; }
 .chatpanel header .mode-tag {
   font-size: .68rem; padding: 3px 8px; border-radius: 6px;
@@ -1365,7 +1475,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .chatday {
   align-self: center; margin: 4px 0 6px;
   padding: 3px 10px; border-radius: 999px;
-  background: #FFFFFF; border: 1px solid #EBDFD7;
+  background: var(--card); border: 1px solid var(--line);
   color: var(--text-2); font-size: .64rem; font-weight: 700;
   letter-spacing: .1em;
 }
@@ -1374,24 +1484,24 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .miniavatar {
   width: 28px; height: 28px; flex: 0 0 auto;
   border-radius: 50%; object-fit: cover;
-  background: #CDEBF4;
+  background: var(--mint);
 }
 .bubble {
   max-width: 85%; padding: 10px 13px;
   border-radius: 14px; font-size: .88rem; line-height: 1.5;
 }
 .bubble.bot {
-  background: #FFFFFF; border: 1px solid #EBDFD7;
+  background: var(--card); border: 1px solid var(--line);
   border-bottom-left-radius: 4px; align-self: flex-start;
-  color: #04284D;
+  color: var(--text);
 }
 .bubble.me {
-  background: #06628D; color: #FFFFFF;
+  background: var(--green); color: var(--on-primary);
   border-bottom-right-radius: 4px; align-self: flex-end;
 }
 .bubble.sys {
-  background: #FCEEE6; border: 1px solid #E46B43;
-  color: #8A3414; align-self: stretch; max-width: 100%;
+  background: var(--warn-bg); border: 1px solid var(--warn-line);
+  color: var(--warn-ink); align-self: stretch; max-width: 100%;
   font-size: .82rem;
 }
 .msgtime {
@@ -1403,12 +1513,12 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .prov {
   display: flex; align-items: center; gap: 6px;
   margin-top: 8px; padding-top: 7px;
-  border-top: 1px solid #EBDFD7;
+  border-top: 1px solid var(--line);
   font-size: .72rem; color: var(--text-2); line-height: 1.4;
 }
 .prov svg { flex: 0 0 auto; }
 .prov.reviewed { color: var(--ok-ink); }
-.prov.generated { color: #8A3414; font-weight: 600; }
+.prov.generated { color: var(--warn-ink); font-weight: 600; }
 
 .chatfoot {
   padding: 0 16px 14px;
@@ -1420,10 +1530,10 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .chatform { display: flex; gap: 8px; padding: 12px 16px 4px; }
 .chatform input {
   min-height: 42px; border-radius: 10px;
-  border: 1px solid #D9C6BB; background: #FFFFFF;
+  border: 1px solid var(--line-strong); background: var(--card);
 }
 .chatform .btn-primary {
-  background: #06628D; border-color: #06628D; color: #FFFFFF;
+  background: var(--green); border-color: var(--green); color: var(--on-primary);
   min-width: 42px; padding: 0 14px;
 }
 
@@ -1431,31 +1541,31 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .eyebrow {
   display: flex; align-items: center; gap: 6px;
   font-size: .64rem; font-weight: 800; letter-spacing: .14em;
-  color: #06628D; text-transform: uppercase; margin: 0 0 6px;
+  color: var(--green-ink); text-transform: uppercase; margin: 0 0 6px;
 }
 
 /* ---- Card base (lighter) ---- */
 .card {
-  background: #FFFFFF;
-  border: 1px solid #EBDFD7;
+  background: var(--card);
+  border: 1px solid var(--line);
   border-radius: 14px;
   padding: 18px;
   box-shadow: 0 1px 2px rgba(4,40,77,.04);
 }
-.card-head h2, .card-head h3 { color: #04284D; }
+.card-head h2, .card-head h3 { color: var(--text); }
 
 /* ---- Buttons ---- */
 .btn-primary {
-  background: #06628D; border-color: #06628D; color: #FFFFFF;
+  background: var(--green); border-color: var(--green); color: var(--on-primary);
 }
-.btn-primary:hover { background: #04284D; border-color: #04284D; filter: none; }
+.btn-primary:hover { background: var(--green-ink); border-color: var(--green-ink); filter: none; }
 .btn-ghost {
-  background: #FFFFFF; border-color: #D9C6BB; color: #04284D;
+  background: var(--card); border-color: var(--line-strong); color: var(--text);
 }
 .btn-ghost:hover { background: var(--bg); }
 
 /* ---- Headings ---- */
-h1, h2, h3 { color: #04284D; }
+h1, h2, h3 { color: var(--text); }
 
 /* ---- Hide old sidebar reassurance (now in rail-bottom) ---- */
 .rail-note { display: none; }

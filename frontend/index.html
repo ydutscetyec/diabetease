@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light" data-rail="expanded">
+<html lang="en" data-theme="auto" data-rail="expanded">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -834,11 +834,7 @@
         <div class="card-head"><h2>Display</h2></div>
         <div class="field">
           <label class="fl" for="setTheme">Theme</label>
-          <!-- "Match my device" and "Dark" are withheld until the dark palette
-               is fixed: the final stylesheet layer hard-codes light colours, so
-               dark mode left 26 text nodes below 1.5:1, the emergency-care
-               headings among them. Restore both options with that fix. -->
-          <select id="setTheme"><option value="light">Light</option></select>
+          <select id="setTheme"><option value="auto">Match my device</option><option value="light">Light</option><option value="dark">Dark</option></select>
         </div>
         <div class="field">
           <label class="fl" for="setDensity">Text size</label>

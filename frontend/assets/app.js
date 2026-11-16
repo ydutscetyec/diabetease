@@ -8,18 +8,13 @@
   /* =================================================== settings (local) */
   var SKEY = "diabetease.settings.v1";
   var Settings = {
-    data: { theme: "light", density: "normal", motion: false, api: "", municipality: "",
+    data: { theme: "auto", density: "normal", motion: false, api: "", municipality: "",
             tileProvider: "osm", tileUrl: "", tileAttribution: "" },
     load: function () {
       try {
         var raw = localStorage.getItem(SKEY);
         if (raw) Object.assign(this.data, JSON.parse(raw));
       } catch (e) { /* storage blocked: defaults are fine */ }
-      // A visitor who already chose "auto" or "dark" has that in storage, so
-      // changing the default alone would not reach them. Dark is unreadable
-      // until the final stylesheet layer stops hard-coding light colours, so
-      // coerce it here too. Remove this when that is fixed.
-      if (this.data.theme !== "light") this.data.theme = "light";
       this.apply();
     },
     save: function () {
@@ -2403,10 +2398,10 @@ function buildNav() {
       Settings.data.tileUrl = this.value.trim(); Settings.save(); reloadMap();
     });
     $("setReset").addEventListener("click", function () {
-      Settings.data = { theme: "light", density: "normal", motion: false, api: "", municipality: "",
+      Settings.data = { theme: "auto", density: "normal", motion: false, api: "", municipality: "",
                         tileProvider: "esri-street", tileUrl: "", tileAttribution: "" };
       Settings.save();
-      $("setTheme").value = "light"; $("setDensity").value = "normal";
+      $("setTheme").value = "auto"; $("setDensity").value = "normal";
       $("setMotion").checked = false; $("setApi").value = "";
     });
 
