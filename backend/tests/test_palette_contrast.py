@@ -179,3 +179,33 @@ def test_no_rule_outside_print_hardcodes_a_colour():
     }
     unexpected = [o for o in offenders if o not in allowed]
     assert not unexpected, f"hard-coded colours outside print: {unexpected}"
+
+
+def test_no_rule_outside_the_palette_carries_a_coloured_literal():
+    """The hole the previous version of this file left open.
+
+    It forbade hard-coded HEX values, so when the palette changed, nine
+    shadows and two tints written as rgba() kept the colours of the palette
+    before it -- rgba(4,40,77,...) is the old navy ink and
+    rgba(42,167,201,...) the old cyan -- and no test noticed. A mobile scrim
+    carried a third colour belonging to no palette at all.
+
+    A neutral veil (pure black or pure white at some alpha) cannot carry a
+    palette and reads the same under any theme, so those are allowed and named
+    below. Anything with a hue has to come from a token, mixed with color-mix
+    where translucency is needed.
+    """
+    body = CSS[CSS.index("h1,h2,h3"):]          # past the :root blocks
+    offenders = []
+    for n, line in enumerate(body.split("\n"), 1):
+        stripped = line.strip()
+        if stripped.startswith("/*") or stripped.startswith("*"):
+            continue
+        for m in re.finditer(r"rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)", line):
+            r, g, b = (int(x) for x in m.groups())
+            neutral = (r == g == b)             # black, white, or a grey
+            if not neutral:
+                offenders.append(f"{stripped[:72]}  -> rgb({r},{g},{b})")
+    assert not offenders, (
+        "coloured literals outside the palette; use a token, with color-mix if "
+        f"it needs alpha: {offenders}")
