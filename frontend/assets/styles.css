@@ -251,7 +251,18 @@ button{font:inherit}
   font-family:var(--font);
 }
 :root[data-rail="collapsed"] .rail-group{margin-bottom:16px}
-:root[data-rail="collapsed"] .rail-group > h4{text-align:center; font-size:.55rem; letter-spacing:0; margin:0 0 8px}
+
+/* Group headings will not fit a 72px rail: "Assessment" needs 61px of text in a
+   47px box, so it was rendering clipped. Hide it from sight but keep it for
+   screen readers; for sighted users the grouping is carried by the 16px gap
+   above. Scoped to >=1024px so the mobile drawer, which is always full width,
+   needs no undo rule in the max-width block. */
+@media (min-width:1024px){
+  :root[data-rail="collapsed"] .rail-group > h4{
+    position:absolute; width:1px; height:1px; padding:0; margin:0;
+    overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0;
+  }
+}
 
 .rail a{
   position:relative; display:flex; align-items:center; gap:13px; text-decoration:none; font-size:.9rem; font-weight:500; margin-bottom:6px; line-height:1.3;
@@ -1239,6 +1250,12 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .rail-bottom .rb-priv i {
   width: 7px; height: 7px; border-radius: 50%; background: var(--mint); flex: 0 0 auto;
 }
+/* This card is prose. Collapsed, its text was crushed into a 21px column
+   (61px of content), so hide the card with the rail. Same >=1024px scoping as
+   the group headings above. */
+@media (min-width:1024px){
+  :root[data-rail="collapsed"] .rail-bottom{display:none}
+}
 
 .rail-account {
   display: flex; align-items: center; gap: 10px;
@@ -1262,6 +1279,14 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 }
 .rail-account .ra-chevron {
   margin-left: auto; color: var(--rail-dim);
+}
+/* Collapsed, the name block and the chevron ran 37px past the right edge of the
+   rail (they reached x=109 in a 72px rail). Keep the avatar, centred; drop the
+   text and the chevron. The aria-label on .rail-account still names it. */
+@media (min-width:1024px){
+  :root[data-rail="collapsed"] .rail-account{justify-content:center; gap:0; padding:12px 0}
+  :root[data-rail="collapsed"] .rail-account > span:not(.ra-avatar),
+  :root[data-rail="collapsed"] .rail-account .ra-chevron{display:none}
 }
 
 /* ---- Top bar: lighter, breadcrumb style ---- */

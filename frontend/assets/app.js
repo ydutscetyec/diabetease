@@ -190,7 +190,7 @@
     {
       group: "Records", items: [
         { id: "reports", label: "Reports and history", roles: ["patient", "researcher", "admin", "guest"], icon: "M6 2h9l5 5v15H6zM14 2v6h6M9 13h8M9 17h5" },
-        { id: "research", label: "Research and evaluation", roles: ["researcher", "admin"], icon: "M5 20V10M10 20V4M15 20v-7M20 20V8" }
+        { id: "research", label: "Research & evaluation", roles: ["researcher", "admin"], icon: "M5 20V10M10 20V4M15 20v-7M20 20V8" }
       ]
     },
     {
