@@ -46,9 +46,10 @@ FACILITY_NOUNS = ("pharmacy", "pharmacies", "botika", "drugstore", "drug store",
 
 SERVICE_NAMES = {
     "glucose": "blood glucose testing", "hba1c": "HbA1c testing",
-    "ogtt": "glucose tolerance testing", "autoantibody": "islet autoantibody testing",
+    "ogtt": "glucose tolerance testing", "lipid_profile": "lipid profile testing",
     "consultation": "diabetes consultation", "insulin": "insulin",
     "glucose_supplies": "glucose meters and strips",
+    "oral_medication": "oral diabetes medicine",
 }
 
 

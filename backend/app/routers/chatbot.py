@@ -41,8 +41,8 @@ REFUSAL = (
 )
 NO_MATCH = (
     "I do not have an answer for that. I can cover symptoms, HbA1c, glucose "
-    "thresholds, islet autoantibodies, family history, the testing centre map, "
-    "and how the assessment works."
+    "thresholds, prediabetes, who should be tested, family history, the testing "
+    "centre map, and how the assessment works."
 )
 CLINICAL_DECLINE = (
     "I do not have a reviewed answer to that medical question, so I cannot answer "
@@ -55,7 +55,8 @@ SUGGEST_LEAD = "I do not cover that exactly. Related topics I can explain:"
 # misses, Candie declines rather than letting a model improvise medicine.
 _CLINICAL = {
     "diabetes", "diabetic", "insulin", "glucose", "sugar", "hba1c", "a1c",
-    "antibody", "antibodies", "autoantibody", "autoantibodies", "pancreas",
+    "pancreas", "bmi", "weight", "overweight", "obesity", "obese",
+    "prediabetes", "cholesterol", "triglyceride", "blood pressure", "hypertension",
     "symptom", "symptoms", "disease", "illness", "sick", "diagnosis", "diagnose",
     "treatment", "treat", "cure", "medicine", "medication", "drug", "dose",
     "ketoacidosis", "dka", "blood", "test", "result", "results", "lab",
@@ -105,7 +106,7 @@ def _tokens(text: str) -> set[str]:
         if t in _STOP:
             continue
         # Short tokens are usually noise, but digits are not: dropping "1" made
-        # "what is type 1 diabetes" indistinguishable from "what is diabetes".
+        # "what is type 2 diabetes" indistinguishable from "what is diabetes".
         if len(t) <= 2 and not t.isdigit():
             continue
         out.add(_stem(t))
@@ -161,14 +162,16 @@ def _is_clinical(query: str) -> bool:
 
 
 TOPIC_TITLES = {
-    "what_is_t1d": "what Type 1 diabetes is",
+    "what_is_t2d": "what Type 2 diabetes is",
     "symptoms": "the common symptoms",
     "glucose": "blood glucose thresholds",
     "hba1c": "what HbA1c means",
-    "autoantibodies": "islet autoantibody testing",
+    "prediabetes": "what prediabetes means",
+    "screening_criteria": "who should be tested",
+    "risk_factors": "what raises the risk",
     "stages": "the three stages before symptoms",
     "family": "family history and inheritance",
-    "type_difference": "how Type 1 differs from Type 2",
+    "type_difference": "how Type 2 differs from Type 1",
     "prevention": "whether it can be prevented",
     "treatment": "how it is treated",
     "testing_centers": "where to get tested",

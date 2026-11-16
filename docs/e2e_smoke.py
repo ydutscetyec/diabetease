@@ -77,8 +77,8 @@ check("emergency outranks refusal", s == 200 and b.get("matched_topic") == "emer
 s, b = call("POST", "/api/v1/chat", {"message": "where can I get tested"})
 check("retrieval handles natural phrasing", s == 200 and b.get("matched_topic") == "testing_centers", str(b)[:160])
 
-s, b = call("POST", "/api/v1/chat", {"message": "ano ang type 1 diabetes"})
-check("local-language trigger resolves", s == 200 and b.get("matched_topic") == "what_is_t1d", str(b)[:160])
+s, b = call("POST", "/api/v1/chat", {"message": "ano ang type 2 diabetes"})
+check("local-language trigger resolves", s == 200 and b.get("matched_topic") == "what_is_t2d", str(b)[:160])
 
 for asset in ("/assets/candie.png", "/assets/candie-avatar.png"):
     s, b = call("GET", asset)

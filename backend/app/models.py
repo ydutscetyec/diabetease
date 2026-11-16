@@ -6,7 +6,7 @@ Design notes that matter for the research write-up:
   without a source and a verification date is "unconfirmed", and the API will
   not let a service be marked confirmed without both.
 * `facility_services.confirmed` is per service, not per facility. A hospital may
-  have confirmed HbA1c testing and unconfirmed autoantibody testing; collapsing
+  have confirmed HbA1c testing and an unconfirmed lipid profile; collapsing
   those into one flag is how fabricated capability claims get into a map.
 * `assessment_sessions` stores no identifier of any kind and is only written when
   STORE_ASSESSMENTS is explicitly enabled.
@@ -23,8 +23,11 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .database import Base
 
-SERVICE_CODES = ("glucose", "hba1c", "ogtt", "autoantibody", "consultation",
-                 "insulin", "glucose_supplies")
+# Keep in step with ServiceIn.service_code in schemas.py and SERVICE_NAMES in
+# services/facility_lookup.py. Three copies of one list is two too many; a
+# mismatch here is how a service silently stops validating.
+SERVICE_CODES = ("glucose", "hba1c", "ogtt", "lipid_profile", "consultation",
+                 "insulin", "glucose_supplies", "oral_medication")
 FACILITY_STATUSES = ("verified", "unconfirmed", "outdated")
 
 

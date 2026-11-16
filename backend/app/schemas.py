@@ -95,6 +95,11 @@ class AssessmentResponse(BaseModel):
     explanation: str
     reasons: list[TriageReason]
     source: Literal["rule_based_thresholds"] = "rule_based_thresholds"
+    # Whether the ADA recommends testing this person at all, and why. Separate
+    # from the tier: someone with no laboratory values still gets an answer to
+    # "should I be tested", which for type 2 is usually the useful question.
+    screening_indicated: bool
+    screening_reason: str
     threshold_source: str
     model: ModelStatus
     stored: bool
@@ -149,8 +154,8 @@ class FacilityListOut(BaseModel):
 
 class ServiceIn(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    service_code: Literal["glucose", "hba1c", "ogtt", "autoantibody", "consultation",
-                          "insulin", "glucose_supplies"]
+    service_code: Literal["glucose", "hba1c", "ogtt", "lipid_profile", "consultation",
+                          "insulin", "glucose_supplies", "oral_medication"]
     confirmed: bool = False
     source: str | None = Field(default=None, max_length=300)
     verified_on: date | None = None

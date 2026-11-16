@@ -27,7 +27,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
 HERE = Path(__file__).resolve().parent
-FEATURES = ["age", "family_history_t1d", "n_symptoms", "glucose_mgdl", "hba1c_pct", "autoantibody_count"]
+FEATURES = ["age", "family_history_t2d", "bmi", "n_risk_factors", "n_symptoms",
+            "glucose_mgdl", "hba1c_pct"]
 
 
 def build(estimator) -> Pipeline:
@@ -118,7 +119,7 @@ def main() -> None:
         "is_active": activate,
         "prediction_task": (
             "binary classification of the dataset's own target column; this is NOT "
-            "forecasting of future type 1 diabetes onset"
+            "forecasting of future type 2 diabetes onset"
         ),
         "dataset_label": manifest.get("dataset_label", "unlabelled"),
         "dataset_is_synthetic": is_synthetic,
@@ -132,7 +133,7 @@ def main() -> None:
         "metrics": results,
         "limitations": (
             "Trained on synthetic demonstration data. Metrics describe the generator, "
-            "not type 1 diabetes."
+            "not type 2 diabetes."
         ) if is_synthetic else manifest.get("limitations", "Record limitations in the manifest."),
         "trained_at": datetime.now(timezone.utc).isoformat(),
     }

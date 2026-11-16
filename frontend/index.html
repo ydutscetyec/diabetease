@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>DiabetEASE — Type 1 diabetes risk information and testing-centre mapping</title>
-<meta name="description" content="Type 1 diabetes risk information, testing-centre mapping and decision support for ten municipalities of South Cotabato.">
+<title>DiabetEASE — Type 2 diabetes screening and testing-centre mapping</title>
+<meta name="description" content="Type 2 diabetes screening information, testing-centre mapping and decision support for ten municipalities of South Cotabato.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -60,7 +60,7 @@
     </span>
     <span class="names">
       <b>Diabet<i>EASE</i></b>
-      <small>Type 1 diabetes screening support</small>
+      <small>Type 2 diabetes screening support</small>
     </span>
   </div>
 
@@ -226,7 +226,7 @@
         <!-- 3. Learn -->
         <div class="card">
           <h3>Educational Resources</h3>
-          <p style="font-size: 0.85rem; color: var(--text-2);">Learn about Type 1 diabetes, the difference between types, and take a knowledge quiz. Sourced from ADA and ISPAD guidelines.</p>
+          <p style="font-size: 0.85rem; color: var(--text-2);">Learn about Type 2 diabetes, who should be tested, and take a knowledge quiz. Sourced from the ADA Standards of Care.</p>
           <a href="#learn" class="btn btn-ghost btn-sm" style="margin-top: 10px; width: 100%; justify-content: center;">Read & Learn</a>
         </div>
 
@@ -335,7 +335,7 @@
         <p>There are five outcomes:</p>
         <ul class="guidelist">
           <li><span class="tag tag-bad">Emergency</span> Seek emergency care now. Nothing else on the page matters.</li>
-          <li><span class="tag tag-warn">See a doctor promptly</span> A value met a published diagnostic threshold, or two or more islet autoantibodies were reported.</li>
+          <li><span class="tag tag-warn">See a doctor promptly</span> A value met a published diagnostic threshold, or a glucose reading was clinically low.</li>
           <li><span class="tag tag-warn">Worth getting tested</span> Nothing met a threshold, but there is enough to justify a glucose test.</li>
           <li><span class="tag">Not enough information</span> No laboratory value was given, so no assessment is possible.</li>
           <li><span class="tag">Nothing crosses a threshold</span> Reassuring about today. <strong>Not an all-clear</strong> — early-stage Type&nbsp;1 diabetes is silent on a glucose test.</li>
@@ -387,7 +387,7 @@
     </div>
 
     <div class="note note-info">
-      <p>Answers are evaluated against diagnostic thresholds published by the American Diabetes Association and the ISPAD staging guidelines.</p>
+      <p>Answers are evaluated against the diagnostic cut-offs and the screening criteria published by the American Diabetes Association.</p>
     </div>
 
     <div id="dkaAlert" class="note note-danger" hidden>
@@ -423,13 +423,31 @@
 
         <fieldset class="step" data-step="2" hidden style="border:0;padding:0;margin:0">
           <div class="field">
-            <label class="fl" for="fam">Does a parent, brother or sister have Type 1 diabetes?</label>
+            <label class="fl" for="fam">Does a parent, brother or sister have Type 2 diabetes?</label>
             <select id="fam"><option value="unknown">I do not know</option><option value="no">No</option><option value="yes">Yes</option></select>
           </div>
           <div class="field">
-            <label class="fl" for="autoimm">Autoimmune conditions in the family</label>
-            <select id="autoimm"><option value="unknown">I do not know</option><option value="no">None known</option><option value="yes">Yes, at least one</option></select>
+            <label class="fl" for="bmi">Body mass index (BMI)</label>
+            <input type="number" id="bmi" min="10" max="80" step="0.1" inputmode="decimal">
+            <span class="hint">Weight in kilograms divided by height in metres, squared. This decides whether testing is recommended before age 35, so it is worth entering if you know it.</span>
+            <span class="err" id="err-bmi"></span>
           </div>
+          <div class="field">
+            <label class="fl" for="ancestry">Are you of Asian ancestry?</label>
+            <select id="ancestry"><option value="unknown">I would rather not say</option><option value="yes">Yes</option><option value="no">No</option></select>
+            <span class="hint">Asked because the guideline uses a lower BMI cut-off — 23 instead of 25 — for people of Asian ancestry, and counts it as a risk factor in its own right.</span>
+          </div>
+
+          <h3 style="margin-top:18px">Anything else that applies</h3>
+          <span class="hint">One of these, together with your BMI, is what the guideline looks for below age 35.</span>
+          <label class="choice"><input type="checkbox" class="rf" value="physical_inactivity"><span>Little physical activity most weeks</span></label>
+          <label class="choice"><input type="checkbox" class="rf" value="hypertension"><span>High blood pressure, or treatment for it</span></label>
+          <label class="choice"><input type="checkbox" class="rf" value="dyslipidaemia"><span>Been told your cholesterol or triglycerides are high</span></label>
+          <label class="choice"><input type="checkbox" class="rf" value="cardiovascular_disease"><span>Heart disease, or a stroke</span></label>
+          <label class="choice"><input type="checkbox" class="rf" value="prior_gestational_diabetes"><span>Diabetes during a pregnancy</span></label>
+          <label class="choice"><input type="checkbox" class="rf" value="pcos"><span>Polycystic ovary syndrome</span></label>
+          <label class="choice"><input type="checkbox" class="rf" value="prediabetes"><span>A previous result called borderline or prediabetes</span></label>
+          <label class="choice"><input type="checkbox" class="rf" value="insulin_resistance_signs"><span>Dark, velvety patches of skin on the neck or armpits</span></label>
         </fieldset>
 
         <fieldset class="step" data-step="3" hidden style="border:0;padding:0;margin:0">
@@ -440,6 +458,10 @@
           <label class="choice"><input type="checkbox" class="sym" value="fatigue"><span>Unusually tired or weak</span></label>
           <label class="choice"><input type="checkbox" class="sym" value="blurred_vision"><span>Blurred vision</span></label>
           <label class="choice"><input type="checkbox" class="sym" value="hunger"><span>Constantly hungry</span></label>
+          <label class="choice"><input type="checkbox" class="sym" value="slow_healing"><span>Cuts or sores that heal slowly</span></label>
+          <label class="choice"><input type="checkbox" class="sym" value="frequent_infections"><span>Infections that keep coming back</span></label>
+          <label class="choice"><input type="checkbox" class="sym" value="numbness"><span>Numbness or tingling in the feet or hands</span></label>
+          <span class="hint">Type 2 diabetes often causes no symptoms at all, so leaving these empty is not reassuring on its own.</span>
 
           <h3 style="margin-top:18px">Urgent signs</h3>
           <span class="hint">These change what you should do immediately.</span>
@@ -456,6 +478,7 @@
             <select id="gluType">
               <option value="none">No glucose result</option>
               <option value="fasting">Fasting (no food for 8 hours)</option>
+              <option value="two_hour">2-hour value from a glucose tolerance test</option>
               <option value="random">Random / casual</option>
             </select>
           </div>
@@ -470,15 +493,6 @@
             <input type="number" id="hba1c" min="3" max="20" step="0.1" inputmode="decimal">
             <span class="err" id="err-hba1c"></span>
             <div class="rangescale" id="a1cScale" aria-live="polite"></div>
-          </div>
-          <div class="field">
-            <label class="fl" for="aab">Islet autoantibody test</label>
-            <select id="aab">
-              <option value="none">Not tested</option>
-              <option value="negative">Tested, negative</option>
-              <option value="one_positive">Tested, one antibody positive</option>
-              <option value="two_or_more_positive">Tested, two or more positive</option>
-            </select>
           </div>
         </fieldset>
 
@@ -531,7 +545,7 @@
   <section class="view" id="v-forecast">
     <div class="pagehead">
       <p class="eyebrow">NOT YET AVAILABLE</p><h1>Risk forecasting</h1>
-      <p>Projection of Type 1 diabetes risk over a defined time horizon.</p>
+      <p>Projection of Type 2 diabetes risk over a defined time horizon.</p>
     </div>
     <div class="banner">
       <p class="eyebrow">Status</p>
@@ -543,12 +557,12 @@
       <div class="tablewrap"><table>
         <tr><th>Requirement</th><th>Why</th><th>Status</th></tr>
         <tr><td>Longitudinal dataset</td><td>Onset prediction requires individuals followed over time with diagnosis dates recorded.</td><td><span class="tag tag-bad">Not secured</span></td></tr>
-        <tr><td>Type 1-specific labels</td><td>Datasets combining Type 1 and Type 2 cannot support a Type 1-specific model.</td><td><span class="tag tag-bad">Not secured</span></td></tr>
-        <tr><td>Islet autoantibody variables</td><td>Published staging of presymptomatic disease is based on antibody status.</td><td><span class="tag tag-bad">Not available locally</span></td></tr>
+        <tr><td>A comparable population</td><td>A model fitted to a foreign cohort carries that cohort&rsquo;s base rates into South Cotabato without saying so.</td><td><span class="tag tag-bad">Not secured</span></td></tr>
+        <tr><td>Measured anthropometrics</td><td>BMI and waist circumference do most of the work in published Type 2 risk tools; self-reported height and weight are not equivalent.</td><td><span class="tag tag-warn">Partially available</span></td></tr>
         <tr><td>A stated prediction horizon</td><td>Risk estimates require a defined time window; 5-year and lifetime risk differ.</td><td><span class="tag tag-warn">Not yet defined</span></td></tr>
         <tr><td>Calibration analysis</td><td>Probabilities may only be displayed once checked against observed frequencies.</td><td><span class="tag tag-bad">Not performed</span></td></tr>
       </table></div>
-      <p style="margin-top:14px"><small>Established screening programmes including TrialNet Pathway to Prevention, Fr1da and ASK use laboratory antibody testing rather than questionnaire-based prediction.</small></p>
+      <p style="margin-top:14px"><small>The ADA&rsquo;s own screening route is a risk-factor check followed by a laboratory test, not a questionnaire that returns a number. This system follows that route.</small></p>
     </div>
   </section>
 
@@ -612,7 +626,7 @@
             <option value="glucose">Blood glucose</option>
             <option value="hba1c">HbA1c</option>
             <option value="ogtt">Oral glucose tolerance</option>
-            <option value="autoantibody">Islet autoantibodies</option>
+            <option value="lipid_profile">Lipid profile</option>
             <option value="consultation">Diabetes consultation</option>
             <option value="insulin">Insulin</option>
             <option value="glucose_supplies">Glucose meters and strips</option>
@@ -657,7 +671,7 @@
       <div class="field"><label class="fl">Services confirmed</label>
         <label class="choice"><input type="checkbox" class="nfSvc" value="glucose"><span>Blood glucose testing</span></label>
         <label class="choice"><input type="checkbox" class="nfSvc" value="hba1c"><span>HbA1c testing</span></label>
-        <label class="choice"><input type="checkbox" class="nfSvc" value="autoantibody"><span>Islet autoantibody testing</span></label>
+        <label class="choice"><input type="checkbox" class="nfSvc" value="lipid_profile"><span>Lipid profile testing</span></label>
         <label class="choice"><input type="checkbox" class="nfSvc" value="consultation"><span>Diabetes consultation</span></label>
         <label class="choice"><input type="checkbox" class="nfSvc" value="insulin"><span>Insulin in stock</span></label>
         <label class="choice"><input type="checkbox" class="nfSvc" value="glucose_supplies"><span>Glucose meters and strips</span></label>
@@ -673,7 +687,7 @@
 
   <!-- ========================================================= learn -->
   <section class="view" id="v-learn">
-    <div class="pagehead"><p class="eyebrow">LEARN AT YOUR OWN PACE</p><h1>Educational resources</h1><p>Type 1 diabetes, testing and when to seek care.</p></div>
+    <div class="pagehead"><p class="eyebrow">LEARN AT YOUR OWN PACE</p><h1>Educational resources</h1><p>Type 2 diabetes, who should be tested, and when to seek care.</p></div>
 
     <div class="note note-danger">
       <h3>When to go to an emergency department</h3>
@@ -682,17 +696,22 @@
 
     <div class="grid g2">
       <div class="card"><h3>What it is</h3>
-        <p>The immune system destroys the beta cells in the pancreas that make insulin. Without insulin the body cannot move glucose out of the blood and into cells, so blood glucose climbs while the body starves.</p>
-        <p>It is not caused by eating sugar. Nothing a child or parent did caused it, and no diet or exercise plan prevents it.</p></div>
+        <p>The body still makes insulin but responds to it poorly, and over the years the pancreas cannot keep up with the extra demand. Glucose then stays high in the blood instead of moving into cells.</p>
+        <p>Eating sugar is not the single cause, and blame is not useful. But unlike Type 1, weight, diet and activity genuinely change the odds — which is the hopeful part.</p></div>
       <div class="card"><h3>How it develops</h3>
-        <p>The autoimmune process starts months to years before any symptom appears. Stage 1 is two or more islet autoantibodies with normal glucose; stage 2 adds rising glucose without symptoms; stage 3 is glucose that meets the diagnostic criteria, with or without symptoms.</p>
-        <p>This is why a check like this one cannot rule the condition out — early stages are silent.</p></div>
-      <div class="card"><h3>Family history and genes</h3>
-        <p>About 85 in 100 people who develop Type 1 diabetes have no family history. A parent or sibling with it raises the risk to roughly 1 in 20, against about 1 in 300 generally. Those figures are from studies in the United States; none exists for the Philippines.</p></div>
-      <div class="card"><h3>Islet autoantibodies</h3>
-        <p>GAD65, IA-2, ZnT8 and insulin autoantibodies are the markers used to identify presymptomatic Type 1 diabetes. Two or more persistently positive antibodies defines early-stage disease and needs a clinician to confirm and stage.</p></div>
+        <p>Slowly, and usually in silence. Glucose drifts through the prediabetes range — a fasting value of 100 to 125 mg/dL, a 2-hour value of 140 to 199, or an HbA1c of 5.7 to 6.4 per cent — often for years before anything is noticeable.</p>
+        <p>That is why one normal result cannot settle the question. The guideline&rsquo;s answer is not a single test but repeat testing, at least every three years.</p></div>
+      <div class="card"><h3>Who should be tested</h3>
+        <p>Everyone from age 35, repeated at least every three years while results stay normal. Below 35, anyone with overweight or obesity who has at least one risk factor.</p>
+        <p>For that rule the BMI cut-off is 23 rather than 25 for people of Asian ancestry, and Asian ancestry counts as a risk factor by itself. For most adults here, that means a BMI of 23 or above is already a reason to be tested, at any age.</p></div>
+      <div class="card"><h3>What raises the risk</h3>
+        <p>A parent, brother or sister with Type 2 diabetes. Asian ancestry. Little physical activity. High blood pressure, or high triglycerides and low HDL cholesterol. Heart disease. Polycystic ovary syndrome. Diabetes during a pregnancy. A previous borderline result.</p>
+        <p>One is enough to bring testing forward. Most of them can be acted on, and several improve together.</p></div>
+      <div class="card"><h3>Can it be prevented?</h3>
+        <p>Often, yes — this is the biggest practical difference from Type 1. For people at high risk, the guideline recommends a prevention programme aiming at losing at least 5 to 7 per cent of body weight, with regular activity.</p>
+        <p>In the trial behind that recommendation, this approach cut new cases by about 58 per cent over roughly three years, more than the medicine arm achieved.</p></div>
       <div class="card"><h3>Glucose and HbA1c tests</h3>
-        <p>Fasting glucose, random glucose, the oral glucose tolerance test and HbA1c are the standard tests. They show whether glucose is abnormal — they do not say which type of diabetes it is. Telling Type 1 from Type 2 needs antibody testing and clinical judgement.</p></div>
+        <p>Fasting glucose, the 2-hour value from a glucose tolerance test, a random glucose and HbA1c are the standard tests. They show whether glucose is abnormal — they do not say which type of diabetes it is. Telling the types apart is a clinician&rsquo;s judgement.</p></div>
       <div class="card"><h3>Getting tested through PhilHealth</h3>
         <p>PhilHealth’s primary care package, YAKAP (called Konsulta before 2025), lists fasting blood sugar, the glucose tolerance test and HbA1c among its covered laboratory tests when the doctor at your registered provider orders them.</p>
         <p>If that clinic has no laboratory, the test may be done at a partner laboratory instead. Your municipal health office can tell you how to register.</p></div>

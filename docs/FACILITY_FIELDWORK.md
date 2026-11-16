@@ -41,7 +41,7 @@ testing map sends a sick person to the wrong place.
 | `address` | Barangay and purok if you have them |
 | `latitude`, `longitude` | Decimal degrees. Read them off the facility pin in Google Maps, not the town centre |
 | `contact` | Landline or mobile as given to you |
-| `services_confirmed` | Comma-separated: `glucose`, `hba1c`, `ogtt`, `autoantibody`, `consultation`. **Only what you actually confirmed** |
+| `services_confirmed` | Comma-separated: `glucose`, `hba1c`, `ogtt`, `lipid_profile`, `consultation`, `oral_medication`. **Only what you actually confirmed** |
 | `source` | "phone call to records office", "DOH registry", "site visit" |
 | `verified_on` | YYYY-MM-DD, the day you checked |
 | `notes` | Anything that affects access: hours, referral needed, cost |

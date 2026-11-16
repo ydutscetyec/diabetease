@@ -1,6 +1,6 @@
 # DiabetEASE
 
-Type 1 diabetes risk information, testing-centre and pharmacy mapping, and
+Type 2 diabetes screening information, testing-centre and pharmacy mapping, and
 decision support for ten municipalities of South Cotabato: Surallah, Sto. Niño,
 Lake Sebu, Norala, T'boli, Banga, Tampakan, Tantangan, Tupi and Polomolok.
 
@@ -29,17 +29,25 @@ means you are one folder too high.
 
 | Part | What happens | Based on |
 |---|---|---|
-| Assessment | Five steps. Entries are checked against diagnostic thresholds and a next step is returned | ADA glucose and HbA1c cut-offs; ISPAD staging; ADA hypoglycaemia levels |
+| Assessment | Five steps. Entries are checked against diagnostic thresholds, and against the ADA screening criteria, and a next step is returned | ADA Section 2 glucose, HbA1c and OGTT cut-offs; ADA Table 2.5 screening criteria; ADA hypoglycaemia levels |
 | Result | The reasoning, your values on a minimum / normal / maximum scale, and the nearest testing centres for your municipality | The same thresholds; the facility database |
 | Map | 41 testing centres and 17 pharmacies. Pin shape and glyph carry the verified/unconfirmed status, not colour alone | Your verified CSV; Google Places listings |
 | Candie | Answers 31 reviewed topics, looks up facilities by municipality, and with a local model can converse freely | Reviewed corpus; the facility database; optionally Ollama |
-| Education | Reference cards, an eight-question quiz, myth-and-fact cards | ADA, ISPAD, CDC |
+| Education | Reference cards, a ten-question quiz, myth-and-fact cards | ADA Sections 2 and 3, the DPP trial, CDC |
 | User guide | How to read each result tier, the map pin colours, and what the system cannot do | — |
 | Accounts | Patient, researcher, admin. Roles are enforced on the server | — |
 
 **It produces no probability and no risk score.** No model is trained, because
-no dataset labelling Type 1 diabetes specifically has been secured. The result
-is a rule check against published thresholds and says so on screen.
+no dataset drawn from a comparable population has been secured, and a model
+fitted to a foreign cohort would carry that cohort's base rates into South
+Cotabato without saying so. The result is a rule check against published
+thresholds and criteria, and says so on screen.
+
+Note for this cohort: the ADA sets the screening BMI cut-off at 23 rather than
+25 for people of Asian ancestry, and lists high-risk ancestry as a risk factor
+in its own right. Both clauses apply here, so screening is indicated for any
+adult in these municipalities at BMI 23 or above, at any age — a wider net than
+the headline "from age 35" suggests.
 
 ## Data status
 
@@ -147,16 +155,21 @@ docs/
 1. **Confirm services by phone.** 19 testing centres and all 17 pharmacies are
    unconfirmed. Tantangan has no confirmed testing centre.
 2. **No trained model.** Objectives 1 and 2 of the paper cannot be reported as
-   written without a Type 1 dataset. `diabetease-dataset-template.xlsx` gives
-   the format.
+   written without a dataset from a comparable population.
+   `diabetease-dataset-template.xlsx` gives the format, and its columns changed
+   with the study: BMI and a risk-factor count replace the autoantibody fields.
 3. **"Forecasting" in the title** needs data that follows people over time.
-4. **Ethics clearance** before `STORE_ASSESSMENTS` is switched on. Most
-   respondents will be minors.
-5. **Sources.** The clinical thresholds were checked on 11 November 2026 against
-   the ADA Standards of Care 2026, the ISPAD 2024 guideline, the CDC and
-   PhilHealth; five statements were corrected as a result. See
-   `docs/VERIFIED_SOURCES.md`. Facilities have not been checked against the DOH
-   registry one by one.
+4. **Ethics clearance** before `STORE_ASSESSMENTS` is switched on. With the
+   change to type 2 the expected respondents are mostly adults rather than
+   minors, which may change what the committee asks for — confirm, do not
+   assume.
+5. **Sources.** The type 2 thresholds and screening criteria were checked on
+   16 November 2026 against the ADA Standards of Care 2026, Sections 2 and 3,
+   and the Diabetes Prevention Program trial behind the prevention advice. The
+   earlier type 1 review (11 November 2026) is kept in
+   `docs/VERIFIED_SOURCES.md` as a record of that version; its staging sources
+   no longer apply. Facilities have not been checked against the DOH registry
+   one by one.
 6. **Deployment.** Not deployed. On a host with a temporary disk, use Postgres
    via `DATABASE_URL` or facility records are lost on redeploy.
 

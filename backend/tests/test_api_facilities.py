@@ -25,7 +25,7 @@ def test_confirmed_service_without_evidence_is_rejected(client, admin_token):
                     headers={"Authorization": f"Bearer {admin_token}"},
                     json={"name": "Evidence-Free Lab", "facility_type": "Diagnostic laboratory",
                           "municipality": "Surallah",
-                          "services": [{"service_code": "autoantibody", "confirmed": True}]})
+                          "services": [{"service_code": "lipid_profile", "confirmed": True}]})
     assert r.status_code == 422
 
 
@@ -55,7 +55,7 @@ def test_full_evidence_lands_as_verified_and_filters_work(client, admin_token):
         "verified_on": "2026-10-20", "latitude": 6.217, "longitude": 125.063,
         "services": [{"service_code": "hba1c", "confirmed": True,
                       "source": "phone call", "verified_on": "2026-10-20"},
-                     {"service_code": "autoantibody", "confirmed": False}],
+                     {"service_code": "lipid_profile", "confirmed": False}],
     })
     assert r.status_code == 201 and r.json()["status"] == "verified"
 
@@ -63,9 +63,9 @@ def test_full_evidence_lands_as_verified_and_filters_work(client, admin_token):
                      params={"service": "hba1c", "confirmed_only": True}).json()
     assert any(f["name"] == "Test District Hospital" for f in hit["items"])
 
-    # The unconfirmed autoantibody service must not surface as a confirmed claim.
+    # The unconfirmed lipid-profile service must not surface as a confirmed claim.
     miss = client.get("/api/v1/facilities",
-                      params={"service": "autoantibody", "confirmed_only": True}).json()
+                      params={"service": "lipid_profile", "confirmed_only": True}).json()
     assert miss["items"] == []
 
 
@@ -137,3 +137,24 @@ def test_insulin_claim_from_a_listing_is_downgraded_by_the_importer():
     from import_facilities import evidences_a_service
     assert evidences_a_service("Google Places search - location only") is False
     assert evidences_a_service("called the pharmacist, insulin in stock") is True
+
+
+def test_the_three_service_code_lists_agree():
+    """The set of service codes is written out in three places: SERVICE_CODES in
+    models.py, the ServiceIn.service_code enum in schemas.py, and SERVICE_NAMES
+    in facility_lookup.py. A mismatch does not raise anything — it just means a
+    service stops validating, or stops having a display name, quietly. The
+    type 1 to type 2 change had to touch all three, and missed one.
+    """
+    import typing
+    from app.models import SERVICE_CODES
+    from app.schemas import ServiceIn
+    from app.services.facility_lookup import SERVICE_NAMES
+
+    enum = set(typing.get_args(ServiceIn.model_fields["service_code"].annotation))
+    assert set(SERVICE_CODES) == enum, (
+        f"models.py vs schemas.py: {set(SERVICE_CODES) ^ enum}")
+    assert enum == set(SERVICE_NAMES), (
+        f"schemas.py vs facility_lookup.py: {enum ^ set(SERVICE_NAMES)}")
+    # and nothing type-1-specific survives in any of them
+    assert "autoantibody" not in enum

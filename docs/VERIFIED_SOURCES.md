@@ -1,5 +1,14 @@
 # What was verified, and how
 
+> **Historical record — the study changed on 16 November 2026.**
+> This document reviewed the *type 1 diabetes* version of the manuscript and
+> its sources. It is kept unedited so the audit trail stays honest: it records
+> what was checked, when, and what was found at that time. Everything here
+> specific to type 1 — islet autoantibodies, the stage 1/2/3 scheme, the ISPAD
+> guideline — no longer applies to the current study. For what the type 2
+> version is based on, see `backend/app/data/sources.json` and the triage
+> module's `THRESHOLD_SOURCE`.
+
 Checked by web search on 11 November 2026. The machine-readable version is
 `backend/app/data/sources.json`, served at `/api/v1/sources` and shown on the
 Educational resources page.

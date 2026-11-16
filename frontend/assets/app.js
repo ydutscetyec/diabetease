@@ -643,12 +643,13 @@ function buildNav() {
     var tc = card("All recorded values");
     var rows = [
       ["Age", inputs.age + " years", "entered"],
-      ["Family history of Type 1", { yes: "Yes", no: "No", unknown: "Unknown" }[inputs.family_history_t1d], "entered"],
+      ["Family history of Type 2", { yes: "Yes", no: "No", unknown: "Unknown" }[inputs.family_history_t2d], "entered"],
+      ["BMI", inputs.bmi === null || inputs.bmi === undefined ? "Not provided" : String(inputs.bmi), "entered"],
       ["Symptoms reported", String(inputs.symptoms.length), "entered"],
       ["Urgent signs reported", String(inputs.urgent_signs.length), "entered"],
       ["Blood glucose", inputs.glucose_mgdl === null ? "Not provided" : inputs.glucose_mgdl + " mg/dL (" + inputs.glucose_test_type + ")", "entered"],
       ["HbA1c", inputs.hba1c_pct === null ? "Not provided" : inputs.hba1c_pct + " %", "entered"],
-      ["Islet autoantibodies", { none: "Not tested", negative: "Negative", one_positive: "One positive", two_or_more_positive: "Two or more positive" }[inputs.autoantibodies], "entered"]
+      ["Other risk factors", String((inputs.risk_factors || []).length), "entered"]
     ];
     var w = el("div", "tablewrap");
     var t = document.createElement("table");
@@ -679,7 +680,7 @@ function buildNav() {
   /* ========================================================= centres */
   var SVCLABEL = {
     glucose: "Blood glucose test", hba1c: "HbA1c test", ogtt: "Glucose tolerance test",
-    autoantibody: "Islet autoantibody test", consultation: "Diabetes consultation",
+    lipid_profile: "Lipid profile test", consultation: "Diabetes consultation",
     insulin: "Insulin", glucose_supplies: "Glucose meters & strips"
   };
   // What each kind of facility should be checked for. Anything not confirmed
@@ -1194,7 +1195,7 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
                   [["yes", "Compares what you enter against diagnostic thresholds published by the American Diabetes Association."],
                    ["yes", "Tells you what to do next: see a doctor now, soon, or get a test when you can."],
                    ["yes", "Shows testing centres and pharmacies near you, with what each has actually been confirmed to offer."],
-                   ["no", "Does not diagnose Type 1 diabetes. Only a clinician can do that."],
+                   ["no", "Does not diagnose Type 2 diabetes. Only a clinician can do that."],
                    ["no", "Does not give a risk percentage or score. No model has been trained, so none is produced."]
                   ].forEach(function (row) {
                       var li = el("li");
@@ -1362,38 +1363,46 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
 
   /* ============================================================ quiz */
   var QUIZ = [
-    { q: "What causes Type 1 diabetes?",
-      a: ["Eating too much sugar", "The immune system destroying insulin-producing cells", "Not exercising enough", "Being overweight"],
+    { q: "What happens in Type 2 diabetes?",
+      a: ["The immune system destroys insulin-producing cells", "The body responds poorly to insulin and the pancreas cannot keep up", "The body makes no insulin from birth", "The kidneys stop filtering glucose"],
       correct: 1,
-      why: "It is an autoimmune disease. Diet and weight do not cause it, and nothing a parent or child did brings it on." },
-    { q: "Can Type 1 diabetes be prevented by changing your lifestyle?",
-      a: ["Yes, with diet and exercise", "No, it cannot currently be prevented"],
-      correct: 1,
-      why: "Prevention works for Type 2 in many cases. For Type 1 there is no proven way to prevent it, which is exactly why early detection matters." },
+      why: "Type 2 is insulin resistance plus a gradual decline in how much insulin the pancreas can produce. The first option describes Type 1." },
+    { q: "Can Type 2 diabetes be delayed or prevented?",
+      a: ["Yes, often — losing 5 to 7 per cent of body weight and staying active", "No, it cannot currently be prevented"],
+      correct: 0,
+      why: "This is the biggest practical difference from Type 1. In the trial behind the guideline, that approach cut new cases by about 58 per cent over roughly three years." },
     { q: "A fasting blood glucose of 130 mg/dL is:",
-      a: ["Normal", "In the intermediate range", "At or above the diagnostic threshold"],
+      a: ["Normal", "In the prediabetes range", "At or above the diagnostic threshold"],
       correct: 2,
       why: "The published fasting cut-off is 126 mg/dL. One reading is not a diagnosis; it needs confirming by a clinician." },
-    { q: "Most people who develop Type 1 diabetes have:",
-      a: ["A parent or sibling with it", "No family history at all"],
+    { q: "A fasting glucose of 110 mg/dL is:",
+      a: ["Normal", "In the prediabetes range", "At or above the diagnostic threshold"],
       correct: 1,
-      why: "About 85 in 100 new cases appear in families with no history. A parent or sibling with it raises risk to about 1 in 20 in US studies." },
-    { q: "Which test can detect Type 1 diabetes before any symptoms appear?",
-      a: ["Fasting glucose", "HbA1c", "Islet autoantibody testing", "Blood pressure"],
-      correct: 2,
-      why: "Glucose and HbA1c only become abnormal late. Autoantibodies appear months to years earlier, which is what makes presymptomatic screening possible." },
+      why: "Prediabetes is a fasting value of 100 to 125. It usually has no symptoms, and it is the stage where diet and activity do the most good." },
+    { q: "From what age does the guideline recommend testing every adult?",
+      a: ["25", "35", "45", "Only when symptoms appear"],
+      correct: 1,
+      why: "Testing is recommended for all adults from 35, repeated at least every three years while results stay normal. Below 35 it depends on BMI and risk factors." },
+    { q: "For someone of Asian ancestry, the BMI at which testing is recommended is:",
+      a: ["23", "25", "27", "30"],
+      correct: 0,
+      why: "The guideline lowers the cut-off from 25 to 23 for people of Asian ancestry, and counts Asian ancestry as a risk factor in its own right. Both apply to this study's population." },
+    { q: "Most people in the early years of Type 2 diabetes have:",
+      a: ["Obvious symptoms", "No symptoms at all"],
+      correct: 1,
+      why: "It develops slowly and quietly, which is the whole reason screening by risk factor exists rather than waiting for someone to feel unwell." },
     { q: "Vomiting, stomach pain, fast breathing and drowsiness together mean you should:",
       a: ["Book an appointment next week", "Finish the online assessment first", "Go to an emergency department now"],
       correct: 2,
-      why: "That pattern can be diabetic ketoacidosis. Its severe symptoms can appear quickly and it is an emergency. Nothing online should delay you." },
-    { q: "Can a blood glucose test tell Type 1 apart from Type 2?",
+      why: "That pattern can mean a hyperglycaemic emergency. It can develop quickly and it is an emergency. Nothing online should delay you." },
+    { q: "Can a blood glucose test tell Type 2 apart from Type 1?",
       a: ["Yes, the numbers differ", "No, it only shows that glucose is abnormal"],
       correct: 1,
-      why: "Both types raise glucose. Telling them apart needs antibody testing and clinical judgement." },
+      why: "Both types raise glucose, and the cut-offs are the same for both. Telling them apart is a clinician's judgement." },
     { q: "A DiabetEASE result saying nothing crosses a threshold means:",
-      a: ["You definitely do not have Type 1 diabetes", "Nothing you entered met a published cut-off today"],
+      a: ["You definitely will not develop Type 2 diabetes", "Nothing you entered met a published cut-off today"],
       correct: 1,
-      why: "Early-stage disease is silent on glucose testing, so a normal result cannot rule it out. It is reassuring about today, not a clean bill of health." }
+      why: "Type 2 develops over years, so a normal result describes today and not next year. The guideline's answer is repeat testing at least every three years." }
   ];
 
   function renderQuiz() {
@@ -1431,18 +1440,20 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
   }
 
   var MYTHS = [
-    ["Eating too many sweets causes Type 1 diabetes.", "Myth",
-     "It is autoimmune. Sugar intake does not cause it, and this myth leads to a lot of misplaced blame on parents and children."],
-    ["Type 1 diabetes only appears in children.", "Myth",
-     "It is most common in childhood and adolescence, but it can begin at any age, including in adults in their thirties and forties."],
-    ["You can have Type 1 diabetes for months without knowing.", "Fact",
-     "The autoimmune process starts months to years before symptoms appear. That silent window is what screening is for."],
-    ["People with Type 1 diabetes must avoid all sugar forever.", "Myth",
-     "Management is about matching insulin to food, not banning food groups. A clinician and dietitian set the plan."],
-    ["A normal blood sugar result rules out Type 1 diabetes.", "Myth",
-     "Glucose becomes abnormal only in the later stages. Only antibody testing detects the early ones."],
-    ["Type 1 diabetes can run in families but usually does not.", "Fact",
-     "A parent or sibling with it raises risk to roughly 1 in 20, yet most new cases have no family history at all."]
+    ["Eating sugar is the single cause of Type 2 diabetes.", "Myth",
+     "Diet matters, and so do weight and activity — but it is not one food and it is not simply a matter of blame. Family history, ancestry and age all contribute, and none of them is anyone's fault."],
+    ["Type 2 diabetes only appears in older people.", "Myth",
+     "It is more common with age, which is why testing starts at 35 for everyone. But with overweight and a risk factor it is tested for much earlier, and it does occur in young adults and adolescents."],
+    ["You can have Type 2 diabetes for years without knowing.", "Fact",
+     "It usually develops without symptoms, and glucose can be high for a long time before anything is noticeable. That silent window is what screening is for."],
+    ["People with Type 2 diabetes must avoid all sugar forever.", "Myth",
+     "Management is about the overall pattern of eating, activity and sometimes medicine — not banning food groups. A clinician and dietitian set the plan."],
+    ["A normal blood sugar result today means you are safe for good.", "Myth",
+     "It is reassuring about today. The guideline's response is not one test but repeat testing at least every three years, because risk changes over time."],
+    ["Losing a modest amount of weight makes a real difference.", "Fact",
+     "The guideline's target for people at high risk is 5 to 7 per cent of body weight, not a transformation. In the trial behind it, that cut new cases by about 58 per cent."],
+    ["If nobody in your family has it, you are not at risk.", "Myth",
+     "Family history is one risk factor among several. Ancestry, weight, blood pressure, cholesterol and activity all count, and in this region ancestry alone is enough to bring testing forward."]
   ];
 
   function renderMyths() {
@@ -1649,14 +1660,15 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
       age: Number($("age").value),
       sex: $("sex").value === "Female" ? "female" : ($("sex").value === "Male" ? "male" : "not_given"),
       municipality: $("muni").value || null,
-      family_history_t1d: $("fam").value,
-      family_autoimmune: $("autoimm").value,
+      family_history_t2d: $("fam").value,
+      asian_ancestry: $("ancestry").value,
+      bmi: $("bmi").value === "" ? null : Number($("bmi").value),
+      risk_factors: Array.prototype.map.call(document.querySelectorAll(".rf:checked"), function (c) { return c.value; }),
       symptoms: Array.prototype.map.call(document.querySelectorAll(".sym:checked"), function (c) { return c.value; }),
       urgent_signs: Array.prototype.map.call(document.querySelectorAll(".dka:checked"), function (c) { return c.value; }),
       glucose_test_type: gt,
       glucose_mgdl: gt === "none" || $("glucose").value === "" ? null : Number($("glucose").value),
       hba1c_pct: $("hba1c").value === "" ? null : Number($("hba1c").value),
-      autoantibodies: $("aab").value,
       consent_to_store: false
     };
   }
@@ -1666,13 +1678,14 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
       ["Age", data.age + " years"],
       ["Sex", data.sex.replace("_", " ")],
       ["Municipality", data.municipality || "not given"],
-      ["First-degree relative with Type 1", { yes: "Yes", no: "No", unknown: "Unknown" }[data.family_history_t1d]],
-      ["Autoimmune conditions in family", { yes: "Yes", no: "None known", unknown: "Unknown" }[data.family_autoimmune]],
+      ["First-degree relative with Type 2", { yes: "Yes", no: "No", unknown: "Unknown" }[data.family_history_t2d]],
+      ["BMI", data.bmi === null ? "not provided" : String(data.bmi)],
+      ["Asian ancestry", { yes: "Yes", no: "No", unknown: "Not stated" }[data.asian_ancestry]],
+      ["Other risk factors", data.risk_factors.length ? data.risk_factors.length + " ticked" : "none ticked"],
       ["Symptoms reported", data.symptoms.length ? data.symptoms.map(function (s) { return SYMLABEL[s]; }).join(", ") : "none ticked"],
       ["Urgent signs", data.urgent_signs.length ? data.urgent_signs.length + " ticked" : "none ticked"],
       ["Glucose", data.glucose_mgdl === null ? "not provided" : data.glucose_mgdl + " mg/dL (" + data.glucose_test_type + ")"],
-      ["HbA1c", data.hba1c_pct === null ? "not provided" : data.hba1c_pct + " %"],
-      ["Islet autoantibodies", { none: "Not tested", negative: "Negative", one_positive: "One positive", two_or_more_positive: "Two or more positive" }[data.autoantibodies]]
+      ["HbA1c", data.hba1c_pct === null ? "not provided" : data.hba1c_pct + " %"]
     ];
     var tb = document.querySelector("#reviewTable tbody");
     clear(tb);
@@ -1773,7 +1786,7 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
     row.style.marginTop = "16px";
     [["Find a testing centre", "#centers", "btn-primary"],
      ["See your parameters", "#parameters", "btn-ghost"],
-     ["Read about Type 1", "#learn", "btn-ghost"],
+     ["Read about Type 2", "#learn", "btn-ghost"],
      ["Start over", "#assess", "btn-ghost"]].forEach(function (b) {
       var a = el("a", "btn " + b[2], b[0]); a.href = b[1]; row.appendChild(a);
     });
@@ -1857,7 +1870,7 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
           at: stamp(), tier: body.tier, headline: body.headline,
           tagClass: body.emergency ? "tag-bad" : (["urgent", "followup"].indexOf(body.tier) >= 0 ? "tag-warn" : "tag-ok"),
           labs: [data.glucose_mgdl !== null ? "glucose" : null, data.hba1c_pct !== null ? "HbA1c" : null,
-                 data.autoantibodies !== "none" ? "antibodies" : null].filter(Boolean).join(", ") || "none",
+                 (data.risk_factors || []).length ? "risk factors" : null].filter(Boolean).join(", ") || "none",
           model: body.model.available ? body.model.version : "not trained"
         });
         renderResult(body);
@@ -1905,7 +1918,7 @@ Explains how to use the Assessment, Map, and Chat before the user starts.
       this.log().appendChild(el("div", "chatday",
         new Date().toLocaleDateString([], { weekday: "long", day: "numeric", month: "long" })
           .toUpperCase()));
-      this.bubble("Hi! I'm Candie. I can help you understand the screening, explore local services, or find trusted information about Type 1 diabetes. What's on your mind?", "bot");
+      this.bubble("Hi! I'm Candie. I can help you understand the screening, explore local services, or find trusted information about Type 2 diabetes. What's on your mind?", "bot");
     },
     toggle: function (force) {
       this.open = force === undefined ? !this.open : force;
