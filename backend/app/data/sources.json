@@ -1,13 +1,13 @@
 {
   "_note": "Every source below was opened or located through a web search on the date shown. 'checked' records how: 'publisher' means the publisher's or institution's own page was seen; 'index' means a bibliographic record was seen but the full text was not read; 'secondary' means only a report of the source was seen. Nothing here is copied text.",
-  "checked_on": "2026-11-11",
+  "checked_on": "2026-11-16",
   "sources": {
     "ADA-S2-2026": {
       "short": "ADA Standards of Care 2026, Section 2",
       "citation": "American Diabetes Association Professional Practice Committee. 2. Diagnosis and Classification of Diabetes: Standards of Care in Diabetes—2026. Diabetes Care. 2026;49(Suppl 1):S27–S49.",
       "doi": "10.2337/dc26-S002",
       "url": "https://doi.org/10.2337/dc26-S002",
-      "supports": "Diagnostic cut-offs: A1C 6.5% or above; fasting plasma glucose 126 mg/dL or above; random glucose with classic symptoms. Prediabetes: A1C 5.7–6.4%, fasting glucose 100–125 mg/dL. Confirmatory testing is required without unequivocal hyperglycaemia.",
+      "supports": "Diagnostic cut-offs: A1C 6.5% or above; fasting plasma glucose 126 mg/dL or above; 2-h plasma glucose 200 mg/dL or above on a 75 g OGTT; random glucose with classic symptoms. Prediabetes: A1C 5.7–6.4%, fasting glucose 100–125 mg/dL, 2-h glucose 140–199 mg/dL. Confirmatory testing is required without unequivocal hyperglycaemia. Screening for type 2 and prediabetes (Table 2.5 and recs. 2.11–2.13): test all adults from age 35 and repeat at least every 3 years; below that age test adults with overweight or obesity — BMI 25 kg/m2 or above, or 23 kg/m2 or above for individuals of Asian ancestry — who have one or more listed risk factors, high-risk ancestry among them.",
       "checked": "index"
     },
     "ADA-S6-2026": {
@@ -15,30 +15,7 @@
       "citation": "American Diabetes Association Professional Practice Committee. 6. Glycemic Goals, Hypoglycemia, and Hyperglycemic Crises: Standards of Care in Diabetes—2026. Diabetes Care. 2026;49(Suppl 1):S132–S149.",
       "doi": "10.2337/dc26-S006",
       "url": "https://doi.org/10.2337/dc26-S006",
-      "supports": "Hypoglycaemia levels: level 1 below 70 and at or above 54 mg/dL; level 2 below 54 mg/dL; level 3 defined by needing assistance. Written for people with diabetes.",
-      "checked": "publisher"
-    },
-    "ISPAD-2024": {
-      "short": "ISPAD Guidelines 2024, screening and staging",
-      "citation": "Haller MJ, Bell KJ, Besser REJ, et al. ISPAD Clinical Practice Consensus Guidelines 2024: Screening, Staging, and Strategies to Preserve Beta-Cell Function in Children and Adolescents with Type 1 Diabetes. Horm Res Paediatr. 2024;97(6):529–545.",
-      "doi": "10.1159/000543035",
-      "url": "https://doi.org/10.1159/000543035",
-      "supports": "Stage 1: two or more islet autoantibodies confirmed on two samples, normal glucose, no symptoms. Stage 2: the same with dysglycaemia. Stage 3: meets diagnostic criteria, with or without symptoms. A single autoantibody carries roughly a 15% risk of stage 3 within 15 years; two or more, 80% to over 90%.",
-      "checked": "publisher"
-    },
-    "INSEL-2015": {
-      "short": "Insel et al. 2015, staging statement",
-      "citation": "Insel RA, Dunne JL, Atkinson MA, et al. Staging Presymptomatic Type 1 Diabetes: A Scientific Statement of JDRF, the Endocrine Society, and the American Diabetes Association. Diabetes Care. 2015;38(10):1964–1974.",
-      "doi": "10.2337/dc15-1419",
-      "url": "https://doi.org/10.2337/dc15-1419",
-      "supports": "The three-stage classification of presymptomatic type 1 diabetes.",
-      "checked": "index"
-    },
-    "ENDOTEXT-T1D": {
-      "short": "Endotext, Pathogenesis of Type 1 Diabetes",
-      "citation": "Pathogenesis of Type 1 Diabetes. In: Endotext. MDText.com, Inc.",
-      "url": "https://www.endotext.org/",
-      "supports": "About 85% of people who develop type 1 diabetes have no family history. US prevalence by age 20 is about 0.3% (1 in 300), against about 5% (1 in 20) with an affected relative. Figures are from US non-Hispanic white youth.",
+      "supports": "Hypoglycaemia levels: level 1 below 70 and at or above 54 mg/dL; level 2 below 54 mg/dL; level 3 defined by needing assistance. Written for people with diabetes. The same section covers hyperglycaemic crises — diabetic ketoacidosis and the hyperosmolar hyperglycaemic state — as medical emergencies.",
       "checked": "publisher"
     },
     "CDC-DKA": {
@@ -61,6 +38,22 @@
       "url": "https://nhfr.doh.gov.ph/VActivefacilitiesList",
       "supports": "The official master list of health facilities. Located but NOT queried facility by facility in this build.",
       "checked": "secondary"
+    },
+    "ADA-S3-2026": {
+      "short": "ADA Standards of Care 2026, Section 3",
+      "citation": "American Diabetes Association Professional Practice Committee. 3. Prevention or Delay of Diabetes and Associated Comorbidities: Standards of Care in Diabetes—2026. Diabetes Care. 2026;49(Suppl 1):S50–S60.",
+      "doi": "10.2337/dc26-S003",
+      "url": "https://doi.org/10.2337/dc26-S003",
+      "supports": "Referral of adults with overweight or obesity at high risk of type 2 diabetes to a diabetes prevention programme targeting a weight reduction of at least 5–7% (rec. 3.3); offering prevention programmes to adults at high risk (rec. 3.5); greater benefit with 7–10% weight loss; metformin considered in defined higher-risk groups (rec. 3.7).",
+      "checked": "index"
+    },
+    "DPP-2002": {
+      "short": "Diabetes Prevention Program, 2002",
+      "citation": "Knowler WC, Barrett-Connor E, Fowler SE, et al. Reduction in the incidence of type 2 diabetes with lifestyle intervention or metformin. N Engl J Med. 2002;346(6):393–403.",
+      "doi": "10.1056/NEJMoa012512",
+      "url": "https://doi.org/10.1056/NEJMoa012512",
+      "supports": "The trial behind the prevention recommendation: an intensive lifestyle intervention reduced the incidence of type 2 diabetes by about 58% and metformin by about 31%, against placebo, over a mean of roughly 3 years.",
+      "checked": "index"
     }
   }
 }

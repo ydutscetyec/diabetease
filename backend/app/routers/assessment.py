@@ -27,14 +27,15 @@ def create_assessment(payload: AssessmentRequest, db: Session = Depends(get_db))
     settings = get_settings()
     result = evaluate(TriageInput(
         age=payload.age,
-        family_history_t1d=payload.family_history_t1d,
-        family_autoimmune=payload.family_autoimmune,
+        family_history_t2d=payload.family_history_t2d,
+        asian_ancestry=payload.asian_ancestry,
+        bmi=payload.bmi,
+        risk_factors=payload.risk_factors,
         symptoms=payload.symptoms,
         urgent_signs=payload.urgent_signs,
         glucose_test_type=payload.glucose_test_type,
         glucose_mgdl=payload.glucose_mgdl,
         hba1c_pct=payload.hba1c_pct,
-        autoantibodies=payload.autoantibodies,
     ))
 
     model_status = inference.status()
@@ -50,7 +51,9 @@ def create_assessment(payload: AssessmentRequest, db: Session = Depends(get_db))
             n_urgent_signs=len(payload.urgent_signs),
             had_glucose=payload.glucose_mgdl is not None,
             had_hba1c=payload.hba1c_pct is not None,
-            autoantibody_status=payload.autoantibodies,
+            had_bmi=payload.bmi is not None,
+            n_risk_factors=len(payload.risk_factors),
+            screening_indicated=result.screening_indicated,
             triage_tier=result.tier,
             model_version=model_status.get("version"),
             purge_after=date.today() + timedelta(days=settings.assessment_retention_days),

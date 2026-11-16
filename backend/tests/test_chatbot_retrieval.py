@@ -1,6 +1,8 @@
 """Candie's safety ordering and retrieval quality."""
 from __future__ import annotations
 
+import re
+
 
 def ask(client, msg):
     r = client.post("/api/v1/chat", json={"message": msg})
@@ -24,9 +26,9 @@ def test_refusal_runs_before_retrieval(client):
 def test_retrieval_matches_expected_topics(client):
     cases = {
         "what is hba1c": "hba1c",
-        "explain islet autoantibodies": "autoantibodies",
-        "is type 1 inherited from parents": "family",
-        "what are the stages before symptoms": "stages",
+        "what is prediabetes": "prediabetes",
+        "is type 2 inherited from parents": "family",
+        "should i get tested": "screening_criteria",
         "where can I get tested": "testing_centers",
         "why is there no trained model": "why_no_model",
         "what are the limitations of this study": "limitations",
@@ -38,7 +40,7 @@ def test_retrieval_matches_expected_topics(client):
 
 
 def test_local_language_triggers_resolve(client):
-    assert ask(client, "ano ang type 1 diabetes")["matched_topic"] == "what_is_t1d"
+    assert ask(client, "ano ang type 2 diabetes")["matched_topic"] == "what_is_t2d"
     assert ask(client, "asa ko magpa test")["matched_topic"] == "testing_centers"
 
 
@@ -74,24 +76,31 @@ def test_llm_is_not_used_when_unconfigured(client):
     assert ask(client, "what is type 1 diabetes")["mode"] == "rule_based"
 
 
-def test_general_and_type1_definitions_are_separate_topics(client):
-    """A model answering 'what is diabetes' from its own knowledge described it
-    as the body being unable to use insulin, which is Type 2 and the opposite of
-    the Type 1 mechanism. Both questions now have reviewed answers."""
+def test_general_and_type2_definitions_are_separate_topics(client):
+    """'What is diabetes' and 'what is type 2' are different questions, and the
+    general answer has to name both mechanisms without implying they are the
+    same one. Both have reviewed answers."""
     general = ask(client, "what is diabetes")
     assert general["matched_topic"] == "what_is_diabetes"
-    assert "immune system destroys" in general["reply"]
-    assert "Type 2" in general["reply"]
+    assert "responds to it poorly" in general["reply"]
+    assert "Type 1" in general["reply"]
 
-    t1 = ask(client, "what is type 1 diabetes")
-    assert t1["matched_topic"] == "what_is_t1d"
+    t2 = ask(client, "what is type 2 diabetes")
+    assert t2["matched_topic"] == "what_is_t2d"
 
 
-def test_type_1_is_never_described_as_insulin_resistance(client):
-    for q in ["what is diabetes", "what is type 1 diabetes",
-              "tell me about type 1 diabetes", "what causes type 1"]:
+def test_type_2_is_never_described_as_autoimmune(client):
+    """The mirror of the old hazard. A model asked about type 2 will sometimes
+    reach for the autoimmune explanation, which belongs to type 1."""
+    for q in ["what is diabetes", "what is type 2 diabetes",
+              "tell me about type 2 diabetes", "what causes type 2"]:
         reply = ask(client, q)["reply"].lower()
-        assert "type 1" not in reply or "resist" not in reply.split("type 2")[0], q
+        before_t1 = reply.split("type 1")[0]
+        # Denying it is fine and in fact wanted; asserting it is the bug.
+        for hit in re.finditer(r"autoimmune", before_t1):
+            window = before_t1[max(0, hit.start() - 24):hit.start()]
+            assert "not" in window, f"{q}: unqualified 'autoimmune' in {window!r}"
+        assert "immune system destroys" not in before_t1, q
 
 
 def test_digits_survive_tokenisation(client):
@@ -124,14 +133,30 @@ def test_sources_endpoint_states_how_each_was_checked(client):
         assert s["url"].startswith("https://"), key
 
 
-def test_family_risk_is_not_presented_as_a_philippine_figure(client):
-    reply = ask(client, "is type 1 inherited from parents")["reply"]
-    assert "United States" in reply
+def test_family_risk_quotes_no_unsourced_number(client):
+    """The type 1 answer quoted US figures and said so. There is no comparable
+    Philippine figure for type 2 here, so the answer must quote none at all
+    rather than borrow one."""
+    reply = ask(client, "is type 2 inherited from parents")["reply"]
+    assert "no figure specific to the philippines" in reply.lower()
+    assert not re.search(r"\b1 in \d+|\d+ in 100|\d+(\.\d+)?\s*%", reply), reply
 
 
-def test_stage_three_is_not_described_as_always_symptomatic(client):
-    reply = ask(client, "tell me about the three stages")["reply"]
-    assert "with or without symptoms" in reply
+def test_prediabetes_answer_gives_all_three_cutoffs(client):
+    """Prediabetes replaced type 1 staging. It is only useful if it names the
+    bands, because a reader is usually holding a lab slip."""
+    reply = ask(client, "what is prediabetes")["reply"]
+    for band in ("100 to 125", "140 to 199", "5.7 to 6.4"):
+        assert band in reply, band
+
+
+def test_screening_answer_carries_the_asian_ancestry_cutoff(client):
+    """The single most consequential number for this study's population: 23
+    rather than 25. If this answer loses it, most of the cohort is told the
+    wrong thing."""
+    reply = ask(client, "should i get tested")["reply"]
+    assert "23" in reply and "35" in reply
+    assert "three years" in reply or "3 years" in reply
 
 
 def test_philhealth_coverage_is_explained_with_its_limit(client):

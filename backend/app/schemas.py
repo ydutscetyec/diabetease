@@ -5,7 +5,14 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
-SYMPTOM_CODES = {"thirst", "urination", "weight_loss", "fatigue", "blurred_vision", "hunger"}
+from .services.triage import RISK_FACTORS
+
+# Type 2 is often silent, and where it does show itself the picture is usually
+# slower than in type 1: alongside thirst and urination, the complications of
+# long-standing high glucose turn up as slow-healing wounds, recurrent
+# infections and numbness in the feet.
+SYMPTOM_CODES = {"thirst", "urination", "weight_loss", "fatigue", "blurred_vision",
+                 "hunger", "slow_healing", "frequent_infections", "numbness"}
 URGENT_CODES = {"vomiting", "abdominal_pain", "rapid_breathing", "drowsiness"}
 
 
@@ -16,15 +23,28 @@ class AssessmentRequest(BaseModel):
     age: int = Field(ge=1, le=120, description="Age in whole years.")
     sex: Literal["female", "male", "not_given"] = "not_given"
     municipality: str | None = Field(default=None, max_length=64)
-    family_history_t1d: Literal["yes", "no", "unknown"] = "unknown"
-    family_autoimmune: Literal["yes", "no", "unknown"] = "unknown"
+    family_history_t2d: Literal["yes", "no", "unknown"] = "unknown"
+    asian_ancestry: Literal["yes", "no", "unknown"] = "unknown"
+    bmi: float | None = Field(
+        default=None, ge=10, le=80,
+        description="Body mass index in kg/m2. Decides whether screening is "
+                    "indicated below age 35.",
+    )
+    risk_factors: list[str] = Field(default_factory=list, max_length=12)
     symptoms: list[str] = Field(default_factory=list, max_length=12)
     urgent_signs: list[str] = Field(default_factory=list, max_length=8)
-    glucose_test_type: Literal["none", "fasting", "random"] = "none"
+    glucose_test_type: Literal["none", "fasting", "two_hour", "random"] = "none"
     glucose_mgdl: float | None = Field(default=None, ge=20, le=900)
     hba1c_pct: float | None = Field(default=None, ge=3, le=20)
-    autoantibodies: Literal["none", "negative", "one_positive", "two_or_more_positive"] = "none"
     consent_to_store: bool = False
+
+    @field_validator("risk_factors")
+    @classmethod
+    def _check_risk_factors(cls, v: list[str]) -> list[str]:
+        bad = set(v) - set(RISK_FACTORS)
+        if bad:
+            raise ValueError(f"unknown risk factor code(s): {sorted(bad)}")
+        return sorted(set(v))
 
     @field_validator("symptoms")
     @classmethod
@@ -47,7 +67,9 @@ class AssessmentRequest(BaseModel):
         # A value without a test type is uninterpretable: 140 mg/dL is normal after
         # a meal and diagnostic when fasting. Reject rather than guess.
         if self.glucose_mgdl is not None and self.glucose_test_type == "none":
-            raise ValueError("glucose_mgdl requires glucose_test_type of 'fasting' or 'random'")
+            raise ValueError(
+                "glucose_mgdl requires glucose_test_type of 'fasting', 'two_hour' or 'random'"
+            )
         if self.glucose_test_type != "none" and self.glucose_mgdl is None:
             raise ValueError("glucose_test_type was set but no glucose_mgdl was supplied")
         return self

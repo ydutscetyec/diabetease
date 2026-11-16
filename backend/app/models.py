@@ -136,7 +136,11 @@ class AssessmentSession(Base):
     n_urgent_signs: Mapped[int] = mapped_column(Integer, default=0)
     had_glucose: Mapped[bool] = mapped_column(Boolean, default=False)
     had_hba1c: Mapped[bool] = mapped_column(Boolean, default=False)
-    autoantibody_status: Mapped[str] = mapped_column(String(32), default="none")
+    had_bmi: Mapped[bool] = mapped_column(Boolean, default=False)
+    # A count, not the factors themselves: which risk factors a person reported
+    # would narrow a record down far more than the age band widens it.
+    n_risk_factors: Mapped[int] = mapped_column(Integer, default=0)
+    screening_indicated: Mapped[bool] = mapped_column(Boolean, default=False)
     triage_tier: Mapped[str] = mapped_column(String(32))
     model_version: Mapped[str | None] = mapped_column(String(64))
     purge_after: Mapped[date] = mapped_column(Date, index=True)

@@ -1,5 +1,5 @@
 {
-  "_note": "Reviewed answer corpus for Candie. Every entry is either general medical information from the cited guideline bodies, or a fact taken from the DiabetEASE manuscript. Nothing here is generated at runtime. Local-language triggers are included because many users in South Cotabato speak Hiligaynon or Cebuano; a native speaker should review them before the defence.",
+  "_note": "Reviewed answer corpus for Candie. Every entry is either general medical information from the cited guideline bodies, or a fact taken from the DiabetEASE manuscript. Nothing here is generated at runtime. This corpus covers type 2 diabetes; the type 1 staging entries were removed when the study changed, because islet autoantibodies and the stage 1/2/3 scheme have no type 2 counterpart. Local-language triggers are included because many users in South Cotabato speak Hiligaynon or Cebuano; a native speaker should review them before the defence.",
   "refusal_patterns": [
     "insulin dose",
     "how much insulin",
@@ -34,16 +34,18 @@
   "topics": [
     {
       "id": "emergency",
-      "source": "CDC-DKA",
+      "source": "ADA-S6-2026",
       "keywords": [
         "emergency",
         "ketoacidosis",
         "dka",
+        "hhs",
         "fruity breath",
         "very sleepy",
-        "drowsy and thirsty"
+        "drowsy and thirsty",
+        "confused"
       ],
-      "answer": "Vomiting, stomach pain, fast or deep breathing, fruity-smelling breath, or unusual drowsiness, especially with great thirst and frequent urination, can mean diabetic ketoacidosis. Severe symptoms can appear quickly and it is a medical emergency. Go to an emergency department or call 911 now. Do not wait and do not finish the assessment first."
+      "answer": "Vomiting, stomach pain, fast or deep breathing, fruity-smelling breath, or unusual drowsiness or confusion, especially with great thirst and frequent urination, can mean a hyperglycaemic emergency — diabetic ketoacidosis or a hyperosmolar hyperglycaemic state. Both are medical emergencies and the second is more common in type 2. Go to an emergency department or call 911 now. Do not wait and do not finish the assessment first."
     },
     {
       "id": "what_is_diabetes",
@@ -59,25 +61,24 @@
         "kinds of diabetes",
         "difference between the types"
       ],
-      "answer": "Diabetes means blood glucose is too high, but the two main types happen for opposite reasons. In Type 1, the immune system destroys the cells that make insulin, so the body has too little insulin. In Type 2, the body still makes insulin but responds to it poorly. Type 2 is far more common overall; Type 1 is the one this system is about, and it is not caused by diet or weight."
+      "answer": "Diabetes means blood glucose is too high, and the two main types happen for different reasons. In Type 2, the body still makes insulin but responds to it poorly, and over time the pancreas cannot keep up. In Type 1, the immune system destroys the cells that make insulin. Type 2 is by far the more common of the two and is the one this system is about."
     },
     {
-      "id": "what_is_t1d",
+      "id": "what_is_t2d",
       "source": "ADA-S2-2026",
       "keywords": [
-        "what is type 1",
-        "type 1 diabetes",
-        "what is t1d",
-        "t1d",
-        "about type 1",
-        "autoimmune",
-        "beta cell",
-        "ano ang type 1",
-        "unsa ang type 1",
-        "why does type 1 happen",
-        "cause of type 1"
+        "what is type 2",
+        "type 2 diabetes",
+        "what is t2d",
+        "t2d",
+        "about type 2",
+        "insulin resistance",
+        "ano ang type 2",
+        "unsa ang type 2",
+        "why does type 2 happen",
+        "cause of type 2"
       ],
-      "answer": "Type 1 diabetes is an autoimmune disease: the immune system destroys the beta cells in the pancreas that produce insulin, so the body makes too little insulin or none at all. This is different from Type 2, where insulin is produced but used poorly. Type 1 is not caused by eating sugar, and treatment with insulin is lifelong."
+      "answer": "Type 2 diabetes is a progressive loss of the body's ability to use insulin well, usually alongside a gradual decline in how much the pancreas can produce. It is not autoimmune. It often develops over years without symptoms, which is why screening matters: by the time thirst or blurred vision appear, glucose has usually been high for some time. It can often be delayed or prevented, and it can be managed."
     },
     {
       "id": "symptoms",
@@ -102,12 +103,12 @@
       "source": "ADA-S2-2026",
       "keywords": [
         "difference",
-        "type 2",
-        "type two",
+        "type 1",
+        "type one",
         "which type",
         "t1 vs t2"
       ],
-      "answer": "Type 1 is autoimmune destruction of beta cells, usually appearing in children and young adults, needing insulin from diagnosis. Type 2 involves insulin resistance and develops differently. Glucose tests cannot tell them apart; antibody testing and clinical judgement do."
+      "answer": "Type 2 involves insulin resistance and a gradual decline in insulin production, usually appears in adults, and is strongly linked to weight, activity and family history. Type 1 is autoimmune destruction of the insulin-producing cells, usually appears younger, and needs insulin from diagnosis. The glucose tests are the same for both and cannot tell them apart; that is a clinician's judgement."
     },
     {
       "id": "hba1c",
@@ -134,33 +135,24 @@
       "answer": "A fasting glucose of 126 mg/dL or above, or a random glucose of 200 mg/dL or above with classic symptoms, meets the diagnostic threshold. Fasting 100 to 125 mg/dL is the intermediate range. Unless glucose is unmistakably high, one result has to be confirmed by a second test before it counts as a diagnosis."
     },
     {
-      "id": "autoantibodies",
-      "source": "ISPAD-2024",
+      "id": "prediabetes",
+      "source": "ADA-S2-2026",
       "keywords": [
-        "autoantibod",
-        "gad",
-        "islet",
-        "znt8",
-        "ia-2",
-        "antibody test"
+        "prediabetes",
+        "pre diabetes",
+        "borderline",
+        "intermediate",
+        "impaired fasting",
+        "impaired glucose",
+        "5.7",
+        "100 to 125",
+        "almost diabetic"
       ],
-      "answer": "Islet autoantibodies, including GAD, IA-2, ZnT8 and insulin autoantibodies, are the markers of early type 1 diabetes. Two or more, confirmed on two samples, is early-stage disease: most children with them progress to clinical diabetes within 15 years. A single antibody is different, carrying roughly a 15% chance over the same period. The test is not routine in municipal facilities and usually needs a referral."
-    },
-    {
-      "id": "stages",
-      "source": "ISPAD-2024",
-      "keywords": [
-        "stage",
-        "presymptomatic",
-        "before symptoms",
-        "early stage",
-        "silent"
-      ],
-      "answer": "Early type 1 diabetes is described in stages. Stage 1 is two or more islet autoantibodies, confirmed on two samples, with normal glucose and no symptoms. Stage 2 is the same with glucose starting to rise. Stage 3 is glucose that meets the diagnostic criteria, and it can occur with or without symptoms. Stages 1 and 2 are silent, which is why a normal glucose result cannot rule the condition out."
+      "answer": "Prediabetes is glucose that is higher than normal but not yet at the diagnostic cut-off: a fasting glucose of 100 to 125 mg/dL, a 2-hour value of 140 to 199, or an HbA1c of 5.7 to 6.4 per cent. It is the stage type 2 diabetes passes through, it usually has no symptoms, and it is the point at which changes to diet and activity do the most good. It is a reason to act, not a diagnosis."
     },
     {
       "id": "family",
-      "source": "ENDOTEXT-T1D",
+      "source": "ADA-S2-2026",
       "keywords": [
         "family",
         "inherit",
@@ -170,33 +162,37 @@
         "sibling",
         "namana"
       ],
-      "answer": "Most people who develop type 1 diabetes, about 85 in 100, have no family history. A parent or sibling with it raises the risk to about 1 in 20, against roughly 1 in 300 in the general population. Those figures come from studies in the United States; no equivalent figure exists for the Philippines. Most relatives never develop it."
+      "answer": "A parent or sibling with type 2 diabetes is one of the risk factors the ADA lists as a reason to be tested earlier than age 35. It raises risk substantially, and it is one of the most common reasons someone in this study would qualify for screening. It is not a sentence: most people with an affected relative do not go on to develop it, and the things that lower risk are the same things that help anyway. No figure specific to the Philippines is available here, so none is quoted."
     },
     {
       "id": "prevention",
-      "source": "ADA-S2-2026",
+      "source": "ADA-S3-2026",
       "keywords": [
         "prevent",
         "avoid",
         "sugar cause",
         "cure",
         "too much sweets",
-        "can i stop it"
+        "can i stop it",
+        "reverse",
+        "delay"
       ],
-      "answer": "Type 1 diabetes is not caused by diet and cannot currently be prevented. That is different from Type 2 diabetes, and the confusion between the two is common. Nothing a child or parent did caused it."
+      "answer": "This is where type 2 differs most from type 1: it can often be delayed or prevented. For adults at high risk, the ADA recommends a diabetes prevention programme aiming at a weight reduction of at least 5 to 7 per cent, together with regular physical activity. In the Diabetes Prevention Program trial, that approach cut new cases by about 58 per cent over roughly three years, more than the medicine arm did. Eating sugar is not the single cause, and blame is not useful, but diet, activity and weight are genuinely things that change the odds."
     },
     {
       "id": "treatment",
-      "source": "ADA-S2-2026",
+      "source": "ADA-S3-2026",
       "keywords": [
         "treatment",
         "how treated",
         "live with",
         "manage",
-        "insulin pump",
-        "injection"
+        "medicine",
+        "metformin",
+        "insulin",
+        "tablets"
       ],
-      "answer": "Type 1 diabetes is managed with insulin, which a doctor prescribes and adjusts, alongside glucose monitoring and education. I cannot advise on any of it. What I can say is that it is manageable and that people with Type 1 diabetes live full lives."
+      "answer": "Type 2 diabetes is managed with changes to diet and activity, often with medicine — metformin is usually the first — and sometimes with insulin later on. Which of those applies to anyone is a doctor's decision and I cannot advise on it. What I can say is that it is manageable, that early action makes a real difference, and that people with type 2 diabetes live full lives."
     },
     {
       "id": "model_status",
@@ -226,7 +222,7 @@
         "why rule",
         "no model"
       ],
-      "answer": "The study has not secured a dataset that labels Type 1 diabetes specifically, with islet-autoantibody variables, for a Philippine population. Public datasets commonly used in student projects label Type 2 or undifferentiated diabetes. Training on those and calling the output a Type 1 risk model would misstate what it is, so the system uses published thresholds instead."
+      "answer": "No model has been trained. The study has not secured a dataset drawn from a population comparable to this one, and a model fitted to a foreign cohort would carry that cohort's base rates into South Cotabato without saying so. The ADA's screening and diagnostic criteria are already a published, validated rule, so the system applies those instead and shows you which cut-off your entry met. That is why you will never see a percentage here."
     },
     {
       "id": "forecasting",
@@ -254,7 +250,7 @@
     },
     {
       "id": "no_threshold",
-      "source": "DiabetEASE",
+      "source": "ADA-S2-2026",
       "keywords": [
         "nothing crosses",
         "am i safe",
@@ -262,7 +258,7 @@
         "all clear",
         "normal result"
       ],
-      "answer": "A result of nothing crosses a threshold is not an all-clear. The autoimmune process begins months to years before glucose becomes abnormal, so a normal glucose result cannot detect early-stage disease. Only islet autoantibody testing can. Come back if thirst, urination, weight loss or fatigue appear or worsen."
+      "answer": "A result of nothing crosses a threshold is not an all-clear. Type 2 diabetes develops gradually, often over years, and usually without symptoms until glucose is already high, so a normal result describes today and not next year. The ADA's answer to that is repeat testing at least every three years, sooner if your risk factors change. Come back if thirst, frequent urination, blurred vision, fatigue or slow-healing cuts appear or worsen."
     },
     {
       "id": "testing_centers",
@@ -360,7 +356,7 @@
         "research goal",
         "aim of the study"
       ],
-      "answer": "The study aims to design, develop and evaluate DiabetEASE: a multi-parameter Type 1 diabetes risk assessment, testing centre mapping and decision-support system. It evaluates predictive performance, functional quality under ISO/IEC 25010, geographic information accuracy, and user acceptability."
+      "answer": "The study aims to design, develop and evaluate DiabetEASE: a multi-parameter Type 2 diabetes screening, testing centre mapping and decision-support system. It evaluates functional quality under ISO/IEC 25010, geographic information accuracy, and user acceptability."
     },
     {
       "id": "research_design",
@@ -413,7 +409,7 @@
         "are you a real",
         "chatbot"
       ],
-      "answer": "I'm Candie, the DiabetEASE health assistant. I answer from a fixed list of reviewed explanations written by the research team, so I will not invent a medical claim. I can explain Type 1 diabetes, walk you through a result you have already recorded, and help you find your way around the site. I cannot diagnose anyone."
+      "answer": "I'm Candie, the DiabetEASE health assistant. I answer from a fixed list of reviewed explanations written by the research team, so I will not invent a medical claim. I can explain Type 2 diabetes, walk you through a result you have already recorded, and help you find your way around the site. I cannot diagnose anyone."
     },
     {
       "id": "cost",
@@ -461,6 +457,34 @@
         "accredited"
       ],
       "answer": "PhilHealth's primary care package, YAKAP (called Konsulta before 2025), covers a check-up plus a set of laboratory tests that includes fasting blood sugar, the glucose tolerance test and HbA1c, ordered by the provider's doctor as needed. You register with one accredited provider. If that clinic has no laboratory, the test may be done at a partner laboratory, so an accredited facility on the map does not always run the test on site."
+    },
+    {
+      "id": "screening_criteria",
+      "source": "ADA-S2-2026",
+      "keywords": [
+        "should i get tested",
+        "who should be tested",
+        "do i need a test",
+        "screening",
+        "when to test",
+        "am i eligible",
+        "kinahanglan ba",
+        "kailangan ba ako magtest"
+      ],
+      "answer": "The ADA recommends testing every adult from age 35, and repeating it at least every three years while results stay normal. Below 35, testing is recommended for anyone with overweight or obesity who has at least one risk factor. The BMI cut-off for that is 23 rather than 25 for people of Asian ancestry — which includes this study's population — and Asian ancestry is itself one of the listed risk factors. In practice that means most adults here with a BMI of 23 or above should be tested, whatever their age."
+    },
+    {
+      "id": "risk_factors",
+      "source": "ADA-S2-2026",
+      "keywords": [
+        "risk factor",
+        "risk factors",
+        "what raises risk",
+        "who is at risk",
+        "am i at risk",
+        "chance of getting"
+      ],
+      "answer": "The risk factors the ADA lists for earlier testing are: a first-degree relative with diabetes; high-risk ancestry, Asian ancestry included; a history of cardiovascular disease; high blood pressure at or above 130/80, or treatment for it; HDL cholesterol below 35 mg/dL or triglycerides above 250; physical inactivity; polycystic ovary syndrome; diabetes in a previous pregnancy; a previous result in the prediabetes range; and other conditions linked to insulin resistance. One is enough, if BMI is at or above the cut-off."
     }
   ]
 }
