@@ -13,7 +13,7 @@
 
    Two rules carry the whole design:
 
-   1. Every candy hue is a FILL with an ink partner (--pink / --pink-ink) that
+   1. Every candy hue is a FILL with an ink partner (--accent-1 / --accent-1-ink) that
       flips with it. One token cannot be both a tile background and text on a
       dark ground, which is exactly why the previous dark theme could not work.
       There are four, matching the four tone tiles the product renders.
@@ -22,7 +22,7 @@
       pastel light enough to carry dark ink is never dark enough to be seen on
       white, so one value cannot do both jobs.
 
-   --pink/--mint/--sky/--lavender keep names from an earlier palette, so a name
+   --accent-1/--accent-2/--accent-3/--accent-4 keep names from an earlier palette, so a name
    describes its slot rather than its hue exactly. --rail-* stay dark in BOTH
    themes on purpose, so the workspace is the brightest thing on screen.
    =========================================================================== */
@@ -48,15 +48,17 @@
   --line-strong:#AD7F94;
   --focus:#A8114B;
 
-  /* candy fills, each with the ink that is legible on it */
-  --pink:#FFA9C9;
-  --pink-ink:#73102F;
-  --mint:#A4E5CB;
-  --mint-ink:#0A4738;
-  --sky:#A6D8F2;
-  --sky-ink:#0A3B58;
-  --lavender:#D3B4EA;
-  --lavender-ink:#3C1860;
+  /* four categorical accent fills, each with the ink that is legible on
+     it. Numbered, not named by hue: every palette gives them different
+     hues, so --accent-1 is teal in one theme and pink in another. */
+  --accent-1:#FFA9C9;
+  --accent-1-ink:#73102F;
+  --accent-2:#A4E5CB;
+  --accent-2-ink:#0A4738;
+  --accent-3:#A6D8F2;
+  --accent-3-ink:#0A3B58;
+  --accent-4:#D3B4EA;
+  --accent-4-ink:#3C1860;
 
   /* status: a lightness ramp, not only a hue change */
   --ok-ink:#0A5A4A;
@@ -117,15 +119,17 @@
   --line-strong:#9C78A6;
   --focus:#FFAECC;
 
-  /* candy fills, each with the ink that is legible on it */
-  --pink:#4C1229;
-  --pink-ink:#FFC2D8;
-  --mint:#0F3A30;
-  --mint-ink:#8FE8CC;
-  --sky:#0E3146;
-  --sky-ink:#A9DCF7;
-  --lavender:#331A4A;
-  --lavender-ink:#DCBFF2;
+  /* four categorical accent fills, each with the ink that is legible on
+     it. Numbered, not named by hue: every palette gives them different
+     hues, so --accent-1 is teal in one theme and pink in another. */
+  --accent-1:#4C1229;
+  --accent-1-ink:#FFC2D8;
+  --accent-2:#0F3A30;
+  --accent-2-ink:#8FE8CC;
+  --accent-3:#0E3146;
+  --accent-3-ink:#A9DCF7;
+  --accent-4:#331A4A;
+  --accent-4-ink:#DCBFF2;
 
   /* status: a lightness ramp, not only a hue change */
   --ok-ink:#7FE7CA;
@@ -172,15 +176,17 @@
     --line-strong:#9C78A6;
     --focus:#FFAECC;
 
-    /* candy fills, each with the ink that is legible on it */
-    --pink:#4C1229;
-    --pink-ink:#FFC2D8;
-    --mint:#0F3A30;
-    --mint-ink:#8FE8CC;
-    --sky:#0E3146;
-    --sky-ink:#A9DCF7;
-    --lavender:#331A4A;
-    --lavender-ink:#DCBFF2;
+    /* four categorical accent fills, each with the ink that is legible on
+     it. Numbered, not named by hue: every palette gives them different
+     hues, so --accent-1 is teal in one theme and pink in another. */
+    --accent-1:#4C1229;
+    --accent-1-ink:#FFC2D8;
+    --accent-2:#0F3A30;
+    --accent-2-ink:#8FE8CC;
+    --accent-3:#0E3146;
+    --accent-3-ink:#A9DCF7;
+    --accent-4:#331A4A;
+    --accent-4-ink:#DCBFF2;
 
     /* status: a lightness ramp, not only a hue change */
     --ok-ink:#7FE7CA;
@@ -411,7 +417,7 @@ input[aria-invalid="true"]{border-color:var(--danger-line); background:var(--dan
 
 .steps{display:flex; gap:5px; list-style:none; padding:0; margin:0 0 10px}
 .steps li{flex:1; height:6px; border-radius:var(--r-pill); background:var(--line)}
-.steps li.done{background:var(--mint)}
+.steps li.done{background:var(--accent-2)}
 .steps li.now{background:var(--green)}
 
 /* --------------------------------------------------------------- tables */
@@ -447,14 +453,14 @@ tr:last-child td{border-bottom:0}
      display:flex; flex-direction:column; align-items:center}
 .pin b{width:15px;height:15px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);
        background:var(--green); border:2px solid var(--card); box-shadow:var(--sh-1)}
-.pin.has b{background:var(--pink)}
+.pin.has b{background:var(--accent-1)}
 .pin span{font-size:.65rem; font-weight:600; background:var(--card); color:var(--text);
           border:1px solid var(--line); border-radius:5px; padding:1px 5px; margin-top:3px; white-space:nowrap}
 .pin:focus-visible b{outline:3px solid var(--focus); outline-offset:3px}
 
 /* ---------------------------------------------------------------- chat */
 .chatfab{
-  position:fixed; z-index:45; right:18px; bottom:calc(18px + env(safe-area-inset-bottom,0px)); border-radius:50%; cursor:pointer; color:var(--mint-ink);
+  position:fixed; z-index:45; right:18px; bottom:calc(18px + env(safe-area-inset-bottom,0px)); border-radius:50%; cursor:pointer; color:var(--accent-2-ink);
   box-shadow:var(--sh-2); display:grid; place-items:center;
 }
 .chatpanel{
@@ -593,7 +599,7 @@ tr:last-child td{border-bottom:0}
 .quizopt:disabled{cursor:default}
 .quizopt.right{background:var(--ok-bg); border-color:var(--ok-line); color:var(--ok-ink); font-weight:600}
 .quizopt.wrong{background:var(--danger-bg); border-color:var(--danger-line); color:var(--danger-ink)}
-.quizwhy{font-size:.85rem; color:var(--text-2); margin:8px 0 0; padding-left:12px; border-left:3px solid var(--mint)}
+.quizwhy{font-size:.85rem; color:var(--text-2); margin:8px 0 0; padding-left:12px; border-left:3px solid var(--accent-2)}
 
 .mythgrid{display:grid; gap:12px; grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
 .myth{
@@ -609,7 +615,7 @@ tr:last-child td{border-bottom:0}
 /* -------------------------------------------------------------- avatar */
 .whoami{display:flex; align-items:center; gap:8px; font-size:.82rem; color:var(--text-2)}
 .rolebadge{font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em;
-  padding:2px 7px; border-radius:999px; background:var(--lavender); color:var(--lavender-ink)}
+  padding:2px 7px; border-radius:999px; background:var(--accent-4); color:var(--accent-4-ink)}
 
 /* --------------------------------------------------- draggable chat */
 .chatpanel.dragging{transition:none; user-select:none}
@@ -645,9 +651,9 @@ a{color:var(--green-ink)}
 
 /* buttons: white labels on teal; the old dark-green label failed on teal */
 
-.btn-soft{background:var(--pink); border-color:var(--pink); color:var(--pink-ink)}
+.btn-soft{background:var(--accent-1); border-color:var(--accent-1); color:var(--accent-1-ink)}
 .segmented button[aria-pressed="true"]{background:var(--green); color:var(--on-primary)}
-.chatfab{ border:3px solid var(--mint-ink)}
+.chatfab{ border:3px solid var(--accent-2-ink)}
 
 .banner{background:var(--rail-bg)}
 .banner .eyebrow{color:var(--rail-dim)}
@@ -692,7 +698,7 @@ a{color:var(--green-ink)}
      this replaced had the previous palette's hexes baked in and no way to
      follow the current one. */
   content:""; display:inline-block; width:30px; height:18px; flex:0 0 auto;
-  background:var(--pink);
+  background:var(--accent-1);
   -webkit-mask:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 36'%3E%3Cpath d='M14 18 2 6v24z'/%3E%3Cpath d='M46 18 58 6v24z'/%3E%3Cellipse cx='30' cy='18' rx='17' ry='13'/%3E%3C/svg%3E");
   mask:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 36'%3E%3Cpath d='M14 18 2 6v24z'/%3E%3Cpath d='M46 18 58 6v24z'/%3E%3Cellipse cx='30' cy='18' rx='17' ry='13'/%3E%3C/svg%3E");
   animation:candybob 2.2s ease-in-out infinite;
@@ -730,11 +736,11 @@ a{color:var(--green-ink)}
 /* The avatar is a bust crop on a transparent square. A circle with a soft
    fill frames it; object-fit:cover inside the circle keeps the head whole
    while the circle hides the hand and tablet at the corners. */
-.chatfab{width:62px; height:62px; padding:0; overflow:hidden; background:var(--mint)}
+.chatfab{width:62px; height:62px; padding:0; overflow:hidden; background:var(--accent-2)}
 .chatfab img{width:100%; height:100%; object-fit:cover; display:block}
-.candie-av{width:40px; height:40px; border-radius:50%; object-fit:cover; background:var(--mint); flex:0 0 auto}
+.candie-av{width:40px; height:40px; border-radius:50%; object-fit:cover; background:var(--accent-2); flex:0 0 auto}
 .candie-hero{width:150px; height:150px; object-fit:contain}
-.boot img{width:96px; height:96px; border-radius:50%; object-fit:cover; background:var(--mint)}
+.boot img{width:96px; height:96px; border-radius:50%; object-fit:cover; background:var(--accent-2)}
 
 /* ------------------------------------------------------- range scale */
 .rangescale{margin-top:10px}
@@ -748,7 +754,7 @@ a{color:var(--green-ink)}
   border:1px solid var(--line-strong)}
 .rs-band{height:100%}
 .rs-band.b-low{background:var(--info-line)}
-.rs-band.b-normal{background:var(--mint)}
+.rs-band.b-normal{background:var(--accent-2)}
 .rs-band.b-mid{background:var(--warn-line)}
 .rs-band.b-high{background:var(--danger-line)}
 .rs-marker{position:absolute; top:-6px; width:4px; height:28px; margin-left:-2px;
@@ -851,7 +857,7 @@ a{color:var(--green-ink)}
 
 .bubble.bot.reviewed{border-left:3px solid var(--green)}
 .bubble.bot.generated{
-  border-left:3px solid var(--pink);
+  border-left:3px solid var(--accent-1);
   background:var(--warn-bg);
 }
 
@@ -885,7 +891,7 @@ a{color:var(--green-ink)}
   display:block; font-size:.66rem; margin-top:6px; color:var(--text-2);
   overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 }
-.stepseg.done .bar{background:var(--mint)}
+.stepseg.done .bar{background:var(--accent-2)}
 .stepseg.now .bar{background:var(--green)}
 .stepseg.now .nm{color:var(--green-ink); font-weight:700}
 @media (max-width:560px){ .stepseg:not(.now) .nm{display:none} }
@@ -979,12 +985,12 @@ a{color:var(--green-ink)}
 .rail-note{margin:16px 10px 0; padding:15px 14px; border:1px solid rgba(255,255,255,.14);
   border-radius:var(--r-lg); background:rgba(255,255,255,.06)}
 .note-icon{display:grid; place-items:center; width:31px; height:31px; margin-bottom:11px;
-  border-radius:10px; background:color-mix(in srgb, var(--mint) 22%, transparent);
+  border-radius:10px; background:color-mix(in srgb, var(--accent-2) 22%, transparent);
   color:var(--rail-dim)}
 .rail-note strong{display:block; font-family:var(--font-head); font-size:.84rem; color:var(--rail-text)}
 .rail-note p{margin:5px 0 11px; color:var(--rail-dim); font-size:.72rem; line-height:1.55; max-width:none}
 .privacy-label{display:flex; align-items:center; gap:7px; color:var(--rail-dim); font-size:.68rem}
-.privacy-label i{width:7px; height:7px; border-radius:50%; background:var(--mint); flex:0 0 auto}
+.privacy-label i{width:7px; height:7px; border-radius:50%; background:var(--accent-2); flex:0 0 auto}
 :root[data-rail="collapsed"] .rail-note{display:none}
 @media (max-width:1023px){ :root[data-rail="collapsed"] .rail-note{display:block} }
 
@@ -1179,7 +1185,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 }
 .rail-brand .logo-drop {
   width: 36px; height: 36px; flex: 0 0 auto;
-  background: var(--mint); border-radius: 50%;
+  background: var(--accent-2); border-radius: 50%;
   display: grid; place-items: center;
 }
 .rail-brand .logo-drop svg { color: var(--green-ink); }
@@ -1207,13 +1213,13 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 }
 .rail a:hover { background: rgba(255,255,255,.07); }
 .rail a[aria-current="page"] {
-  background: var(--mint);
-  color: var(--mint-ink);
+  background: var(--accent-2);
+  color: var(--accent-2-ink);
   font-weight: 600;
   border-left: 0;
 }
-.rail a[aria-current="page"] .ico { color: var(--mint-ink); }
-.rail a[aria-current="page"] .lbl { color: var(--mint-ink); }
+.rail a[aria-current="page"] .ico { color: var(--accent-2-ink); }
+.rail a[aria-current="page"] .lbl { color: var(--accent-2-ink); }
 .rail a .ico { color: var(--rail-dim); }
 .rail a .lbl { color: var(--rail-text); }
 
@@ -1231,7 +1237,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 }
 .rail-bottom .rb-icon {
   width: 32px; height: 32px; border-radius: 10px;
-  background: color-mix(in srgb, var(--mint) 22%, transparent);
+  background: color-mix(in srgb, var(--accent-2) 22%, transparent);
   display: grid; place-items: center;
   color: var(--rail-dim); margin-bottom: 10px;
 }
@@ -1248,7 +1254,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
   color: var(--rail-dim); font-size: .68rem;
 }
 .rail-bottom .rb-priv i {
-  width: 7px; height: 7px; border-radius: 50%; background: var(--mint); flex: 0 0 auto;
+  width: 7px; height: 7px; border-radius: 50%; background: var(--accent-2); flex: 0 0 auto;
 }
 /* This card is prose. Collapsed, its text was crushed into a 21px column
    (61px of content), so hide the card with the rail. Same >=1024px scoping as
@@ -1266,7 +1272,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .rail-account:hover { background: rgba(255,255,255,.05); }
 .rail-account .ra-avatar {
   width: 32px; height: 32px; border-radius: 50%;
-  background: var(--rail-dim); color: var(--pink-ink);
+  background: var(--rail-dim); color: var(--accent-1-ink);
   display: grid; place-items: center;
   font-weight: 700; font-size: .78rem; flex: 0 0 auto;
 }
@@ -1341,7 +1347,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 /* ---- Welcome card: mint gradient ---- */
 .welcome {
   position: relative; overflow: hidden;
-  background: linear-gradient(108deg, var(--ok-bg) 0%, var(--card) 55%, var(--mint) 140%);
+  background: linear-gradient(108deg, var(--ok-bg) 0%, var(--card) 55%, var(--accent-2) 140%);
   border: 1px solid var(--line-strong);
   border-radius: var(--r-lg);
   padding: 32px 36px;
@@ -1391,7 +1397,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
   opacity: .7;
 }
 .orbit-one { width: 180px; height: 180px; }
-.orbit-two { width: 140px; height: 140px; border-color: var(--mint); }
+.orbit-two { width: 140px; height: 140px; border-color: var(--accent-2); }
 .mascot-caption {
   position: absolute; bottom: -4px; z-index: 3;
   display: inline-flex; align-items: center; gap: 6px;
@@ -1404,7 +1410,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 }
 .welcome-deco {
   position: absolute; width: 120px; height: 120px;
-  border: 1px solid var(--mint); border-radius: 50%; opacity: .5;
+  border: 1px solid var(--accent-2); border-radius: 50%; opacity: .5;
 }
 .deco-a { top: -80px; right: 220px; }
 .deco-b { bottom: -86px; left: 40%; }
@@ -1456,10 +1462,10 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .stat .v.sm { font-size: 1rem; margin-top: 4px; }
 .stat .n { font-size: .74rem; color: var(--text-2); }
 
-.tone-mint   { background: var(--mint); color: var(--mint-ink); }
-.tone-blue   { background: var(--sky); color: var(--sky-ink); }
-.tone-peach  { background: var(--pink); color: var(--pink-ink); }
-.tone-lav    { background: var(--lavender); color: var(--lavender-ink); }
+.tone-mint   { background: var(--accent-2); color: var(--accent-2-ink); }
+.tone-blue   { background: var(--accent-3); color: var(--accent-3-ink); }
+.tone-peach  { background: var(--accent-1); color: var(--accent-1-ink); }
+.tone-lav    { background: var(--accent-4); color: var(--accent-4-ink); }
 
 /* ---- Bottom row cards ---- */
 .bottom-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
@@ -1487,7 +1493,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 }
 .chatpanel header .candie-av {
   width: 36px; height: 36px; border-radius: 50%;
-  background: var(--mint); object-fit: cover;
+  background: var(--accent-2); object-fit: cover;
 }
 .chatpanel header b { font-size: 1rem; color: var(--text); }
 .chatpanel header small { color: var(--green); font-size: .72rem; }
@@ -1508,7 +1514,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .miniavatar {
   width: 28px; height: 28px; flex: 0 0 auto;
   border-radius: 50%; object-fit: cover;
-  background: var(--mint);
+  background: var(--accent-2);
 }
 .bubble {
   max-width: 85%; padding: 10px 13px;
