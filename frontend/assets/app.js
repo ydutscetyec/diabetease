@@ -329,22 +329,24 @@ function buildNav() {
     })(start);
   }
 
+  // Keyed on the tone class the tile actually gets, so a call site reads as the
+  // colour it renders. These used to be token names, and they had drifted out
+  // of step with the classes they mapped to: "tone-peach" rendered a peach tile
+  // and "tone-lav" a lavender one.
   var STAT_ICONS = {
-    "--mint": '<path d="M3 12h4l2-6 4 12 2-6h6"/>',
-    "--sky": '<path d="M4 20V9M10 20V4M16 20v-7M22 20H2"/>',
-    "--lavender": '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
-    "--yellow": '<path d="M10.5 3h3a2 2 0 0 1 2 2v2h3a2 2 0 0 1 2 2v3M3 10.5V9a2 2 0 0 1 2-2h2"/><circle cx="12" cy="14" r="6"/>'
+    "tone-mint": '<path d="M3 12h4l2-6 4 12 2-6h6"/>',
+    "tone-blue": '<path d="M4 20V9M10 20V4M16 20v-7M22 20H2"/>',
+    "tone-peach": '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
+    "tone-lav": '<path d="M10.5 3h3a2 2 0 0 1 2 2v2h3a2 2 0 0 1 2 2v3M3 10.5V9a2 2 0 0 1 2-2h2"/><circle cx="12" cy="14" r="6"/>'
   };
-  var STAT_TONES = { "--mint": "tone-mint", "--sky": "tone-blue",
-                     "--lavender": "tone-peach", "--yellow": "tone-lav" };
 
   function statCard(key, value, note, token, small) {
     var s = el("div", "stat");
-    var tile = el("span", "stat-tile " + (STAT_TONES[token] || "tone-mint"));
+    var tile = el("span", "stat-tile " + (STAT_ICONS[token] ? token : "tone-mint"));
     tile.setAttribute("aria-hidden", "true");
     tile.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" '
       + 'stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
-      + (STAT_ICONS[token] || STAT_ICONS["--mint"]) + "</svg>";
+      + (STAT_ICONS[token] || STAT_ICONS["tone-mint"]) + "</svg>";
     s.appendChild(tile);
     var body = el("div", "stat-body");
     body.appendChild(el("span", "k", key));
@@ -371,10 +373,10 @@ function buildNav() {
     }
     var host = $("dashStats");
     clear(host);
-    host.appendChild(statCard("Model status", "Loading…", "", "--lavender", true));
-    host.appendChild(statCard("Testing centres", "…", "", "--sky", true));
-    host.appendChild(statCard("With a confirmed service", "…", "", "--mint", true));
-    host.appendChild(statCard("Pharmacies", "…", "", "--yellow", true));
+    host.appendChild(statCard("Model status", "Loading…", "", "tone-peach", true));
+    host.appendChild(statCard("Testing centres", "…", "", "tone-blue", true));
+    host.appendChild(statCard("With a confirmed service", "…", "", "tone-mint", true));
+    host.appendChild(statCard("Pharmacies", "…", "", "tone-lav", true));
 
     Promise.all([
       Api.call("/health").catch(function () { return null; }),
@@ -392,13 +394,13 @@ function buildNav() {
       host.appendChild(statCard("Model status",
         h ? (h.model === "unavailable" ? "Not trained" : h.model) : "Unknown",
         h && h.model === "unavailable" ? "no probability is produced" : "see research page",
-        "--lavender", true));
+        "tone-peach", true));
       host.appendChild(statCard("Testing centres", f ? String(testing) : "—",
-        f ? "hospitals, clinics, laboratories, health units" : "server unreachable", "--sky"));
+        f ? "hospitals, clinics, laboratories, health units" : "server unreachable", "tone-blue"));
       host.appendChild(statCard("With a confirmed service", f ? String(confirmedTesting) : "—",
-        f ? (testing - confirmedTesting) + " still to confirm" : "server unreachable", "--mint"));
+        f ? (testing - confirmedTesting) + " still to confirm" : "server unreachable", "tone-mint"));
       host.appendChild(statCard("Pharmacies", f ? String(pharmacies) : "—",
-        f ? "insulin availability to be confirmed by phone" : "server unreachable", "--yellow"));
+        f ? "insulin availability to be confirmed by phone" : "server unreachable", "tone-lav"));
     });
 
     renderDashAssessment();
@@ -1135,11 +1137,11 @@ function buildNav() {
 
         var fc = el("div", "grid g3");
         fc.style.marginTop = "16px";
-        fc.appendChild(statCard("Facility records", String(b.facilities.total_records), "total in database", "--sky"));
+        fc.appendChild(statCard("Facility records", String(b.facilities.total_records), "total in database", "tone-blue"));
         fc.appendChild(statCard("Verified", String(b.facilities.by_status.verified),
-          b.facilities.by_status.unconfirmed + " unconfirmed", "--mint"));
+          b.facilities.by_status.unconfirmed + " unconfirmed", "tone-mint"));
         fc.appendChild(statCard("Confirmed services", String(b.facilities.confirmed_service_claims),
-          "each backed by a source and date", "--lavender"));
+          "each backed by a source and date", "tone-peach"));
         host.appendChild(fc);
 
         host.appendChild(note("info", "Coverage denominator", b.facilities.coverage_denominator));

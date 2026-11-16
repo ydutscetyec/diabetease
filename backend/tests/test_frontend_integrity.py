@@ -273,9 +273,15 @@ def test_breadcrumbs_and_eyebrows_present():
 
 
 def test_stat_cards_have_tone_tiles():
-    assert "var STAT_TONES" in JS
+    """The icon table is keyed on the tone class the tile gets, so a call site
+    reads as the colour it renders. It used to be keyed on token names that had
+    drifted: "--lavender" rendered a peach tile and "--yellow" a lavender one.
+    """
+    assert "var STAT_ICONS" in JS
+    assert "var STAT_TONES" not in JS, "the indirection is gone; key on the class"
     for tone in ("tone-mint", "tone-blue", "tone-peach", "tone-lav"):
         assert tone in CSS, tone
+        assert f'"{tone}"' in JS, f"{tone} is not a key in STAT_ICONS"
 
 
 def test_result_alert_states_urgency_in_words():

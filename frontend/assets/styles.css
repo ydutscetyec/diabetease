@@ -16,10 +16,12 @@
    to override it). Every value below is the one that was already winning, so
    the rendered result is unchanged — but there is now one place to edit.
 
-   Naming note: --pink/--mint/--sky/--lavender/--yellow kept their names from
-   the earlier palette while taking swatch values, so --mint is now a cyan and
-   --pink a peach. Renaming them touches every call site; left for its own
-   change.
+   Naming note: --pink/--mint/--sky/--lavender keep the names they had under an
+   earlier palette, so the name describes the slot rather than the hue exactly.
+   Each is a FILL and has an ink partner (--pink-ink and so on) that flips with
+   it; that pairing is what makes the dark theme possible, so never write one
+   without the other. There are four, matching the four tone tiles the product
+   actually renders.
    =========================================================================== */
 
 :root{
@@ -52,8 +54,6 @@
   --sky-ink:#0A3B58;
   --lavender:#D3B4EA;
   --lavender-ink:#3C1860;
-  --yellow:#FFDF8A;
-  --yellow-ink:#5A3C00;
 
   /* status: a lightness ramp, not only a hue change */
   --ok-ink:#0A5A4A;
@@ -123,8 +123,6 @@
   --sky-ink:#A9DCF7;
   --lavender:#331A4A;
   --lavender-ink:#DCBFF2;
-  --yellow:#3A2A08;
-  --yellow-ink:#FFE0A0;
 
   /* status: a lightness ramp, not only a hue change */
   --ok-ink:#7FE7CA;
@@ -180,8 +178,6 @@
     --sky-ink:#A9DCF7;
     --lavender:#331A4A;
     --lavender-ink:#DCBFF2;
-    --yellow:#3A2A08;
-    --yellow-ink:#FFE0A0;
 
     /* status: a lightness ramp, not only a hue change */
     --ok-ink:#7FE7CA;
@@ -1433,8 +1429,8 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .stat .n { font-size: .74rem; color: var(--text-2); }
 
 .tone-mint   { background: var(--mint); color: var(--mint-ink); }
-.tone-blue   { background: var(--sky); color: var(--info-ink); }
-.tone-peach  { background: var(--warn-bg); color: var(--pink-ink); }
+.tone-blue   { background: var(--sky); color: var(--sky-ink); }
+.tone-peach  { background: var(--pink); color: var(--pink-ink); }
 .tone-lav    { background: var(--lavender); color: var(--lavender-ink); }
 
 /* ---- Bottom row cards ---- */

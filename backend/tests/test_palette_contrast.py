@@ -84,11 +84,13 @@ PAIRINGS = [
     ("info-ink", "info-bg", TEXT, "neutral note"),
     ("rail-text", "rail-bg", TEXT, "sidebar item"),
     ("rail-dim", "rail-bg", TEXT, "sidebar group label and banner eyebrow"),
+    # Four tone fills, matching the four tile classes the product renders.
+    # There is no fifth: a palette that documents a colour nothing uses is a
+    # palette that lies a little.
     ("pink-ink", "pink", TEXT, "text on a bubblegum fill"),
     ("mint-ink", "mint", TEXT, "text on a mint fill"),
     ("sky-ink", "sky", TEXT, "text on a candy-blue fill"),
     ("lavender-ink", "lavender", TEXT, "text on a grape fill"),
-    ("yellow-ink", "yellow", TEXT, "text on a lemon fill"),
     ("line-strong", "card", UI, "input border on a card"),
     ("line-strong", "bg", UI, "input border on the page"),
     ("ok-line", "card", UI, "verified chip border and progress fill"),
