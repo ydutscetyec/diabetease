@@ -190,3 +190,166 @@ def test_metrics_endpoint_reports_the_feasibility_study(client, admin_token):
         # without it invites the reader to assume the model beat chance
         assert any(k.startswith("baseline") for k in e["metrics"]), (
             f"{e['version']} reports model metrics with no baseline beside them")
+
+
+# --------------------------------------------------------------------------
+# The model is now loaded and scoring. These are the guards that matter once
+# that is true: not "is anything active", but "can anything a patient sees be
+# influenced by it", and "does the exported model still compute what
+# scikit-learn computed".
+# --------------------------------------------------------------------------
+
+def linear_path() -> Path:
+    from app.config import get_settings
+    return Path(get_settings().model_path).with_suffix(".json")
+
+
+@pytest.fixture(autouse=True)
+def _with_the_shipped_model(monkeypatch):
+    """Point MODEL_PATH at the artifact the repository actually ships.
+
+    conftest.py sets MODEL_PATH to an absent file on purpose, so the rest of the
+    suite exercises the no-model path -- which is right, and which
+    test_model_interlock.py depends on. These tests are the opposite case: they
+    check what holds once a model IS loaded, so they opt in explicitly and put
+    the setting back afterwards. The settings object is cached, so it has to be
+    cleared on the way in and on the way out.
+    """
+    from app.config import get_settings
+    from app.services import inference, linear_model
+
+    artifact = Path(__file__).resolve().parents[1] / "ml" / "artifacts" / "model.joblib"
+    monkeypatch.setenv("MODEL_PATH", str(artifact))
+    get_settings.cache_clear()
+    inference.load_model(force=True)
+    linear_model.load(force=True)
+    yield
+    monkeypatch.undo()
+    get_settings.cache_clear()
+    inference.load_model(force=True)
+    linear_model.load(force=True)
+
+
+def test_the_exported_model_reproduces_scikit_learn():
+    """Parity, checked without scikit-learn installed.
+
+    The server runs pure-Python wheels only, so what ships is coefficients, not a
+    pickle. The trainer stores scikit-learn's own probabilities for a spread of
+    rows; if the hand-written scorer drifts from them, the deployed model is
+    quietly not the model that was evaluated.
+    """
+    from app.services import linear_model
+
+    model = json.loads(linear_path().read_text(encoding="utf-8"))
+    fixture = model["parity_fixture"]
+    assert len(fixture) >= 20, f"only {len(fixture)} parity rows; too few to trust"
+
+    linear_model.load(force=True)
+    worst = 0.0
+    for case in fixture:
+        got = linear_model.score(case["features"])
+        assert got is not None, "the scorer refused a fixture row"
+        worst = max(worst, abs(got["probability"] - case["sklearn_probability"]))
+    assert worst < 1e-9, (
+        f"the scorer differs from scikit-learn by {worst:.2e}; the deployed model "
+        f"is not the model that was evaluated")
+
+
+def test_the_shipped_model_needs_no_unavailable_library():
+    """It must score with nothing but the standard library.
+
+    scikit-learn, pandas and joblib are training extras. If the scorer grew a
+    dependency on one, the model would load in tests and fail silently on the
+    server, where inference.load_model swallows the ImportError.
+    """
+    src = (Path(__file__).resolve().parents[1] / "app" / "services"
+           / "linear_model.py").read_text(encoding="utf-8")
+    for banned in ("import numpy", "import pandas", "import joblib",
+                   "import sklearn", "from sklearn"):
+        assert banned not in src, f"linear_model.py uses `{banned}`"
+
+
+def test_the_loaded_model_is_marked_research_only_and_uncalibrated():
+    model = json.loads(linear_path().read_text(encoding="utf-8"))
+    assert model["research_only"] is True
+    assert model["calibration_assessed"] is False, (
+        "marking calibration assessed would unlock the probability in "
+        "inference.predict; it has not been assessed")
+    assert model["dataset_is_synthetic"] is True
+    assert (model.get("limitations") or "").strip(), "the artifact states no limitation"
+
+
+def test_predict_never_returns_a_probability():
+    """The number a reader would treat as a risk."""
+    from app.services import inference
+
+    out = inference.predict({
+        "Age_Years": 61, "BMI_kg_m2": 31.3, "Sex": "Female",
+        "Family_History_of_T2D": "Yes", "Physical_Activity": "High",
+        "Hypertension_History": "Yes", "Municipality": "Surallah",
+    })
+    assert out is not None, "the model did not load; the rest of these guards are vacuous"
+    assert "probability" not in out, "inference.predict leaked a probability"
+    assert out["predicted_class"] in ("Positive", "Negative")
+    assert out.get("probability_withheld"), "no reason given for withholding it"
+
+
+def test_the_assessment_is_unchanged_by_the_model_being_loaded(client):
+    """The line this whole arrangement exists to hold.
+
+    The model is loaded and scoring. The assessment must still be a threshold
+    check, carrying no prediction, probability or score of any kind.
+    """
+    from app.services import inference
+
+    assert inference.status()["available"] is True, (
+        "the model is not loaded, so this test proves nothing")
+
+    body = client.post("/api/v1/assessment", json={
+        "age": 61, "municipality": "Surallah", "family_history_t2d": "yes",
+        "asian_ancestry": "yes", "bmi": 31.3, "risk_factors": ["hypertension"],
+        "symptoms": [], "urgent_signs": [],
+        "glucose_test_type": "fasting", "glucose_mgdl": 130, "hba1c_pct": 6.2,
+        "consent_to_store": False,
+    }).json()
+
+    flat = json.dumps(body).lower()
+    for banned in ("probability", "risk_score", "predicted_class", "confidence",
+                   "likelihood"):
+        assert banned not in flat, (
+            f"the assessment response contains {banned!r}:\n{json.dumps(body, indent=1)[:600]}")
+
+
+def test_the_model_surface_is_closed_to_patients(client, admin_token):
+    """Role, not obscurity. Hiding the route would not be access control."""
+    unauth = client.post("/api/v1/admin/model/compare", json={"age": 50, "bmi": 28})
+    assert unauth.status_code in (401, 403), unauth.status_code
+
+    ok = client.post(
+        "/api/v1/admin/model/compare",
+        headers={"Authorization": f"Bearer {admin_token}"},
+        json={"age": 61, "bmi": 31.3, "sex": "Female", "family_history_t2d": "Yes",
+              "physical_activity": "High", "hypertension_history": "Yes",
+              "municipality": "Surallah", "fasting_glucose_mgdl": 130, "hba1c_pct": 6.2},
+    )
+    assert ok.status_code == 200, ok.text
+    seen = ok.json()
+    # the key, not a substring: "probability_withheld" is the explanation and
+    # should be present
+    assert "probability" not in seen["model"], "the endpoint leaked a probability"
+    assert seen["model"]["probability_withheld"]
+    assert seen["thresholds"]["verdict"] == "Positive"
+    assert seen["agree"] is not None
+
+
+def test_cohort_agreement_reports_the_baseline_beside_the_accuracy(client, admin_token):
+    """An accuracy without its baseline is the number that misled me first time."""
+    body = client.get("/api/v1/admin/model/cohort-agreement",
+                      headers={"Authorization": f"Bearer {admin_token}"}).json()
+    assert body["n"] == 500
+    assert body["always_negative_accuracy"] is not None, (
+        "the baseline has to travel with the accuracy")
+    assert body["accuracy"] <= body["always_negative_accuracy"], (
+        "the model now beats the baseline; that is a real change and the write-up "
+        "and the limitation text both need revisiting")
+    assert body["missed_cases"] > 0

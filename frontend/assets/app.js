@@ -1157,6 +1157,51 @@ function buildNav() {
 
         if (b.model.status !== "active") {
           var ev = b.evaluated_not_activated || [];
+          var rt = b.runtime_model || {};
+          if (rt.available) {
+            var rc = el("div", "card subcard");
+            var rh = el("h3"); rh.textContent = "Model loaded for research";
+            rc.appendChild(rh);
+            var rp = el("p");
+            rp.textContent = rt.version + " — " + (rt.prediction_task || "") + ".";
+            rc.appendChild(rp);
+            rc.appendChild(note("info", "Where this model can and cannot reach",
+              rt.detail || ""));
+            var run = el("button", "btn btn-sm card-action");
+            run.type = "button";
+            run.textContent = "Score the whole cohort against the thresholds";
+            var slot = el("div");
+            run.addEventListener("click", function () {
+              run.disabled = true;
+              clear(slot);
+              slot.innerHTML = '<div class="skel"></div>';
+              Api.call("/api/v1/admin/model/cohort-agreement", { headers: Auth.headers() })
+                .then(function (a) {
+                  clear(slot);
+                  var items = [
+                    { label: "sensitivity", value: Math.round(a.sensitivity * 1000) / 10 },
+                    { label: "specificity", value: Math.round(a.specificity * 1000) / 10 },
+                    { label: "accuracy", value: Math.round(a.accuracy * 1000) / 10 },
+                    { label: "always-negative accuracy",
+                      value: Math.round(a.always_negative_accuracy * 1000) / 10 }
+                  ];
+                  var ch = el("div"); slot.appendChild(ch);
+                  window.Charts.bars(ch, { id: "cohort-agreement",
+                    label: "Model vs the published thresholds, n = " + a.n + " (percent)",
+                    items: items });
+                  slot.appendChild(note("warn", "How to read this", a.reading));
+                })
+                .catch(function (e) {
+                  clear(slot);
+                  slot.appendChild(note("danger", "Could not score the cohort",
+                    (e && e.message) || "The request failed."));
+                })
+                .then(function () { run.disabled = false; });
+            });
+            rc.appendChild(run);
+            rc.appendChild(slot);
+            host.appendChild(rc);
+          }
           if (!ev.length) {
             host.appendChild(note("warn", "No active model",
               "No metric is reported because none has been measured. The training pipeline exists and runs, but it refuses to activate a model trained on synthetic data, so the API keeps reporting that no model is available."));

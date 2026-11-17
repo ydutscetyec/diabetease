@@ -48,9 +48,40 @@ def load_model(force: bool = False) -> dict[str, Any]:
     return _cache
 
 
+def load_linear(force: bool = False) -> dict[str, Any] | None:
+    """The pure-Python model, which is the one that loads on the server.
+
+    joblib and scikit-learn are not runtime dependencies here -- the runtime is
+    pure-Python wheels only -- so the branch above can only ever succeed on a
+    machine that has the training extras installed. An exported linear model
+    needs neither, so it is the artifact that actually scores in production.
+    """
+    from . import linear_model
+    return linear_model.load(force=force)
+
+
 def status() -> dict[str, Any]:
     cache = load_model()
     if cache["pipeline"] is None:
+        linear = load_linear()
+        if linear is not None:
+            return {
+                "available": True,
+                "status": "loaded",
+                "version": linear.get("version"),
+                "prediction_task": (
+                    "flags who may need a laboratory test, from non-laboratory "
+                    "features only"
+                ),
+                "kind": linear.get("kind"),
+                "research_only": True,
+                "detail": (
+                    "Loaded for research use and reachable only by a signed-in "
+                    "researcher. It takes no part in the assessment, which remains a "
+                    "check against published diagnostic thresholds, and it emits no "
+                    "probability because its calibration has not been assessed."
+                ),
+            }
         return {
             "available": False,
             "status": "unavailable",
@@ -69,10 +100,34 @@ def status() -> dict[str, Any]:
 
 
 def predict(features: dict[str, Any]) -> dict[str, Any] | None:
-    """Return a prediction dict, or None when no model is available."""
+    """Return a prediction dict, or None when no model is available.
+
+    Nothing patient-facing calls this. The assessment router consults status()
+    only, to record which model version was current when a session was stored.
+    """
     cache = load_model()
     if cache["pipeline"] is None:
-        return None
+        from . import linear_model
+        scored = linear_model.score(features)
+        if scored is None:
+            return None
+        # The class, never the probability. A probability invites someone to read
+        # it as a risk, and this model's calibration has not been assessed -- nor
+        # could it usefully be, on a cohort where it does not beat the
+        # always-negative baseline on accuracy.
+        return {
+            "predicted_class": scored["predicted_class"],
+            "version": scored["version"],
+            "prediction_task": (
+                "flags who may need a laboratory test, from non-laboratory "
+                "features only"
+            ),
+            "probability_withheld": (
+                "calibration has not been assessed, so no probability is reported"
+            ),
+            "features_missing": scored["features_missing"],
+            "levels_not_seen_in_training": scored["levels_not_seen_in_training"],
+        }
     import pandas as pd
     frame = pd.DataFrame([features])
     pipeline = cache["pipeline"]

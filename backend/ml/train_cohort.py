@@ -55,6 +55,11 @@ A1C_DX = THRESHOLDS["hba1c_diagnostic_pct"]
 FPG_PRE = THRESHOLDS["fasting_glucose_intermediate_low_mgdl"]
 A1C_PRE = THRESHOLDS["hba1c_intermediate_low_pct"]
 
+LIM_NOLABS_SHORT = (
+    "Research use only, on synthetic data. Does not beat the always-negative "
+    "baseline on accuracy; emits no probability because calibration has not "
+    "been assessed.")
+
 LAB = ["Fasting_Blood_Glucose_mg_dL", "HbA1c_Percent"]
 NONLAB_NUM = ["Age_Years", "BMI_kg_m2"]
 CAT = ["Sex", "Family_History_of_T2D", "Physical_Activity",
@@ -242,7 +247,89 @@ def main() -> int:
     out = DATA.parent / "model_evaluation.json"
     out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(f"wrote {out.relative_to(Path(__file__).resolve().parents[1])}")
+
+    export_linear(df)
     return 0
+
+
+def export_linear(df: pd.DataFrame) -> None:
+    """Export the non-laboratory model as plain numbers.
+
+    The server runs pure-Python wheels only: scikit-learn, pandas and joblib are
+    in requirements-ml.txt and are not installed there. A pickled pipeline would
+    load on a developer's machine and nowhere else, so the registry would be
+    reporting a model that could not score anything in production.
+
+    A logistic regression needs none of it at inference time -- a
+    standardisation, a one-hot expansion and a dot product -- so what ships is
+    the coefficients, scored by app/services/linear_model.py. A fixture of
+    scikit-learn's own probabilities travels with them so the parity test can
+    check the scorer without scikit-learn being installed.
+    """
+    y = df["ada_label"].eq("Positive").astype(int)
+    X = df[NONLAB_NUM + CAT]
+    pre = ColumnTransformer([("n", StandardScaler(), NONLAB_NUM),
+                             ("c", OneHotEncoder(handle_unknown="ignore"), CAT)])
+    pipe = Pipeline([("pre", pre),
+                     ("clf", LogisticRegression(max_iter=2000, class_weight="balanced"))])
+    pipe.fit(X, y)
+
+    sc = pipe.named_steps["pre"].named_transformers_["n"]
+    oh = pipe.named_steps["pre"].named_transformers_["c"]
+    clf = pipe.named_steps["clf"]
+    probs = pipe.predict_proba(X)[:, 1]
+
+    # Spread across the cohort rather than taken from the front, so the fixture
+    # covers several municipalities and both classes.
+    step = max(1, len(df) // 25)
+    fixture = []
+    for pos in range(0, len(df), step):
+        row = df.iloc[pos]
+        fixture.append({
+            "features": {c: (float(row[c]) if c in NONLAB_NUM else str(row[c]))
+                         for c in NONLAB_NUM + CAT},
+            "sklearn_probability": float(probs[pos]),
+        })
+
+    model = {
+        "kind": "logistic_regression",
+        "version": "synthetic-nolabs-v1",
+        "trained_on": "DiabetEASE synthetic South Cotabato cohort (n=%d)" % len(df),
+        "dataset_is_synthetic": True,
+        "research_only": True,
+        "calibration_assessed": False,
+        "is_active": True,
+        "limitations": LIM_NOLABS_SHORT,
+        "numeric": [{"name": n, "mean": float(m), "scale": float(s)}
+                    for n, m, s in zip(NONLAB_NUM, sc.mean_, sc.scale_)],
+        "categorical": [{"name": n, "levels": [str(v) for v in cats]}
+                        for n, cats in zip(CAT, oh.categories_)],
+        "coefficients": [float(c) for c in clf.coef_[0]],
+        "intercept": float(clf.intercept_[0]),
+        "threshold": 0.5,
+        "positive_label": "Positive",
+        "negative_label": "Negative",
+        "parity_fixture": fixture,
+    }
+    from app.config import get_settings
+    path = Path(get_settings().model_path).with_suffix(".json")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(model, indent=1) + "\n", encoding="utf-8")
+    print(f"wrote {path.name}: {len(model['coefficients'])} coefficients, "
+          f"{len(fixture)}-row parity fixture")
+
+    # fail loudly here rather than shipping numbers the scorer disagrees with
+    import sys as _sys
+    _sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from app.services import linear_model
+    linear_model.load(force=True)
+    worst = 0.0
+    for case in fixture:
+        got = linear_model.score(case["features"])
+        worst = max(worst, abs(got["probability"] - case["sklearn_probability"]))
+    print(f"  parity with scikit-learn over the fixture: max difference {worst:.2e}")
+    if worst > 1e-9:
+        raise SystemExit(f"the exported model does not reproduce scikit-learn ({worst:.2e})")
 
 
 if __name__ == "__main__":

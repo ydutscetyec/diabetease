@@ -67,8 +67,10 @@ app = FastAPI(
     version=settings.build,
     description=(
         "Backend for DiabetEASE. The assessment endpoint returns a rule-based triage "
-        "result against published diagnostic thresholds; it returns a model prediction "
-        "only when an active, provenance-tagged artifact is loaded."
+        "result against published diagnostic thresholds, and never a model prediction "
+        "or a risk score. A model trained on the synthetic research cohort is loaded "
+        "and scores, but it is reachable only by a signed-in researcher under "
+        "/api/v1/admin/model/*; the assessment consults it for nothing."
     ),
     docs_url="/api/docs",
     openapi_url="/api/openapi.json",
