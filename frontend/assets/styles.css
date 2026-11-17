@@ -672,6 +672,11 @@ body{
    loses on source order to every component rule further down this file, which
    is where the real exceptions live. */
 .card > * + *{margin-top:var(--s-5)}
+/* for a container filled from JS, where the children are not direct
+   children of the .card and so miss the rule above */
+.stack > * + *{margin-top:var(--s-5)}
+/* a card nested inside a card: its own frame, one step quieter */
+.subcard{box-shadow:none; border:1px solid var(--line); padding:var(--s-6)}
 
 /* Between the big pieces of a view, where nothing closer applies. The rhythm is
    three-tier on purpose, and these are the only three vertical gaps in the app:

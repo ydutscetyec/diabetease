@@ -1156,8 +1156,47 @@ function buildNav() {
         $("resTag").className = "tag " + (b.model.status === "active" ? "tag-ok" : "tag-warn");
 
         if (b.model.status !== "active") {
-          host.appendChild(note("warn", "No active model",
-            "No metric is reported because none has been measured. The training pipeline exists and runs, but it refuses to activate a model trained on synthetic data, so the API keeps reporting that no model is available."));
+          var ev = b.evaluated_not_activated || [];
+          if (!ev.length) {
+            host.appendChild(note("warn", "No active model",
+              "No metric is reported because none has been measured. The training pipeline exists and runs, but it refuses to activate a model trained on synthetic data, so the API keeps reporting that no model is available."));
+          } else {
+            host.appendChild(note("warn", "Measured, not activated",
+              "The pipeline has run on the synthetic cohort and these are the numbers it "
+              + "produced. Nothing is serving: no probability or risk score reaches the "
+              + "assessment, which stays a check against the published thresholds. The "
+              + "measurements below are reported as a feasibility finding, not as "
+              + "performance of a deployed model."));
+            ev.forEach(function (m) {
+              var card = el("div", "card subcard");
+              var h = el("h3"); h.textContent = m.version; card.appendChild(h);
+              var task = el("p");
+              task.textContent = "Task: " + m.prediction_task + ".";
+              card.appendChild(task);
+              var ds = el("p");
+              ds.appendChild(el("small", null, "Dataset: " + m.dataset_label
+                + (m.dataset_is_synthetic ? " — SYNTHETIC" : "") + ", n = " + m.n
+                + ", stratified 5-fold cross-validation."));
+              card.appendChild(ds);
+
+              // Baselines are plotted alongside the models on purpose: an AUC
+              // means little without the always-negative accuracy next to it.
+              var items = Object.keys(m.metrics)
+                .filter(function (k) { return /\.(roc_auc|sensitivity|accuracy)$/.test(k); })
+                .sort()
+                .map(function (k) {
+                  return { label: k.replace(/_/g, " "),
+                           value: Math.round(m.metrics[k] * 1000) / 10 };
+                });
+              if (items.length) {
+                var ch = el("div"); card.appendChild(ch);
+                window.Charts.bars(ch, { id: "ev-" + m.version,
+                  label: m.version + " — measured (percent)", items: items });
+              }
+              if (m.limitations) card.appendChild(note("warn", "Why it is not activated", m.limitations));
+              host.appendChild(card);
+            });
+          }
         } else {
           var meta = el("p");
           meta.textContent = "Version " + b.model.version + " (" + b.model.algorithm + "), task: " +

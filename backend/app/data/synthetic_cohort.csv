@@ -1,0 +1,501 @@
+Patient_ID,Municipality,Age_Years,Sex,Family_History_of_T2D,BMI_kg_m2,Fasting_Blood_Glucose_mg_dL,HbA1c_Percent,Physical_Activity,Hypertension_History,Synthetic_T2D_Label,ada_label,ada_band
+SC-T2D-0001,Santo Niño,53.0,Female,No,22.4,124.0,6.0,Low,Yes,Positive,Negative,prediabetes range
+SC-T2D-0002,Tampakan,31.0,Female,Yes,27.5,108.0,5.2,High,No,Negative,Negative,prediabetes range
+SC-T2D-0003,Surallah,61.0,Female,Yes,31.3,130.0,6.2,High,Yes,Positive,Positive,diabetes range
+SC-T2D-0004,Surallah,37.0,Male,No,28.8,88.0,5.2,High,No,Negative,Negative,normal range
+SC-T2D-0005,Norala,46.0,Female,No,24.0,133.0,5.7,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0006,Banga,44.0,Male,Yes,29.7,127.0,5.8,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0007,Santo Niño,79.0,Male,No,26.1,112.0,4.9,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0008,Banga,65.0,Male,No,27.2,100.0,4.7,High,No,Negative,Negative,prediabetes range
+SC-T2D-0009,Koronadal City,59.0,Female,Yes,30.2,112.0,5.4,Moderate,Yes,Positive,Negative,prediabetes range
+SC-T2D-0010,Tantangan,52.0,Female,No,31.6,123.0,5.8,Moderate,No,Positive,Negative,prediabetes range
+SC-T2D-0011,Surallah,53.0,Male,No,30.4,85.0,4.6,High,Yes,Negative,Negative,normal range
+SC-T2D-0012,Lake Sebu,40.0,Female,Yes,25.8,146.0,5.7,Low,No,Negative,Positive,diabetes range
+SC-T2D-0013,Tampakan,25.0,Female,No,25.1,109.0,5.5,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0014,Tantangan,60.0,Male,No,25.9,105.0,5.5,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0015,Surallah,31.0,Male,No,21.4,81.0,4.8,Moderate,No,Negative,Negative,normal range
+SC-T2D-0016,Surallah,59.0,Female,No,25.5,118.0,5.7,High,No,Negative,Negative,prediabetes range
+SC-T2D-0017,Polomolok,55.0,Male,Yes,24.3,110.0,5.1,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0018,Banga,56.0,Female,Yes,25.2,120.0,5.7,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0019,Santo Niño,58.0,Male,Yes,27.1,113.0,5.3,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0020,Lake Sebu,29.0,Male,Yes,20.5,85.0,4.9,High,Yes,Negative,Negative,normal range
+SC-T2D-0021,Tampakan,44.0,Male,No,33.4,108.0,5.5,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0022,Koronadal City,46.0,Male,No,22.7,98.0,5.4,High,Yes,Negative,Negative,normal range
+SC-T2D-0023,Tampakan,55.0,Female,No,28.6,103.0,4.4,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0024,Lake Sebu,42.0,Female,Yes,28.2,117.0,6.1,High,No,Negative,Negative,prediabetes range
+SC-T2D-0025,Polomolok,35.0,Female,No,27.8,113.0,5.9,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0026,Banga,54.0,Female,No,34.4,95.0,4.6,Low,Yes,Negative,Negative,normal range
+SC-T2D-0027,Lake Sebu,44.0,Male,Yes,20.6,123.0,5.4,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0028,Santo Niño,35.0,Female,No,28.5,127.0,6.5,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0029,Banga,55.0,Male,Yes,22.7,69.0,4.5,Low,Yes,Negative,Negative,normal range
+SC-T2D-0030,Santo Niño,43.0,Female,Yes,24.2,109.0,5.7,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0031,Surallah,47.0,Female,Yes,22.3,75.0,4.3,Low,No,Negative,Negative,normal range
+SC-T2D-0032,Tupi,53.0,Female,No,35.9,126.0,6.0,Low,Yes,Negative,Positive,diabetes range
+SC-T2D-0033,Surallah,32.0,Male,No,22.2,86.0,5.7,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0034,Polomolok,61.0,Male,No,23.3,133.0,5.9,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0035,Tampakan,48.0,Female,Yes,24.1,124.0,5.4,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0036,Surallah,31.0,Female,Yes,27.7,150.0,6.2,Low,No,Negative,Positive,diabetes range
+SC-T2D-0037,Tupi,53.0,Female,No,33.7,125.0,5.4,Low,Yes,Positive,Negative,prediabetes range
+SC-T2D-0038,Koronadal City,55.0,Female,Yes,34.8,134.0,5.2,Low,Yes,Positive,Positive,diabetes range
+SC-T2D-0039,T'boli,72.0,Male,Yes,36.1,135.0,5.6,Moderate,Yes,Positive,Positive,diabetes range
+SC-T2D-0040,Tantangan,34.0,Female,No,22.6,117.0,5.2,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0041,Norala,47.0,Male,Yes,28.9,150.0,6.2,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0042,Santo Niño,20.0,Female,No,26.3,88.0,4.2,Low,Yes,Negative,Negative,normal range
+SC-T2D-0043,Koronadal City,44.0,Female,Yes,31.6,92.0,4.9,Low,Yes,Positive,Negative,normal range
+SC-T2D-0044,Tantangan,56.0,Female,Yes,25.2,112.0,5.7,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0045,Santo Niño,68.0,Female,Yes,27.0,111.0,5.2,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0046,Tampakan,51.0,Female,No,22.1,109.0,5.3,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0047,T'boli,75.0,Male,No,23.9,113.0,4.7,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0048,Banga,53.0,Female,Yes,33.2,111.0,5.0,High,No,Positive,Negative,prediabetes range
+SC-T2D-0049,Banga,47.0,Male,Yes,22.2,100.0,4.6,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0050,Santo Niño,24.0,Male,Yes,19.6,153.0,5.6,High,No,Negative,Positive,diabetes range
+SC-T2D-0051,Norala,75.0,Female,No,41.9,114.0,5.2,Low,Yes,Positive,Negative,prediabetes range
+SC-T2D-0052,Tupi,73.0,Female,No,23.2,112.0,5.6,High,Yes,Positive,Negative,prediabetes range
+SC-T2D-0053,Tampakan,44.0,Female,No,26.5,78.0,4.4,High,No,Negative,Negative,normal range
+SC-T2D-0054,Banga,52.0,Female,No,24.7,120.0,5.9,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0055,Tampakan,54.0,Female,No,27.7,114.0,5.0,Low,No,Positive,Negative,prediabetes range
+SC-T2D-0056,Lake Sebu,48.0,Male,Yes,37.3,164.0,6.6,Low,Yes,Positive,Positive,diabetes range
+SC-T2D-0057,Lake Sebu,33.0,Female,Yes,32.6,126.0,5.8,Moderate,Yes,Positive,Positive,diabetes range
+SC-T2D-0058,Tupi,62.0,Female,No,29.8,96.0,4.7,Low,No,Negative,Negative,normal range
+SC-T2D-0059,Tampakan,50.0,Female,Yes,25.9,115.0,5.2,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0060,Surallah,70.0,Female,Yes,16.0,110.0,5.3,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0061,Tantangan,44.0,Male,Yes,18.7,114.0,6.1,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0062,Tantangan,61.0,Female,Yes,26.0,121.0,5.0,Moderate,Yes,Positive,Negative,prediabetes range
+SC-T2D-0063,Polomolok,67.0,Male,No,30.5,161.0,6.9,Low,Yes,Positive,Positive,diabetes range
+SC-T2D-0064,Tantangan,73.0,Female,No,30.0,144.0,5.9,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0065,Tampakan,39.0,Male,No,31.8,87.0,5.1,High,No,Negative,Negative,normal range
+SC-T2D-0066,Norala,50.0,Male,No,32.9,135.0,6.6,Low,Yes,Positive,Positive,diabetes range
+SC-T2D-0067,Santo Niño,27.0,Male,No,26.4,81.0,4.4,Moderate,Yes,Negative,Negative,normal range
+SC-T2D-0068,Tupi,58.0,Female,Yes,24.2,97.0,5.0,High,No,Negative,Negative,normal range
+SC-T2D-0069,Polomolok,40.0,Female,No,28.6,134.0,6.1,Low,No,Negative,Positive,diabetes range
+SC-T2D-0070,Santo Niño,53.0,Female,No,27.7,123.0,6.3,High,No,Negative,Negative,prediabetes range
+SC-T2D-0071,Tantangan,41.0,Male,No,29.9,76.0,5.2,High,Yes,Negative,Negative,normal range
+SC-T2D-0072,Tampakan,61.0,Male,Yes,24.9,139.0,6.4,High,No,Negative,Positive,diabetes range
+SC-T2D-0073,Tupi,52.0,Female,No,28.7,95.0,4.9,Low,No,Negative,Negative,normal range
+SC-T2D-0074,T'boli,54.0,Male,No,32.2,96.0,4.9,Moderate,Yes,Negative,Negative,normal range
+SC-T2D-0075,Tampakan,39.0,Female,Yes,23.1,114.0,5.7,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0076,Tampakan,68.0,Female,No,31.9,144.0,6.2,Low,Yes,Negative,Positive,diabetes range
+SC-T2D-0077,Surallah,46.0,Female,No,17.6,135.0,5.6,High,Yes,Positive,Positive,diabetes range
+SC-T2D-0078,Santo Niño,67.0,Female,No,20.1,84.0,4.2,Moderate,No,Negative,Negative,normal range
+SC-T2D-0079,Banga,55.0,Female,No,30.0,123.0,4.9,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0080,Lake Sebu,50.0,Female,Yes,25.1,127.0,5.9,Low,No,Negative,Positive,diabetes range
+SC-T2D-0081,Tampakan,40.0,Male,No,27.7,125.0,5.7,Moderate,No,Positive,Negative,prediabetes range
+SC-T2D-0082,Norala,39.0,Male,No,26.2,111.0,5.6,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0083,Lake Sebu,56.0,Male,No,26.2,111.0,5.6,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0084,Santo Niño,31.0,Female,No,19.7,65.0,4.2,Low,No,Negative,Negative,normal range
+SC-T2D-0085,Norala,45.0,Female,Yes,28.1,142.0,6.6,Low,No,Positive,Positive,diabetes range
+SC-T2D-0086,Banga,38.0,Female,No,33.5,116.0,5.0,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0087,Koronadal City,28.0,Male,Yes,22.5,101.0,5.4,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0088,Santo Niño,30.0,Female,No,28.7,86.0,4.9,Moderate,Yes,Negative,Negative,normal range
+SC-T2D-0089,Tantangan,23.0,Male,Yes,31.1,105.0,4.9,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0090,Koronadal City,40.0,Male,No,29.1,105.0,5.3,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0091,Norala,67.0,Male,Yes,26.1,93.0,5.4,Moderate,Yes,Negative,Negative,normal range
+SC-T2D-0092,Norala,65.0,Male,No,29.5,118.0,5.6,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0093,Surallah,78.0,Male,No,28.4,129.0,6.2,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0094,Tupi,54.0,Male,No,27.3,121.0,5.1,Moderate,Yes,Positive,Negative,prediabetes range
+SC-T2D-0095,Tampakan,20.0,Female,Yes,21.2,98.0,4.9,High,Yes,Negative,Negative,normal range
+SC-T2D-0096,Surallah,64.0,Female,Yes,23.1,128.0,5.5,High,Yes,Negative,Positive,diabetes range
+SC-T2D-0097,Santo Niño,52.0,Female,Yes,30.3,116.0,5.9,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0098,Santo Niño,49.0,Female,Yes,39.8,137.0,6.5,Low,No,Negative,Positive,diabetes range
+SC-T2D-0099,Tupi,57.0,Female,No,27.2,111.0,4.9,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0100,Banga,37.0,Female,No,30.2,135.0,6.0,High,Yes,Negative,Positive,diabetes range
+SC-T2D-0101,Lake Sebu,55.0,Male,No,26.0,133.0,4.9,High,No,Positive,Positive,diabetes range
+SC-T2D-0102,Tantangan,21.0,Female,No,19.4,129.0,6.1,Low,No,Negative,Positive,diabetes range
+SC-T2D-0103,Santo Niño,28.0,Male,Yes,16.0,90.0,5.9,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0104,Santo Niño,41.0,Male,No,29.3,76.0,4.4,Moderate,No,Negative,Negative,normal range
+SC-T2D-0105,Polomolok,48.0,Male,Yes,31.1,130.0,6.0,Low,No,Positive,Positive,diabetes range
+SC-T2D-0106,T'boli,62.0,Female,No,35.4,105.0,4.7,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0107,Norala,46.0,Male,No,34.0,108.0,5.9,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0108,Tupi,53.0,Male,No,34.9,114.0,4.9,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0109,Surallah,55.0,Female,No,19.9,120.0,5.2,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0110,T'boli,18.0,Male,Yes,22.7,72.0,4.2,Low,No,Negative,Negative,normal range
+SC-T2D-0111,Tupi,46.0,Female,No,26.0,105.0,5.2,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0112,Polomolok,59.0,Male,No,30.7,128.0,5.9,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0113,Santo Niño,77.0,Female,Yes,27.6,125.0,5.2,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0114,Surallah,32.0,Female,Yes,22.6,108.0,5.4,High,No,Negative,Negative,prediabetes range
+SC-T2D-0115,Banga,38.0,Male,Yes,31.3,135.0,5.7,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0116,Koronadal City,57.0,Male,Yes,28.4,92.0,4.8,Moderate,Yes,Positive,Negative,normal range
+SC-T2D-0117,Santo Niño,36.0,Male,Yes,27.9,83.0,5.3,High,No,Negative,Negative,normal range
+SC-T2D-0118,Santo Niño,45.0,Female,No,28.9,65.0,4.2,Moderate,No,Negative,Negative,normal range
+SC-T2D-0119,Koronadal City,34.0,Female,No,30.4,155.0,5.7,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0120,T'boli,52.0,Male,Yes,35.1,102.0,5.2,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0121,Banga,26.0,Male,Yes,20.6,98.0,4.8,Low,No,Negative,Negative,normal range
+SC-T2D-0122,Lake Sebu,52.0,Female,No,18.9,115.0,5.1,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0123,Tupi,40.0,Male,Yes,24.0,123.0,5.9,High,Yes,Positive,Negative,prediabetes range
+SC-T2D-0124,Tupi,25.0,Female,Yes,29.3,94.0,5.0,Low,Yes,Negative,Negative,normal range
+SC-T2D-0125,Norala,55.0,Female,Yes,23.6,89.0,5.1,Moderate,No,Positive,Negative,normal range
+SC-T2D-0126,Tupi,40.0,Male,Yes,34.0,112.0,5.3,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0127,Banga,40.0,Male,Yes,29.3,105.0,5.0,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0128,Tampakan,34.0,Female,Yes,16.0,138.0,7.0,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0129,Tupi,22.0,Female,No,25.1,99.0,4.9,Moderate,Yes,Negative,Negative,normal range
+SC-T2D-0130,Santo Niño,57.0,Male,No,30.0,85.0,5.0,Moderate,No,Negative,Negative,normal range
+SC-T2D-0131,Tantangan,51.0,Female,No,25.7,108.0,5.5,High,No,Negative,Negative,prediabetes range
+SC-T2D-0132,Tampakan,31.0,Female,Yes,18.5,108.0,5.0,High,No,Negative,Negative,prediabetes range
+SC-T2D-0133,T'boli,47.0,Female,No,35.3,95.0,5.2,Moderate,Yes,Positive,Negative,normal range
+SC-T2D-0134,Banga,37.0,Male,No,27.9,135.0,5.7,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0135,Polomolok,49.0,Female,No,23.0,99.0,5.0,High,No,Negative,Negative,normal range
+SC-T2D-0136,Lake Sebu,26.0,Male,Yes,29.0,105.0,4.2,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0137,Banga,53.0,Male,No,24.0,81.0,5.0,High,Yes,Negative,Negative,normal range
+SC-T2D-0138,Tantangan,82.0,Male,Yes,30.1,145.0,5.9,Low,No,Positive,Positive,diabetes range
+SC-T2D-0139,Tampakan,58.0,Male,No,33.5,111.0,5.1,Low,Yes,Positive,Negative,prediabetes range
+SC-T2D-0140,Tupi,60.0,Female,No,34.8,115.0,5.2,High,No,Negative,Negative,prediabetes range
+SC-T2D-0141,Santo Niño,46.0,Female,Yes,31.8,73.0,4.2,Moderate,Yes,Positive,Negative,normal range
+SC-T2D-0142,Surallah,18.0,Female,Yes,21.9,88.0,4.7,Moderate,Yes,Negative,Negative,normal range
+SC-T2D-0143,T'boli,46.0,Female,No,22.3,103.0,5.6,High,No,Negative,Negative,prediabetes range
+SC-T2D-0144,T'boli,36.0,Male,Yes,29.7,112.0,5.6,Moderate,Yes,Positive,Negative,prediabetes range
+SC-T2D-0145,Banga,59.0,Female,No,22.6,111.0,5.2,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0146,Koronadal City,27.0,Male,No,30.0,103.0,4.6,High,No,Negative,Negative,prediabetes range
+SC-T2D-0147,Norala,65.0,Male,No,16.8,74.0,4.2,High,No,Negative,Negative,normal range
+SC-T2D-0148,T'boli,53.0,Male,No,31.1,92.0,4.4,Low,Yes,Negative,Negative,normal range
+SC-T2D-0149,Tantangan,50.0,Female,Yes,30.0,118.0,5.6,Moderate,No,Positive,Negative,prediabetes range
+SC-T2D-0150,Tantangan,60.0,Male,Yes,31.4,92.0,4.2,Moderate,Yes,Positive,Negative,normal range
+SC-T2D-0151,Banga,66.0,Male,No,22.8,73.0,4.5,Low,No,Negative,Negative,normal range
+SC-T2D-0152,Tantangan,74.0,Female,Yes,30.4,125.0,5.2,Low,No,Positive,Negative,prediabetes range
+SC-T2D-0153,Tampakan,45.0,Male,Yes,22.3,156.0,7.1,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0154,Lake Sebu,36.0,Male,Yes,31.1,133.0,6.0,High,Yes,Positive,Positive,diabetes range
+SC-T2D-0155,Surallah,58.0,Male,Yes,31.1,141.0,6.1,Moderate,Yes,Positive,Positive,diabetes range
+SC-T2D-0156,T'boli,50.0,Female,Yes,24.7,88.0,5.5,High,No,Negative,Negative,normal range
+SC-T2D-0157,Polomolok,68.0,Female,Yes,29.0,159.0,6.3,Moderate,No,Positive,Positive,diabetes range
+SC-T2D-0158,Surallah,34.0,Female,No,28.8,111.0,4.7,High,Yes,Positive,Negative,prediabetes range
+SC-T2D-0159,Santo Niño,48.0,Female,No,35.9,140.0,5.9,High,Yes,Negative,Positive,diabetes range
+SC-T2D-0160,Surallah,50.0,Female,No,26.4,87.0,4.7,High,No,Positive,Negative,normal range
+SC-T2D-0161,T'boli,31.0,Female,No,29.3,118.0,4.6,High,Yes,Positive,Negative,prediabetes range
+SC-T2D-0162,Santo Niño,63.0,Male,No,32.7,146.0,6.1,High,No,Negative,Positive,diabetes range
+SC-T2D-0163,Tupi,34.0,Male,Yes,28.6,124.0,6.1,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0164,Santo Niño,47.0,Male,No,21.3,97.0,5.1,High,No,Positive,Negative,normal range
+SC-T2D-0165,Tupi,41.0,Male,Yes,28.3,105.0,4.9,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0166,Tupi,43.0,Male,Yes,28.3,123.0,5.0,High,No,Negative,Negative,prediabetes range
+SC-T2D-0167,Tampakan,69.0,Male,Yes,22.2,75.0,4.2,High,Yes,Negative,Negative,normal range
+SC-T2D-0168,Tupi,49.0,Female,No,26.7,138.0,4.7,Low,No,Negative,Positive,diabetes range
+SC-T2D-0169,Tupi,71.0,Female,No,22.4,108.0,4.9,High,No,Negative,Negative,prediabetes range
+SC-T2D-0170,Lake Sebu,44.0,Female,No,34.0,157.0,6.1,High,No,Negative,Positive,diabetes range
+SC-T2D-0171,T'boli,49.0,Male,No,35.7,119.0,5.5,High,No,Negative,Negative,prediabetes range
+SC-T2D-0172,Banga,85.0,Male,Yes,32.3,125.0,6.0,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0173,Banga,42.0,Male,No,31.5,114.0,5.5,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0174,Santo Niño,54.0,Male,No,29.5,74.0,4.8,High,No,Negative,Negative,normal range
+SC-T2D-0175,T'boli,29.0,Female,Yes,26.5,115.0,5.0,High,No,Negative,Negative,prediabetes range
+SC-T2D-0176,Tampakan,30.0,Male,No,24.9,92.0,4.8,Low,Yes,Positive,Negative,normal range
+SC-T2D-0177,T'boli,35.0,Male,Yes,30.4,119.0,4.6,Low,Yes,Positive,Negative,prediabetes range
+SC-T2D-0178,Tantangan,49.0,Female,No,26.2,108.0,5.2,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0179,Tantangan,62.0,Female,Yes,22.3,93.0,4.4,Moderate,No,Positive,Negative,normal range
+SC-T2D-0180,Surallah,66.0,Male,No,25.7,65.0,4.2,Moderate,Yes,Negative,Negative,normal range
+SC-T2D-0181,Tampakan,41.0,Female,No,25.1,106.0,5.0,High,No,Negative,Negative,prediabetes range
+SC-T2D-0182,Surallah,40.0,Male,Yes,22.9,120.0,4.8,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0183,Koronadal City,50.0,Female,No,26.6,146.0,5.8,Low,Yes,Positive,Positive,diabetes range
+SC-T2D-0184,Santo Niño,46.0,Female,Yes,21.1,112.0,4.8,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0185,Tupi,55.0,Female,Yes,30.1,111.0,5.7,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0186,Tampakan,69.0,Female,Yes,30.3,161.0,5.5,Low,Yes,Positive,Positive,diabetes range
+SC-T2D-0187,Santo Niño,37.0,Female,No,27.6,95.0,4.8,Low,Yes,Negative,Negative,normal range
+SC-T2D-0188,Santo Niño,47.0,Female,Yes,29.2,115.0,5.4,Moderate,No,Positive,Negative,prediabetes range
+SC-T2D-0189,T'boli,55.0,Female,Yes,33.0,164.0,6.6,High,Yes,Positive,Positive,diabetes range
+SC-T2D-0190,T'boli,33.0,Male,Yes,26.5,134.0,6.2,Low,No,Negative,Positive,diabetes range
+SC-T2D-0191,Tampakan,61.0,Male,Yes,30.0,153.0,6.3,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0192,Polomolok,54.0,Female,Yes,16.0,117.0,4.2,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0193,Tantangan,55.0,Male,No,29.7,91.0,4.5,Moderate,No,Negative,Negative,normal range
+SC-T2D-0194,Tampakan,42.0,Female,Yes,37.9,127.0,5.8,Moderate,No,Positive,Positive,diabetes range
+SC-T2D-0195,Polomolok,51.0,Male,No,22.5,105.0,5.1,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0196,Tantangan,45.0,Male,No,23.6,126.0,5.6,High,No,Negative,Positive,diabetes range
+SC-T2D-0197,Banga,48.0,Male,Yes,28.3,133.0,5.3,Low,Yes,Negative,Positive,diabetes range
+SC-T2D-0198,Norala,64.0,Male,Yes,25.7,92.0,5.1,High,No,Negative,Negative,normal range
+SC-T2D-0199,Santo Niño,28.0,Male,Yes,27.9,131.0,5.9,Moderate,No,Positive,Positive,diabetes range
+SC-T2D-0200,Norala,29.0,Female,No,28.4,102.0,4.9,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0201,Tupi,70.0,Female,Yes,36.4,167.0,6.5,Moderate,Yes,Positive,Positive,diabetes range
+SC-T2D-0202,Koronadal City,60.0,Male,Yes,28.2,127.0,6.0,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0203,Koronadal City,39.0,Male,Yes,25.1,126.0,5.6,Low,No,Positive,Positive,diabetes range
+SC-T2D-0204,Banga,58.0,Female,Yes,25.7,138.0,6.0,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0205,Santo Niño,69.0,Male,Yes,25.4,89.0,4.3,Low,Yes,Negative,Negative,normal range
+SC-T2D-0206,Tampakan,50.0,Female,Yes,26.0,110.0,5.5,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0207,Tantangan,53.0,Male,No,29.4,129.0,4.7,Low,Yes,Negative,Positive,diabetes range
+SC-T2D-0208,Lake Sebu,18.0,Male,No,26.7,107.0,5.7,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0209,Koronadal City,52.0,Female,Yes,25.0,128.0,5.4,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0210,Koronadal City,63.0,Female,No,25.0,133.0,6.1,High,No,Negative,Positive,diabetes range
+SC-T2D-0211,Lake Sebu,63.0,Male,Yes,31.0,131.0,5.4,High,No,Positive,Positive,diabetes range
+SC-T2D-0212,Tantangan,41.0,Female,Yes,29.7,97.0,5.2,Moderate,Yes,Negative,Negative,normal range
+SC-T2D-0213,Santo Niño,46.0,Male,No,27.8,165.0,5.8,High,No,Negative,Positive,diabetes range
+SC-T2D-0214,Koronadal City,51.0,Male,No,29.3,117.0,5.6,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0215,Banga,69.0,Male,No,25.6,144.0,5.7,Low,Yes,Positive,Positive,diabetes range
+SC-T2D-0216,Lake Sebu,34.0,Male,Yes,29.1,148.0,6.1,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0217,Banga,33.0,Female,Yes,25.8,78.0,4.2,High,Yes,Negative,Negative,normal range
+SC-T2D-0218,Surallah,67.0,Female,Yes,41.2,129.0,6.3,Low,No,Positive,Positive,diabetes range
+SC-T2D-0219,Tampakan,47.0,Female,Yes,29.3,121.0,5.5,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0220,Tampakan,29.0,Male,No,19.4,113.0,5.2,High,No,Negative,Negative,prediabetes range
+SC-T2D-0221,T'boli,49.0,Female,No,31.1,120.0,5.2,High,No,Negative,Negative,prediabetes range
+SC-T2D-0222,Tupi,48.0,Female,No,34.9,130.0,6.1,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0223,Tampakan,65.0,Female,Yes,30.6,143.0,6.2,High,No,Positive,Positive,diabetes range
+SC-T2D-0224,T'boli,59.0,Female,Yes,21.0,99.0,5.6,Moderate,No,Negative,Negative,normal range
+SC-T2D-0225,T'boli,70.0,Female,Yes,26.5,102.0,5.0,Moderate,Yes,Positive,Negative,prediabetes range
+SC-T2D-0226,Koronadal City,50.0,Female,Yes,32.8,117.0,5.6,High,No,Positive,Negative,prediabetes range
+SC-T2D-0227,Polomolok,55.0,Female,No,27.5,98.0,4.9,Moderate,No,Positive,Negative,normal range
+SC-T2D-0228,Tampakan,45.0,Male,Yes,35.7,124.0,5.4,High,No,Negative,Negative,prediabetes range
+SC-T2D-0229,Lake Sebu,36.0,Female,No,25.7,91.0,5.5,Moderate,No,Negative,Negative,normal range
+SC-T2D-0230,Polomolok,67.0,Female,Yes,28.0,128.0,5.6,High,Yes,Negative,Positive,diabetes range
+SC-T2D-0231,Tampakan,73.0,Male,No,16.8,67.0,4.2,Low,Yes,Negative,Negative,normal range
+SC-T2D-0232,Tampakan,59.0,Male,No,29.8,110.0,5.7,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0233,Lake Sebu,52.0,Male,No,32.0,124.0,5.3,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0234,Polomolok,51.0,Female,No,27.4,145.0,4.9,Low,Yes,Positive,Positive,diabetes range
+SC-T2D-0235,Lake Sebu,32.0,Female,Yes,25.1,107.0,4.5,High,No,Negative,Negative,prediabetes range
+SC-T2D-0236,Norala,37.0,Male,Yes,38.8,167.0,6.3,Low,Yes,Positive,Positive,diabetes range
+SC-T2D-0237,Tantangan,33.0,Female,No,17.7,94.0,4.4,High,Yes,Negative,Negative,normal range
+SC-T2D-0238,Surallah,27.0,Male,Yes,23.1,113.0,5.5,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0239,Polomolok,31.0,Female,No,31.0,94.0,5.2,Moderate,No,Positive,Negative,normal range
+SC-T2D-0240,Norala,30.0,Male,Yes,25.3,120.0,5.7,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0241,Tampakan,70.0,Female,No,32.7,121.0,5.8,Moderate,Yes,Positive,Negative,prediabetes range
+SC-T2D-0242,Tupi,76.0,Female,Yes,22.1,105.0,5.8,Low,No,Positive,Negative,prediabetes range
+SC-T2D-0243,Surallah,30.0,Female,No,24.5,114.0,5.3,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0244,Lake Sebu,40.0,Male,No,23.7,84.0,5.7,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0245,Koronadal City,61.0,Female,No,25.3,111.0,5.0,Low,No,Positive,Negative,prediabetes range
+SC-T2D-0246,Koronadal City,30.0,Female,No,18.1,65.0,4.2,Moderate,Yes,Negative,Negative,normal range
+SC-T2D-0247,Banga,48.0,Female,Yes,33.5,134.0,6.1,Moderate,Yes,Positive,Positive,diabetes range
+SC-T2D-0248,Banga,56.0,Male,No,31.0,106.0,5.4,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0249,Tantangan,41.0,Female,No,21.7,76.0,4.5,Low,Yes,Negative,Negative,normal range
+SC-T2D-0250,Santo Niño,38.0,Male,Yes,27.2,127.0,5.9,High,Yes,Positive,Positive,diabetes range
+SC-T2D-0251,Santo Niño,67.0,Female,No,22.9,152.0,5.9,Low,No,Negative,Positive,diabetes range
+SC-T2D-0252,Lake Sebu,50.0,Female,No,25.3,70.0,4.3,Low,Yes,Negative,Negative,normal range
+SC-T2D-0253,Koronadal City,63.0,Male,No,34.9,109.0,5.4,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0254,Banga,40.0,Male,No,30.8,111.0,6.1,Low,Yes,Positive,Negative,prediabetes range
+SC-T2D-0255,Norala,63.0,Male,Yes,28.1,143.0,5.8,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0256,Tampakan,47.0,Female,No,23.2,121.0,5.8,High,No,Negative,Negative,prediabetes range
+SC-T2D-0257,Banga,71.0,Female,No,34.8,121.0,5.7,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0258,Koronadal City,49.0,Female,No,24.4,144.0,6.2,Moderate,No,Positive,Positive,diabetes range
+SC-T2D-0259,Tupi,66.0,Male,Yes,17.3,71.0,4.8,High,Yes,Positive,Negative,normal range
+SC-T2D-0260,Tampakan,53.0,Female,No,21.0,106.0,6.1,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0261,Tantangan,51.0,Male,No,25.2,101.0,4.2,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0262,Polomolok,61.0,Male,No,20.0,94.0,4.4,Low,No,Negative,Negative,normal range
+SC-T2D-0263,Lake Sebu,50.0,Female,No,17.3,115.0,5.7,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0264,T'boli,18.0,Male,No,21.7,128.0,4.4,Low,No,Negative,Positive,diabetes range
+SC-T2D-0265,Santo Niño,32.0,Female,No,30.7,96.0,5.1,High,No,Negative,Negative,normal range
+SC-T2D-0266,Banga,75.0,Female,No,27.0,131.0,5.0,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0267,Koronadal City,38.0,Male,Yes,24.3,111.0,4.6,Low,Yes,Positive,Negative,prediabetes range
+SC-T2D-0268,Santo Niño,63.0,Female,Yes,29.1,92.0,4.8,High,No,Positive,Negative,normal range
+SC-T2D-0269,Tampakan,23.0,Male,No,21.5,120.0,5.6,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0270,Tupi,75.0,Female,No,30.2,141.0,7.2,High,No,Negative,Positive,diabetes range
+SC-T2D-0271,Surallah,38.0,Male,Yes,29.1,126.0,5.4,Low,Yes,Negative,Positive,diabetes range
+SC-T2D-0272,Banga,81.0,Male,No,29.7,113.0,5.7,High,No,Negative,Negative,prediabetes range
+SC-T2D-0273,Tupi,45.0,Male,Yes,29.9,91.0,5.0,High,Yes,Negative,Negative,normal range
+SC-T2D-0274,Surallah,56.0,Female,Yes,25.7,109.0,5.0,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0275,T'boli,44.0,Male,Yes,31.6,83.0,5.0,High,Yes,Positive,Negative,normal range
+SC-T2D-0276,Lake Sebu,54.0,Male,No,22.0,137.0,6.4,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0277,T'boli,28.0,Female,No,30.8,120.0,4.7,High,No,Negative,Negative,prediabetes range
+SC-T2D-0278,Norala,54.0,Female,No,30.1,121.0,5.6,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0279,Tupi,66.0,Female,Yes,16.0,107.0,5.1,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0280,Polomolok,50.0,Female,No,33.3,95.0,5.1,Low,No,Negative,Negative,normal range
+SC-T2D-0281,Norala,40.0,Male,No,34.2,103.0,5.3,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0282,Norala,75.0,Female,No,30.8,123.0,5.8,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0283,Banga,66.0,Female,Yes,26.2,121.0,5.3,High,No,Positive,Negative,prediabetes range
+SC-T2D-0284,Santo Niño,59.0,Male,Yes,28.8,139.0,5.9,Moderate,No,Positive,Positive,diabetes range
+SC-T2D-0285,Surallah,43.0,Male,No,37.9,86.0,5.3,Moderate,No,Negative,Negative,normal range
+SC-T2D-0286,Norala,37.0,Female,No,37.7,141.0,6.4,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0287,Santo Niño,46.0,Male,Yes,26.2,125.0,6.2,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0288,Lake Sebu,36.0,Male,Yes,30.9,139.0,6.2,Moderate,Yes,Positive,Positive,diabetes range
+SC-T2D-0289,T'boli,45.0,Male,Yes,22.7,93.0,4.2,Low,Yes,Negative,Negative,normal range
+SC-T2D-0290,Santo Niño,48.0,Male,No,25.2,65.0,4.2,Low,Yes,Negative,Negative,normal range
+SC-T2D-0291,Surallah,40.0,Male,Yes,28.8,86.0,5.4,Moderate,No,Negative,Negative,normal range
+SC-T2D-0292,T'boli,53.0,Male,Yes,38.6,166.0,6.3,Low,No,Positive,Positive,diabetes range
+SC-T2D-0293,Koronadal City,44.0,Male,Yes,29.6,117.0,5.2,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0294,Tupi,47.0,Male,Yes,38.3,132.0,6.5,Low,No,Negative,Positive,diabetes range
+SC-T2D-0295,Polomolok,62.0,Male,Yes,24.1,102.0,5.3,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0296,Polomolok,50.0,Female,No,21.2,75.0,4.2,Low,No,Negative,Negative,normal range
+SC-T2D-0297,Santo Niño,51.0,Male,Yes,32.8,125.0,4.6,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0298,Lake Sebu,47.0,Male,No,37.3,90.0,4.6,Low,Yes,Positive,Negative,normal range
+SC-T2D-0299,Lake Sebu,55.0,Male,Yes,30.2,127.0,5.8,Low,Yes,Negative,Positive,diabetes range
+SC-T2D-0300,T'boli,38.0,Male,No,31.2,82.0,4.8,Low,Yes,Negative,Negative,normal range
+SC-T2D-0301,Norala,40.0,Male,No,27.0,94.0,4.4,High,No,Negative,Negative,normal range
+SC-T2D-0302,Santo Niño,34.0,Male,No,28.5,84.0,5.0,Moderate,Yes,Negative,Negative,normal range
+SC-T2D-0303,Santo Niño,41.0,Female,No,24.1,134.0,5.9,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0304,Norala,56.0,Male,No,17.4,103.0,6.0,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0305,Koronadal City,50.0,Female,No,30.0,135.0,4.9,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0306,Lake Sebu,52.0,Male,No,23.9,138.0,5.7,High,Yes,Negative,Positive,diabetes range
+SC-T2D-0307,Lake Sebu,31.0,Male,No,16.0,90.0,4.7,Moderate,Yes,Negative,Negative,normal range
+SC-T2D-0308,Lake Sebu,64.0,Male,No,33.4,121.0,4.5,High,No,Negative,Negative,prediabetes range
+SC-T2D-0309,Surallah,57.0,Female,No,29.0,139.0,5.4,High,No,Positive,Positive,diabetes range
+SC-T2D-0310,Santo Niño,36.0,Male,Yes,30.6,81.0,4.2,High,No,Negative,Negative,normal range
+SC-T2D-0311,Lake Sebu,45.0,Male,No,31.2,119.0,5.4,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0312,Tantangan,46.0,Male,No,18.7,83.0,4.9,Low,No,Negative,Negative,normal range
+SC-T2D-0313,Tampakan,27.0,Male,No,23.3,90.0,4.6,High,No,Negative,Negative,normal range
+SC-T2D-0314,Lake Sebu,40.0,Male,No,23.6,120.0,5.8,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0315,Koronadal City,44.0,Female,Yes,27.8,99.0,4.5,High,Yes,Negative,Negative,normal range
+SC-T2D-0316,Polomolok,40.0,Male,No,21.5,105.0,5.5,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0317,Tantangan,49.0,Female,No,26.2,118.0,5.4,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0318,Tupi,31.0,Male,Yes,27.0,137.0,4.8,Low,Yes,Positive,Positive,diabetes range
+SC-T2D-0319,Norala,66.0,Female,No,27.0,131.0,5.4,Low,Yes,Positive,Positive,diabetes range
+SC-T2D-0320,Norala,26.0,Male,No,16.0,116.0,4.9,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0321,Polomolok,30.0,Female,No,20.1,96.0,4.6,Moderate,No,Negative,Negative,normal range
+SC-T2D-0322,Tupi,55.0,Male,Yes,29.0,128.0,6.4,Low,No,Negative,Positive,diabetes range
+SC-T2D-0323,Tampakan,48.0,Male,No,32.7,145.0,5.4,High,Yes,Positive,Positive,diabetes range
+SC-T2D-0324,Santo Niño,68.0,Male,Yes,30.2,135.0,5.7,Low,No,Negative,Positive,diabetes range
+SC-T2D-0325,Tantangan,53.0,Female,Yes,26.2,118.0,5.5,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0326,Koronadal City,56.0,Female,No,41.5,91.0,5.0,Moderate,Yes,Positive,Negative,normal range
+SC-T2D-0327,Santo Niño,57.0,Male,Yes,27.7,139.0,6.4,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0328,Tampakan,65.0,Female,Yes,16.4,149.0,6.3,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0329,Santo Niño,32.0,Male,Yes,22.9,113.0,5.3,High,No,Negative,Negative,prediabetes range
+SC-T2D-0330,Surallah,64.0,Female,Yes,19.2,138.0,5.9,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0331,Tantangan,28.0,Male,No,29.2,65.0,4.6,High,Yes,Negative,Negative,normal range
+SC-T2D-0332,Lake Sebu,50.0,Female,No,26.8,137.0,5.8,High,No,Negative,Positive,diabetes range
+SC-T2D-0333,Koronadal City,42.0,Female,Yes,33.2,134.0,5.6,High,Yes,Negative,Positive,diabetes range
+SC-T2D-0334,Banga,27.0,Male,Yes,28.6,77.0,4.9,High,No,Negative,Negative,normal range
+SC-T2D-0335,T'boli,82.0,Male,Yes,22.8,126.0,6.4,High,No,Negative,Positive,diabetes range
+SC-T2D-0336,Santo Niño,39.0,Male,Yes,28.1,115.0,5.5,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0337,Santo Niño,48.0,Female,Yes,19.6,113.0,5.5,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0338,Lake Sebu,26.0,Female,Yes,31.5,127.0,5.3,Low,No,Positive,Positive,diabetes range
+SC-T2D-0339,Polomolok,28.0,Male,No,21.9,90.0,5.4,Moderate,No,Negative,Negative,normal range
+SC-T2D-0340,Tampakan,58.0,Female,No,24.9,118.0,5.4,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0341,Santo Niño,42.0,Female,Yes,19.6,77.0,4.3,Low,Yes,Negative,Negative,normal range
+SC-T2D-0342,Lake Sebu,55.0,Male,No,25.2,164.0,5.7,Low,Yes,Positive,Positive,diabetes range
+SC-T2D-0343,Koronadal City,33.0,Female,No,24.5,108.0,4.2,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0344,T'boli,76.0,Female,Yes,25.8,135.0,6.3,Low,Yes,Negative,Positive,diabetes range
+SC-T2D-0345,Lake Sebu,41.0,Female,Yes,16.2,117.0,5.4,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0346,Santo Niño,51.0,Female,No,24.5,98.0,5.3,High,No,Negative,Negative,normal range
+SC-T2D-0347,Tupi,64.0,Male,Yes,21.0,104.0,6.0,High,Yes,Positive,Negative,prediabetes range
+SC-T2D-0348,Koronadal City,50.0,Male,No,22.8,95.0,5.0,High,No,Negative,Negative,normal range
+SC-T2D-0349,Santo Niño,48.0,Male,No,27.1,106.0,4.5,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0350,Lake Sebu,62.0,Female,No,21.1,106.0,4.8,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0351,Lake Sebu,44.0,Female,No,34.3,128.0,5.1,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0352,Surallah,38.0,Male,No,24.3,111.0,5.1,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0353,Banga,38.0,Male,Yes,24.1,97.0,4.7,Low,No,Negative,Negative,normal range
+SC-T2D-0354,Banga,58.0,Female,Yes,35.7,182.0,6.4,High,Yes,Positive,Positive,diabetes range
+SC-T2D-0355,Tupi,33.0,Male,Yes,23.2,96.0,4.5,Low,Yes,Negative,Negative,normal range
+SC-T2D-0356,Surallah,47.0,Male,Yes,21.4,130.0,5.3,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0357,Tupi,43.0,Male,No,27.5,81.0,5.4,Moderate,No,Negative,Negative,normal range
+SC-T2D-0358,Polomolok,53.0,Male,Yes,20.9,118.0,4.9,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0359,Santo Niño,60.0,Female,Yes,28.0,71.0,4.2,Low,No,Negative,Negative,normal range
+SC-T2D-0360,Tupi,66.0,Male,Yes,33.0,97.0,5.1,Low,No,Positive,Negative,normal range
+SC-T2D-0361,T'boli,26.0,Female,No,26.7,113.0,5.2,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0362,Norala,44.0,Male,No,25.6,104.0,4.9,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0363,Lake Sebu,48.0,Female,Yes,29.4,114.0,5.2,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0364,Koronadal City,22.0,Female,Yes,28.9,116.0,5.4,High,No,Negative,Negative,prediabetes range
+SC-T2D-0365,Tampakan,22.0,Male,No,17.2,102.0,5.1,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0366,Koronadal City,43.0,Male,Yes,30.3,140.0,6.1,High,No,Negative,Positive,diabetes range
+SC-T2D-0367,Lake Sebu,19.0,Female,No,30.2,138.0,6.2,Low,Yes,Negative,Positive,diabetes range
+SC-T2D-0368,Surallah,58.0,Female,Yes,31.7,162.0,6.0,High,No,Negative,Positive,diabetes range
+SC-T2D-0369,Tantangan,59.0,Male,Yes,27.8,99.0,5.2,Moderate,No,Negative,Negative,normal range
+SC-T2D-0370,Tupi,50.0,Female,Yes,28.4,115.0,6.0,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0371,Koronadal City,41.0,Male,Yes,27.2,134.0,5.1,High,Yes,Negative,Positive,diabetes range
+SC-T2D-0372,Tampakan,20.0,Male,No,26.7,82.0,4.5,High,Yes,Negative,Negative,normal range
+SC-T2D-0373,Surallah,40.0,Female,Yes,28.2,109.0,5.5,High,No,Positive,Negative,prediabetes range
+SC-T2D-0374,Lake Sebu,39.0,Male,Yes,26.2,136.0,6.0,Low,No,Negative,Positive,diabetes range
+SC-T2D-0375,Santo Niño,58.0,Female,No,22.3,141.0,6.4,Low,No,Negative,Positive,diabetes range
+SC-T2D-0376,Tampakan,51.0,Male,No,26.3,126.0,5.4,Moderate,Yes,Positive,Positive,diabetes range
+SC-T2D-0377,Koronadal City,61.0,Male,Yes,24.9,108.0,4.7,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0378,Polomolok,23.0,Male,Yes,30.2,158.0,6.9,High,No,Negative,Positive,diabetes range
+SC-T2D-0379,Lake Sebu,59.0,Male,No,34.4,114.0,5.4,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0380,Banga,53.0,Male,No,22.3,112.0,4.6,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0381,Tantangan,63.0,Female,Yes,23.9,96.0,4.2,High,No,Positive,Negative,normal range
+SC-T2D-0382,Banga,41.0,Female,Yes,19.7,117.0,5.2,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0383,Banga,41.0,Female,Yes,32.2,134.0,5.7,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0384,Koronadal City,33.0,Female,Yes,27.1,118.0,5.2,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0385,Koronadal City,38.0,Male,No,29.5,122.0,4.2,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0386,Santo Niño,18.0,Female,Yes,23.6,133.0,5.6,High,No,Negative,Positive,diabetes range
+SC-T2D-0387,T'boli,34.0,Male,Yes,31.9,77.0,5.0,Low,Yes,Negative,Negative,normal range
+SC-T2D-0388,Tupi,32.0,Male,No,24.1,82.0,5.0,Low,No,Negative,Negative,normal range
+SC-T2D-0389,Banga,25.0,Male,Yes,24.8,93.0,5.5,Moderate,Yes,Negative,Negative,normal range
+SC-T2D-0390,Polomolok,71.0,Male,No,27.7,96.0,4.6,Moderate,No,Negative,Negative,normal range
+SC-T2D-0391,Tupi,31.0,Female,No,27.3,81.0,4.2,High,Yes,Negative,Negative,normal range
+SC-T2D-0392,Santo Niño,24.0,Male,Yes,23.1,90.0,4.4,Moderate,No,Negative,Negative,normal range
+SC-T2D-0393,Polomolok,50.0,Male,Yes,28.5,81.0,4.3,High,Yes,Negative,Negative,normal range
+SC-T2D-0394,Santo Niño,35.0,Male,Yes,31.3,92.0,4.7,Moderate,No,Negative,Negative,normal range
+SC-T2D-0395,Surallah,51.0,Male,No,24.3,103.0,5.0,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0396,Banga,56.0,Male,No,28.6,114.0,5.1,High,No,Negative,Negative,prediabetes range
+SC-T2D-0397,Lake Sebu,46.0,Male,Yes,25.8,118.0,6.2,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0398,Tampakan,60.0,Female,No,18.5,112.0,6.0,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0399,Polomolok,51.0,Male,No,24.7,110.0,5.1,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0400,Lake Sebu,45.0,Female,Yes,28.2,101.0,4.7,Moderate,No,Positive,Negative,prediabetes range
+SC-T2D-0401,Polomolok,54.0,Female,Yes,30.0,129.0,6.1,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0402,Polomolok,54.0,Female,No,28.9,114.0,5.1,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0403,Polomolok,43.0,Male,No,24.0,115.0,5.5,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0404,Polomolok,65.0,Male,Yes,27.2,101.0,5.6,Moderate,Yes,Positive,Negative,prediabetes range
+SC-T2D-0405,Lake Sebu,31.0,Female,Yes,35.4,138.0,5.9,High,Yes,Negative,Positive,diabetes range
+SC-T2D-0406,T'boli,51.0,Male,Yes,27.2,105.0,5.4,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0407,Tantangan,49.0,Male,Yes,23.5,117.0,5.4,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0408,Santo Niño,28.0,Female,Yes,29.5,65.0,4.4,Low,No,Negative,Negative,normal range
+SC-T2D-0409,Santo Niño,67.0,Female,Yes,25.4,139.0,5.7,High,Yes,Positive,Positive,diabetes range
+SC-T2D-0410,Santo Niño,59.0,Male,No,25.3,136.0,5.4,High,No,Negative,Positive,diabetes range
+SC-T2D-0411,Polomolok,62.0,Male,No,30.8,163.0,6.1,High,Yes,Positive,Positive,diabetes range
+SC-T2D-0412,Santo Niño,35.0,Male,Yes,30.1,129.0,5.7,High,Yes,Negative,Positive,diabetes range
+SC-T2D-0413,Tupi,60.0,Female,Yes,21.7,143.0,7.3,Low,No,Negative,Positive,diabetes range
+SC-T2D-0414,Santo Niño,50.0,Female,No,30.1,104.0,4.3,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0415,Lake Sebu,34.0,Female,Yes,20.0,144.0,6.1,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0416,T'boli,45.0,Male,Yes,26.4,137.0,5.8,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0417,Tantangan,46.0,Female,No,25.6,77.0,4.2,Moderate,No,Negative,Negative,normal range
+SC-T2D-0418,Tupi,50.0,Female,Yes,21.2,112.0,5.3,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0419,Santo Niño,36.0,Female,Yes,28.9,125.0,5.1,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0420,Santo Niño,63.0,Female,No,31.4,120.0,5.3,High,Yes,Positive,Negative,prediabetes range
+SC-T2D-0421,Tupi,56.0,Female,Yes,28.4,137.0,5.9,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0422,Surallah,50.0,Female,Yes,31.1,142.0,5.6,High,No,Positive,Positive,diabetes range
+SC-T2D-0423,Norala,71.0,Male,Yes,29.1,93.0,4.6,Low,Yes,Positive,Negative,normal range
+SC-T2D-0424,Santo Niño,45.0,Male,Yes,24.7,145.0,5.5,Moderate,No,Positive,Positive,diabetes range
+SC-T2D-0425,Norala,52.0,Female,No,29.2,126.0,6.0,Low,No,Negative,Positive,diabetes range
+SC-T2D-0426,Santo Niño,56.0,Female,Yes,26.2,122.0,5.6,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0427,T'boli,60.0,Male,Yes,30.2,128.0,5.3,High,No,Positive,Positive,diabetes range
+SC-T2D-0428,T'boli,49.0,Male,Yes,28.2,168.0,6.3,High,Yes,Positive,Positive,diabetes range
+SC-T2D-0429,Santo Niño,64.0,Male,No,28.1,171.0,6.4,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0430,Santo Niño,38.0,Female,Yes,25.3,118.0,5.8,High,No,Negative,Negative,prediabetes range
+SC-T2D-0431,Lake Sebu,67.0,Female,No,27.3,112.0,6.5,Low,No,Negative,Positive,diabetes range
+SC-T2D-0432,Tupi,39.0,Male,No,23.7,83.0,5.1,Moderate,No,Negative,Negative,normal range
+SC-T2D-0433,Santo Niño,51.0,Female,No,27.0,128.0,5.3,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0434,Koronadal City,52.0,Male,Yes,30.3,131.0,5.3,Low,No,Negative,Positive,diabetes range
+SC-T2D-0435,Surallah,39.0,Male,Yes,24.5,91.0,5.4,High,No,Negative,Negative,normal range
+SC-T2D-0436,Banga,57.0,Male,No,33.5,184.0,6.1,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0437,Koronadal City,40.0,Female,No,23.0,79.0,4.4,High,No,Negative,Negative,normal range
+SC-T2D-0438,Santo Niño,54.0,Female,Yes,27.7,132.0,6.0,Low,Yes,Positive,Positive,diabetes range
+SC-T2D-0439,Santo Niño,44.0,Female,Yes,37.4,133.0,4.9,High,No,Negative,Positive,diabetes range
+SC-T2D-0440,Banga,25.0,Male,No,26.8,104.0,4.9,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0441,Banga,57.0,Female,No,31.0,99.0,4.6,Moderate,No,Negative,Negative,normal range
+SC-T2D-0442,Tampakan,51.0,Female,Yes,18.4,106.0,5.2,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0443,Tampakan,38.0,Female,Yes,24.4,107.0,5.2,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0444,Banga,64.0,Female,Yes,26.3,114.0,5.5,Low,No,Positive,Negative,prediabetes range
+SC-T2D-0445,Tampakan,43.0,Male,Yes,30.9,141.0,6.5,Low,No,Positive,Positive,diabetes range
+SC-T2D-0446,Surallah,37.0,Male,Yes,27.1,115.0,5.3,High,No,Negative,Negative,prediabetes range
+SC-T2D-0447,Surallah,28.0,Female,No,27.2,91.0,4.9,Moderate,Yes,Negative,Negative,normal range
+SC-T2D-0448,Lake Sebu,34.0,Female,Yes,28.0,119.0,5.7,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0449,Polomolok,53.0,Male,Yes,29.7,99.0,4.4,Moderate,Yes,Negative,Negative,normal range
+SC-T2D-0450,Koronadal City,36.0,Female,No,22.0,101.0,5.0,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0451,Lake Sebu,45.0,Male,No,33.1,98.0,4.4,High,No,Negative,Negative,normal range
+SC-T2D-0452,Tupi,56.0,Female,Yes,24.5,84.0,4.3,Moderate,Yes,Positive,Negative,normal range
+SC-T2D-0453,Lake Sebu,65.0,Female,No,22.7,112.0,5.6,Moderate,Yes,Negative,Negative,prediabetes range
+SC-T2D-0454,Tantangan,63.0,Female,Yes,22.0,126.0,5.7,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0455,Banga,57.0,Female,Yes,16.1,93.0,4.9,High,Yes,Negative,Negative,normal range
+SC-T2D-0456,T'boli,56.0,Female,No,31.3,133.0,5.7,High,No,Negative,Positive,diabetes range
+SC-T2D-0457,Santo Niño,43.0,Male,Yes,29.1,94.0,5.2,Low,No,Positive,Negative,normal range
+SC-T2D-0458,Lake Sebu,51.0,Male,Yes,16.0,79.0,5.4,Moderate,Yes,Negative,Negative,normal range
+SC-T2D-0459,T'boli,21.0,Female,Yes,32.5,121.0,6.0,Moderate,Yes,Positive,Negative,prediabetes range
+SC-T2D-0460,Santo Niño,55.0,Female,Yes,29.2,139.0,6.9,Low,Yes,Positive,Positive,diabetes range
+SC-T2D-0461,Surallah,27.0,Female,Yes,28.9,141.0,6.5,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0462,Norala,65.0,Female,Yes,32.2,188.0,6.6,High,No,Positive,Positive,diabetes range
+SC-T2D-0463,Tupi,45.0,Male,Yes,24.8,94.0,4.2,High,No,Negative,Negative,normal range
+SC-T2D-0464,Norala,54.0,Female,Yes,25.1,161.0,6.4,High,Yes,Negative,Positive,diabetes range
+SC-T2D-0465,Polomolok,53.0,Male,Yes,31.4,131.0,6.3,High,No,Negative,Positive,diabetes range
+SC-T2D-0466,Santo Niño,56.0,Male,Yes,29.2,117.0,5.6,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0467,Santo Niño,45.0,Female,Yes,29.2,147.0,6.6,Low,Yes,Positive,Positive,diabetes range
+SC-T2D-0468,Surallah,18.0,Female,No,29.0,65.0,4.9,High,Yes,Negative,Negative,normal range
+SC-T2D-0469,Tantangan,63.0,Female,No,23.3,79.0,4.7,Low,Yes,Positive,Negative,normal range
+SC-T2D-0470,Santo Niño,42.0,Male,No,27.5,170.0,6.9,Moderate,Yes,Negative,Positive,diabetes range
+SC-T2D-0471,Tantangan,61.0,Female,Yes,34.7,128.0,4.7,Low,No,Positive,Positive,diabetes range
+SC-T2D-0472,Polomolok,60.0,Male,No,22.9,108.0,4.9,Moderate,Yes,Positive,Negative,prediabetes range
+SC-T2D-0473,Santo Niño,59.0,Female,Yes,30.7,140.0,5.9,Low,Yes,Negative,Positive,diabetes range
+SC-T2D-0474,Tupi,32.0,Male,Yes,16.4,106.0,5.3,Low,Yes,Negative,Negative,prediabetes range
+SC-T2D-0475,Surallah,71.0,Female,No,35.4,108.0,5.0,Low,Yes,Positive,Negative,prediabetes range
+SC-T2D-0476,Tupi,84.0,Male,Yes,35.3,168.0,6.4,Low,No,Positive,Positive,diabetes range
+SC-T2D-0477,Banga,60.0,Female,No,22.3,106.0,5.1,Low,Yes,Positive,Negative,prediabetes range
+SC-T2D-0478,Norala,44.0,Female,Yes,16.0,115.0,5.0,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0479,Santo Niño,48.0,Female,No,26.0,127.0,4.9,Low,Yes,Negative,Positive,diabetes range
+SC-T2D-0480,Banga,59.0,Male,Yes,24.6,85.0,5.0,Moderate,Yes,Negative,Negative,normal range
+SC-T2D-0481,Tantangan,48.0,Female,No,17.9,116.0,4.6,Low,No,Negative,Negative,prediabetes range
+SC-T2D-0482,T'boli,37.0,Male,Yes,21.4,98.0,4.9,Low,Yes,Negative,Negative,normal range
+SC-T2D-0483,Koronadal City,57.0,Male,Yes,25.4,142.0,6.1,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0484,Tampakan,37.0,Female,Yes,19.1,112.0,5.1,Moderate,No,Negative,Negative,prediabetes range
+SC-T2D-0485,Polomolok,41.0,Male,No,22.8,138.0,5.1,Moderate,No,Negative,Positive,diabetes range
+SC-T2D-0486,Santo Niño,65.0,Male,Yes,34.2,117.0,5.1,Low,No,Positive,Negative,prediabetes range
+SC-T2D-0487,Lake Sebu,18.0,Male,No,17.6,91.0,5.5,High,Yes,Negative,Negative,normal range
+SC-T2D-0488,Tampakan,50.0,Female,Yes,32.8,171.0,6.3,Moderate,Yes,Positive,Positive,diabetes range
+SC-T2D-0489,Santo Niño,75.0,Male,Yes,20.6,146.0,5.6,High,Yes,Positive,Positive,diabetes range
+SC-T2D-0490,Lake Sebu,46.0,Male,No,22.6,83.0,4.8,Low,No,Negative,Negative,normal range
+SC-T2D-0491,Surallah,47.0,Female,Yes,27.6,131.0,5.3,Low,No,Positive,Positive,diabetes range
+SC-T2D-0492,Koronadal City,60.0,Male,Yes,40.1,129.0,5.5,Low,Yes,Negative,Positive,diabetes range
+SC-T2D-0493,Banga,60.0,Male,No,25.0,105.0,5.4,High,No,Negative,Negative,prediabetes range
+SC-T2D-0494,Santo Niño,43.0,Female,No,27.6,131.0,5.4,High,No,Negative,Positive,diabetes range
+SC-T2D-0495,Surallah,22.0,Male,Yes,20.6,78.0,4.5,Moderate,No,Negative,Negative,normal range
+SC-T2D-0496,Santo Niño,39.0,Female,Yes,23.3,100.0,5.6,High,No,Negative,Negative,prediabetes range
+SC-T2D-0497,Norala,49.0,Female,No,25.1,100.0,5.2,High,Yes,Negative,Negative,prediabetes range
+SC-T2D-0498,T'boli,36.0,Female,Yes,27.2,70.0,4.5,Moderate,Yes,Negative,Negative,normal range
+SC-T2D-0499,Norala,45.0,Male,Yes,35.9,107.0,5.3,High,No,Negative,Negative,prediabetes range
+SC-T2D-0500,Santo Niño,48.0,Female,Yes,26.7,120.0,5.9,Moderate,No,Negative,Negative,prediabetes range

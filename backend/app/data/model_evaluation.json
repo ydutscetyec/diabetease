@@ -1,0 +1,105 @@
+{
+  "generated_by": "backend/ml/train_cohort.py",
+  "provenance": {
+    "source": "DiabetEASE_Synthetic_South_Cota.csv, supplied by the study team",
+    "synthetic": true,
+    "supplied_disclaimer": "Geographic assignments are simulated for system development and do not represent the actual distribution or prevalence of Type 2 Diabetes patients across South Cotabato.",
+    "cleaning": [
+      "dropped the trailing blank rows and the disclaimer row",
+      "dropped an unnamed empty column",
+      "merged the municipality spelling 'Sto. Ni\u00f1o' into 'Santo Ni\u00f1o'",
+      "added ada_label and ada_band, derived from triage.py THRESHOLDS",
+      "kept the supplied Synthetic_T2D_Label so the disagreement stays auditable"
+    ]
+  },
+  "relabelled_from": {
+    "source": "app/services/triage.py THRESHOLDS",
+    "rule": "Positive if FPG >= 126 mg/dL or HbA1c >= 6.5%"
+  },
+  "cohort": {
+    "n": 500,
+    "label_counts": {
+      "Negative": 340,
+      "Positive": 160
+    },
+    "bands": {
+      "prediabetes range": 207,
+      "diabetes range": 160,
+      "normal range": 133
+    },
+    "supplied_label_disagreements": 164,
+    "agreement_with_supplied_label": 0.672
+  },
+  "versions": [
+    {
+      "version": "synthetic-withlabs-v1",
+      "activated": false,
+      "prediction_task": "reconstructs the diagnostic threshold rule it was labelled with",
+      "limitations": "Not activated, and not a performance figure. The label is defined as FPG >= 126 mg/dL or HbA1c >= 6.5%, and the model is given both of those columns, so it is rediscovering the rule it was handed. Reported only to show why the high AUC is an artefact.",
+      "results": [
+        {
+          "model": "baseline_most_frequent",
+          "roc_auc": 0.5,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "accuracy": 0.68,
+          "n": 500,
+          "positives": 160
+        },
+        {
+          "model": "logistic_regression",
+          "roc_auc": 0.9947,
+          "sensitivity": 0.975,
+          "specificity": 0.9529,
+          "accuracy": 0.96,
+          "n": 500,
+          "positives": 160
+        },
+        {
+          "model": "gradient_boosting",
+          "roc_auc": 0.9968,
+          "sensitivity": 0.9938,
+          "specificity": 0.9971,
+          "accuracy": 0.996,
+          "n": 500,
+          "positives": 160
+        }
+      ]
+    },
+    {
+      "version": "synthetic-nolabs-v1",
+      "activated": false,
+      "prediction_task": "flags who may need a laboratory test, from non-laboratory features only",
+      "limitations": "Not activated. On this cohort no model beat the always-negative baseline on accuracy. The dataset is synthetic and its glucose and HbA1c columns appear to have been drawn independently of age, BMI and the risk factors, so there is no association to find. That is a property of the generator, not evidence about screening: published non-laboratory risk scores do discriminate usefully in real cohorts.",
+      "results": [
+        {
+          "model": "baseline_most_frequent",
+          "roc_auc": 0.5,
+          "sensitivity": 0.0,
+          "specificity": 1.0,
+          "accuracy": 0.68,
+          "n": 500,
+          "positives": 160
+        },
+        {
+          "model": "logistic_regression",
+          "roc_auc": 0.6663,
+          "sensitivity": 0.5812,
+          "specificity": 0.6265,
+          "accuracy": 0.612,
+          "n": 500,
+          "positives": 160
+        },
+        {
+          "model": "gradient_boosting",
+          "roc_auc": 0.5829,
+          "sensitivity": 0.2938,
+          "specificity": 0.8235,
+          "accuracy": 0.654,
+          "n": 500,
+          "positives": 160
+        }
+      ]
+    }
+  ]
+}

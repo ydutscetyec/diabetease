@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 from fastapi import APIRouter, Depends, Header, HTTPException, status
 from sqlalchemy.orm import Session
 
@@ -74,6 +77,76 @@ def metrics(db: Session = Depends(get_db), admin: dict = Depends(require_admin))
 
     active = db.query(ModelVersion).filter(ModelVersion.is_active.is_(True)).one_or_none()
     model_block: dict = {"status": "no active model", "metrics": {}}
+
+    # Versions that were trained and measured but deliberately not activated.
+    # These used to be dropped on the floor, which made the registry look as
+    # though no model had ever been tried. The measurements are the finding, so
+    # they are reported whether or not anything is serving.
+    evaluated = []
+
+    # The committed report first: a fresh deployment has an empty database, and
+    # without this the registry would claim no model had ever been tried.
+    report = Path(__file__).resolve().parents[1] / "data" / "model_evaluation.json"
+    if report.exists():
+        try:
+            doc = json.loads(report.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            doc = {}
+        for v in doc.get("versions", []):
+            best = max(
+                (r for r in v.get("results", []) if not r["model"].startswith("baseline")),
+                key=lambda r: r.get("roc_auc", 0), default=None,
+            )
+            evaluated.append({
+                "version": v.get("version"),
+                "algorithm": (best or {}).get("model"),
+                "prediction_task": v.get("prediction_task"),
+                "dataset_label": "DiabetEASE synthetic South Cotabato cohort",
+                "dataset_is_synthetic": True,
+                "n": doc.get("cohort", {}).get("n"),
+                "activated": bool(v.get("activated")),
+                "limitations": None,
+                "metrics": {
+                    f"{r['model']}.{m}": r[m]
+                    for r in v.get("results", [])
+                    for m in ("roc_auc", "sensitivity", "specificity", "accuracy")
+                    if m in r
+                },
+                "results": v.get("results", []),
+                "cohort": doc.get("cohort"),
+                "relabelled_from": doc.get("relabelled_from"),
+            })
+
+    seen = {e["version"] for e in evaluated}
+    for mv in (
+        db.query(ModelVersion)
+        .filter(ModelVersion.is_active.is_(False))
+        .order_by(ModelVersion.trained_at.desc())
+        .all()
+    ):
+        rows = db.query(ModelEvaluation).filter(
+            ModelEvaluation.model_version_id == mv.id
+        ).all()
+        if mv.version in seen:
+            # already reported from the committed file; add what only the
+            # registry holds rather than listing the version twice
+            for e in evaluated:
+                if e["version"] == mv.version:
+                    e["limitations"] = mv.limitations
+                    e["dataset_label"] = mv.dataset_label
+            continue
+        evaluated.append({
+            "version": mv.version,
+            "algorithm": mv.algorithm,
+            "prediction_task": mv.prediction_task,
+            "dataset_label": mv.dataset_label,
+            "dataset_is_synthetic": mv.dataset_is_synthetic,
+            "n": (mv.n_train or 0) + (mv.n_test or 0),
+            "activated": False,
+            "limitations": mv.limitations,
+            "metrics": {r.metric: r.value for r in rows},
+        })
+
     if active:
         rows = db.query(ModelEvaluation).filter(
             ModelEvaluation.model_version_id == active.id
@@ -102,5 +175,6 @@ def metrics(db: Session = Depends(get_db), admin: dict = Depends(require_admin))
             ),
         },
         "model": model_block,
+        "evaluated_not_activated": evaluated,
         "usability_evaluation": {"status": "not conducted", "respondents": 0},
     }
