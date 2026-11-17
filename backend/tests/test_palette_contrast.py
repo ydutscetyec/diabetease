@@ -232,28 +232,65 @@ def test_dark_and_auto_declare_the_same_values():
     assert explicit == auto, f"differs: {set(explicit.items()) ^ set(auto.items())}"
 
 
+def _rules():
+    """Every rule in the stylesheet as (prelude, body, at_rules, pos).
+
+    Brace-matched rather than split on newlines, and it reports the at-rules a
+    rule sits inside, so a test can ask "is this in @media print?" instead of
+    guessing from the file's layout.
+    """
+    css = re.sub(r"/\*.*?\*/", lambda m: " " * len(m.group(0)), CSS, flags=re.S)
+    out, stack, i = [], [], 0
+    while i < len(css):
+        brace = css.find("{", i)
+        if brace < 0:
+            break
+        close = css.find("}", i)
+        if 0 <= close < brace:                      # a block ended first
+            if stack:
+                stack.pop()
+            i = close + 1
+            continue
+        prelude = css[i:brace].strip().split("}")[-1].strip()
+        if prelude.startswith("@"):
+            stack.append(prelude)
+            i = brace + 1
+            continue
+        depth, j = 1, brace + 1
+        while j < len(css) and depth:
+            if css[j] == "{":
+                depth += 1
+            elif css[j] == "}":
+                depth -= 1
+            j += 1
+        out.append((prelude, css[brace + 1:j - 1], tuple(stack), brace))
+        i = j
+    return out
+
+
 def test_no_rule_outside_print_hardcodes_a_colour():
     """The failure this whole file exists for: a literal hex in a rule has
-    silently opted out of the dark theme. Print is the one exception, because
-    paper is white whatever the screen says.
-    """
-    body = CSS[CSS.index("h1,h2,h3"):]          # past the :root blocks
-    offenders = []
-    for line in body.split("\n"):
-        stripped = line.strip()
-        if stripped.startswith("/*") or stripped.startswith("*"):
-            continue
-        if re.search(r"#[0-9A-Fa-f]{3,6}\b", re.sub(r"rgba?\([^)]*\)", "", line)):
-            offenders.append(stripped)
-    allowed = {
-        "body{background:#fff}",
-        ".card{box-shadow:none; border:1px solid #999; break-inside:avoid}",
-        "display:block; margin-top:16px; padding-top:10px; "
-        "border-top:1px solid #000; font-size:10pt;",
-    }
-    unexpected = [o for o in offenders if o not in allowed]
-    assert not unexpected, f"hard-coded colours outside print: {unexpected}"
+    silently opted out of every theme. Print is the one exception, because paper
+    is white whatever the screen says.
 
+    This used to scan from the first `h1,h2,h3` in the file, on the assumption
+    that everything before it was palette. Adding a rule above that line then
+    made the rule invisible to this check -- a mutation planting a hex in it
+    passed. It now works from the rules themselves.
+    """
+    offenders = []
+    for prelude, body, at_rules, _ in _rules():
+        if any("print" in a for a in at_rules):
+            continue
+        if ":root" in prelude:                      # the palette blocks
+            continue
+        hexes = re.findall(r"#[0-9A-Fa-f]{3,8}\b", body)
+        if hexes:
+            offenders.append(f"{prelude[:70]} -- {', '.join(sorted(set(hexes)))}")
+
+    assert not offenders, (
+        "hard-coded colours outside @media print; these ignore the theme:\n  "
+        + "\n  ".join(offenders))
 
 def test_no_rule_outside_the_palette_carries_a_coloured_literal():
     """The hole the previous version of this file left open.

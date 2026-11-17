@@ -173,16 +173,14 @@
         <div class="welcome-actions">
           <button type="button" class="btn btn-primary btn-sm" id="askCandie">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
-                style="margin-right:6px">
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
             </svg>
             Ask Candie something
           </button>
           <a class="btn btn-light btn-sm" href="#learn">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
-                style="margin-right:6px">
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
               <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
             </svg>
@@ -202,7 +200,7 @@
     </section>
 
           <!-- NEW: Dashboard Onboarding / Quick Start Guide -->
-      <div class="section-label" style="margin-top: 32px;">
+      <div class="section-label">
         <div>
           <h2>Explore DiabetEASE</h2>
           <p>A quick guide to every part of the app.</p>
@@ -214,56 +212,56 @@
         <div class="card">
           <h3>Risk Assessment</h3>
           <p style="font-size: 0.85rem; color: var(--text-2);">The core tool. A gentle 5-step check-in that compares your symptoms and lab results against published thresholds to recommend next steps.</p>
-          <a href="#assess" class="btn btn-ghost btn-sm" style="margin-top: 10px; width: 100%; justify-content: center;">Start Check-in</a>
+          <a href="#assess" class="btn btn-ghost btn-sm card-action">Start Check-in</a>
         </div>
 
         <!-- 2. Map -->
         <div class="card">
           <h3>Testing Centre Map</h3>
           <p style="font-size: 0.85rem; color: var(--text-2);">Find hospitals, clinics, and pharmacies across the 10 municipalities. Filter by service (like HbA1c) and see which records are verified.</p>
-          <a href="#centers" class="btn btn-ghost btn-sm" style="margin-top: 10px; width: 100%; justify-content: center;">Open Map</a>
+          <a href="#centers" class="btn btn-ghost btn-sm card-action">Open Map</a>
         </div>
 
         <!-- 3. Learn -->
         <div class="card">
           <h3>Educational Resources</h3>
           <p style="font-size: 0.85rem; color: var(--text-2);">Learn about Type 2 diabetes, who should be tested, and take a knowledge quiz. Sourced from the ADA Standards of Care.</p>
-          <a href="#learn" class="btn btn-ghost btn-sm" style="margin-top: 10px; width: 100%; justify-content: center;">Read & Learn</a>
+          <a href="#learn" class="btn btn-ghost btn-sm card-action">Read & Learn</a>
         </div>
 
         <!-- 4. Parameters -->
         <div class="card">
           <h3>Health Parameters</h3>
           <p style="font-size: 0.85rem; color: var(--text-2);">After an assessment, view your entered values (like glucose or HbA1c) plotted against reference ranges to understand what they mean.</p>
-          <a href="#parameters" class="btn btn-ghost btn-sm" style="margin-top: 10px; width: 100%; justify-content: center;">View Scales</a>
+          <a href="#parameters" class="btn btn-ghost btn-sm card-action">View Scales</a>
         </div>
 
         <!-- 5. Forecast -->
         <div class="card">
           <h3>Risk Forecasting</h3>
           <p style="font-size: 0.85rem; color: var(--text-2);">Predictive modeling for future onset. <strong>Currently unavailable</strong> as it requires longitudinal data not yet secured for this study.</p>
-          <a href="#forecast" class="btn btn-ghost btn-sm" style="margin-top: 10px; width: 100%; justify-content: center; opacity: 0.6; pointer-events: none;">Coming Soon</a>
+          <a href="#forecast" class="btn btn-ghost btn-sm card-action is-muted">Coming Soon</a>
         </div>
 
         <!-- 6. Reports -->
         <div class="card">
           <h3>Reports & History</h3>
           <p style="font-size: 0.85rem; color: var(--text-2);">View your past assessments for this session. Note: History is cleared when you close the tab unless storage is enabled.</p>
-          <a href="#reports" class="btn btn-ghost btn-sm" style="margin-top: 10px; width: 100%; justify-content: center;">View History</a>
+          <a href="#reports" class="btn btn-ghost btn-sm card-action">View History</a>
         </div>
 
         <!-- 7. Research -->
         <div class="card">
           <h3>Research & Evaluation</h3>
           <p style="font-size: 0.85rem; color: var(--text-2);"><strong>Staff only.</strong> View model metrics, facility data quality, and usability evaluation status. Requires a researcher login.</p>
-          <a href="#research" class="btn btn-ghost btn-sm" style="margin-top: 10px; width: 100%; justify-content: center;">Staff Area</a>
+          <a href="#research" class="btn btn-ghost btn-sm card-action">Staff Area</a>
         </div>
 
         <!-- 8. Account/Settings -->
         <div class="card">
           <h3>Account & Settings</h3>
           <p style="font-size: 0.85rem; color: var(--text-2);">Manage your profile, switch between light/dark mode, configure map tiles, and review privacy data handling.</p>
-          <a href="#settings" class="btn btn-ghost btn-sm" style="margin-top: 10px; width: 100%; justify-content: center;">Preferences</a>
+          <a href="#settings" class="btn btn-ghost btn-sm card-action">Preferences</a>
         </div>
       </div>
       <!-- END NEW SECTION -->
@@ -302,7 +300,7 @@
     </div>
 
     <!-- ADDED: dashMuniChart for the municipal facility chart -->
-    <div class="card" style="margin-top:16px">
+    <div class="card">
       <div class="card-head">
         <h2>Facility records by municipality</h2>
         <span class="spacer"></span>
@@ -404,7 +402,7 @@
       <p class="stepnote" id="stepNote"></p>
 
       <form id="assessForm" novalidate>
-        <fieldset class="step" data-step="1" style="border:0;padding:0;margin:0">
+        <fieldset class="step" data-step="1" class="plain-fieldset">
           <div class="field">
             <label class="fl" for="age">Age in years</label>
             <input type="number" id="age" min="1" max="120" inputmode="numeric">
@@ -422,7 +420,7 @@
           </div>
         </fieldset>
 
-        <fieldset class="step" data-step="2" hidden style="border:0;padding:0;margin:0">
+        <fieldset class="step" data-step="2" hidden class="plain-fieldset">
           <div class="field">
             <label class="fl" for="fam">Does a parent, brother or sister have Type 2 diabetes?</label>
             <select id="fam"><option value="unknown">I do not know</option><option value="no">No</option><option value="yes">Yes</option></select>
@@ -439,7 +437,7 @@
             <span class="hint">Asked because the guideline uses a lower BMI cut-off — 23 instead of 25 — for people of Asian ancestry, and counts it as a risk factor in its own right.</span>
           </div>
 
-          <h3 style="margin-top:18px">Anything else that applies</h3>
+          <h3>Anything else that applies</h3>
           <span class="hint">One of these, together with your BMI, is what the guideline looks for below age 35.</span>
           <label class="choice"><input type="checkbox" class="rf" value="physical_inactivity"><span>Little physical activity most weeks</span></label>
           <label class="choice"><input type="checkbox" class="rf" value="hypertension"><span>High blood pressure, or treatment for it</span></label>
@@ -451,7 +449,7 @@
           <label class="choice"><input type="checkbox" class="rf" value="insulin_resistance_signs"><span>Dark, velvety patches of skin on the neck or armpits</span></label>
         </fieldset>
 
-        <fieldset class="step" data-step="3" hidden style="border:0;padding:0;margin:0">
+        <fieldset class="step" data-step="3" hidden class="plain-fieldset">
           <h3>Symptoms in the last few weeks</h3>
           <label class="choice"><input type="checkbox" class="sym" value="thirst"><span>Much more thirsty than usual</span></label>
           <label class="choice"><input type="checkbox" class="sym" value="urination"><span>Passing urine far more often, including at night</span></label>
@@ -464,7 +462,7 @@
           <label class="choice"><input type="checkbox" class="sym" value="numbness"><span>Numbness or tingling in the feet or hands</span></label>
           <span class="hint">Type 2 diabetes often causes no symptoms at all, so leaving these empty is not reassuring on its own.</span>
 
-          <h3 style="margin-top:18px">Urgent signs</h3>
+          <h3>Urgent signs</h3>
           <span class="hint">These change what you should do immediately.</span>
           <label class="choice alarm"><input type="checkbox" class="dka" value="vomiting"><span>Vomiting or persistent nausea</span></label>
           <label class="choice alarm"><input type="checkbox" class="dka" value="abdominal_pain"><span>Stomach pain</span></label>
@@ -472,7 +470,7 @@
           <label class="choice alarm"><input type="checkbox" class="dka" value="drowsiness"><span>Unusual drowsiness or confusion</span></label>
         </fieldset>
 
-        <fieldset class="step" data-step="4" hidden style="border:0;padding:0;margin:0">
+        <fieldset class="step" data-step="4" hidden class="plain-fieldset">
           <h3>Laboratory results you already have</h3>
           <div class="field">
             <label class="fl" for="gluType">Type of glucose test</label>
@@ -497,10 +495,10 @@
           </div>
         </fieldset>
 
-        <fieldset class="step" data-step="5" hidden style="border:0;padding:0;margin:0">
+        <fieldset class="step" data-step="5" hidden class="plain-fieldset">
           <h3>Check your answers</h3>
           <div class="tablewrap"><table id="reviewTable"><tbody></tbody></table></div>
-          <p style="margin-top:12px"><small>Your answers are sent to the server to compute the result. Nothing is stored: no name, no birth date, no identifier.</small></p>
+          <p><small>Your answers are sent to the server to compute the result. Nothing is stored: no name, no birth date, no identifier.</small></p>
         </fieldset>
 
         <div class="stepactions">
@@ -553,7 +551,7 @@
       <h2>Not available</h2>
       <p>Forecasting requires longitudinal data and a validated model. Neither is currently available, so no projection is shown.</p>
     </div>
-    <div class="card" style="margin-top:16px">
+    <div class="card">
       <div class="card-head"><h2>Requirements</h2></div>
       <div class="tablewrap"><table>
         <tr><th>Requirement</th><th>Why</th><th>Status</th></tr>
@@ -563,7 +561,7 @@
         <tr><td>A stated prediction horizon</td><td>Risk estimates require a defined time window; 5-year and lifetime risk differ.</td><td><span class="tag tag-warn">Not yet defined</span></td></tr>
         <tr><td>Calibration analysis</td><td>Probabilities may only be displayed once checked against observed frequencies.</td><td><span class="tag tag-bad">Not performed</span></td></tr>
       </table></div>
-      <p style="margin-top:14px"><small>The ADA&rsquo;s own screening route is a risk-factor check followed by a laboratory test, not a questionnaire that returns a number. This system follows that route.</small></p>
+      <p><small>The ADA&rsquo;s own screening route is a risk-factor check followed by a laboratory test, not a questionnaire that returns a number. This system follows that route.</small></p>
     </div>
   </section>
 
@@ -646,13 +644,13 @@
       </div>
     </div>
 
-    <div class="card" style="margin-top:16px">
+    <div class="card">
       <div class="card-head"><h2>Facilities</h2><span class="spacer"></span><span class="tag" id="facCount">—</span></div>
       <div id="facilityList"></div>
-      <p style="margin-top:12px"><small id="facAttribution"></small></p>
+      <p><small id="facAttribution"></small></p>
     </div>
 
-    <details class="card" style="margin-top:16px">
+    <details class="card">
       <summary style="cursor:pointer; min-height:44px; display:flex; align-items:center; font-weight:600">Add a verified facility record</summary>
       
       <div class="inline">
@@ -682,7 +680,7 @@
         <div class="field"><label class="fl" for="nfDate">Date verified</label><input type="date" id="nfDate"></div>
       </div>
       <div class="btnrow"><button type="button" class="btn btn-primary" id="addFacility">Save record</button></div>
-      <div id="facilityFlash" class="note" hidden style="margin-top:12px"></div>
+      <div id="facilityFlash" class="note" hidden></div>
     </details>
   </section>
 
@@ -733,7 +731,7 @@
       <div class="mythgrid" id="mythGrid"></div>
     </div>
 
-    <div class="card" style="margin-top:16px">
+    <div class="card">
       <div class="card-head"><h2>Sources</h2></div>
       
       <div id="eduSources"><div class="skel"></div></div>
@@ -769,7 +767,7 @@
 
     <div class="grid g2">
       <div class="card">    
-        <div class="segmented" role="group" aria-label="Sign in or create account" style="margin-bottom:16px">
+        <div class="segmented" role="group" aria-label="Sign in or create account">
           <button type="button" id="tabLogin" aria-pressed="true">Sign in</button>
           <button type="button" id="tabRegister" aria-pressed="false">Create account</button>
         </div>
@@ -793,7 +791,7 @@
             <button class="btn btn-primary" type="submit" id="authSubmit">Sign in</button>
             <button class="btn btn-ghost" type="button" id="signOutBtn" hidden>Sign out</button>
           </div>
-          <p id="authStatus" style="margin-top:12px"></p>
+          <p id="authStatus"></p>
         </form>
       </div>
 
@@ -806,7 +804,7 @@
           <tr><td>Researcher</td><td>Evaluation metrics, facility record management</td></tr>
           <tr><td>Admin</td><td>Account management, role assignment</td></tr>
         </table></div>
-        <div class="note note-info" style="margin-top:14px">
+        <div class="note note-info">
           <p>An account links saved assessments to you. Assessments are not stored unless storage is enabled and you consent. You can delete your account and its records at any time.</p>
         </div>
         <div class="btnrow"><button class="btn btn-ghost btn-sm" id="deleteAccount" hidden>Delete my account and data</button></div>
@@ -822,8 +820,8 @@
           <select id="grantRole"><option value="patient">patient</option><option value="researcher">researcher</option><option value="admin">admin</option></select></div>
       </div>
       <div class="btnrow"><button class="btn btn-primary btn-sm" id="grantBtn">Grant role</button></div>
-      <p id="grantStatus" style="margin-top:10px"></p>
-      <div id="accountList" style="margin-top:14px"></div>
+      <p id="grantStatus"></p>
+      <div id="accountList"></div>
     </div>
   </section>
 
@@ -846,7 +844,7 @@
           <select id="setDensity"><option value="normal">Normal</option><option value="large">Large</option></select>
         </div>
         <label class="choice"><input type="checkbox" id="setMotion"><span>Reduce animation</span></label>
-        <div class="field" style="margin-top:14px">
+        <div class="field">
           <label class="fl" for="setApi">API base URL</label>
           <input type="text" id="setApi" placeholder="http://127.0.0.1:8000">
         </div>
@@ -870,7 +868,7 @@
         <p id="aiState"></p>
         <details id="aiSetup">
           <summary style="cursor:pointer; min-height:44px; display:flex; align-items:center; font-weight:600">Set up open conversation</summary>
-          <p style="margin-top:12px">Candie answers reviewed topics on her own. To let her answer anything else, run a language model on this computer. It is detected automatically.</p>
+          <p>Candie answers reviewed topics on her own. To let her answer anything else, run a language model on this computer. It is detected automatically.</p>
           <ol>
             <li>Install Ollama from <strong>ollama.com</strong>.</li>
             <li>In PowerShell: <code>ollama pull llama3.2</code></li>
@@ -878,11 +876,11 @@
           </ol>
           <p>If answers are slow or time out, a smaller model usually fixes it: <code>ollama pull llama3.2:1b</code></p>
         </details>
-        <div class="btnrow" style="margin-top:12px">
+        <div class="btnrow">
           <button type="button" class="btn btn-ghost btn-sm" id="aiRecheck">Check again</button>
           <button type="button" class="btn btn-ghost btn-sm" id="aiDiagnose">Test the model</button>
         </div>
-        <div id="aiDiagnosis" class="note" hidden style="margin-top:12px"></div>
+        <div id="aiDiagnosis" class="note" hidden></div>
       </div>
 
       <div class="card">

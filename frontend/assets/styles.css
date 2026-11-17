@@ -79,6 +79,16 @@
   --rail-text:#F7E8F0;
   --rail-dim:#FFB5D2;
 
+  /* ---- spacing scale ----
+     324 spacing declarations used 26 different pixel values -- 2,3,4,5,6,7,8,9,
+     10,11,12,13,14,15,16,17,18,20,22,24,26,28,32,36 -- every one of them picked
+     by eye. Nothing lined up with anything, which is what reads as untidy gaps
+     between components. These eight steps replace all of them. 6px stays in the
+     scale because it is the idiom for the gap inside a row of icons, where 4 is
+     cramped and 8 is loose. */
+  --s-1:2px; --s-2:4px; --s-3:6px; --s-4:8px;
+  --s-5:12px; --s-6:16px; --s-7:24px; --s-8:32px;
+
   --r-sm:8px; --r-md:12px; --r-lg:18px; --r-pill:999px;
   --sh-1:0 1px 2px rgba(58,30,43,.05), 0 2px 8px rgba(58,30,43,.05);
   --sh-2:0 2px 6px rgba(58,30,43,.08), 0 10px 22px rgba(58,30,43,.09);
@@ -650,11 +660,65 @@ body{
 }
 
 
-h1,h2,h3,h4{font-family:var(--font-head); font-weight:600; line-height:1.25; margin:0 0 .35em}
+/* ---------------------------------------------------------------- flow
+   Blocks stacked inside a card used to get their spacing from 24 inline
+   margin-top declarations in index.html, at 10, 12, 14, 16 and 18px. That is
+   why no two cards had the same internal rhythm, and why none of it could be
+   changed from here. One rule owns it now.
+
+   Specificity is (0,1,0) on purpose, not :where()'s zero. At zero even the bare
+   `p` rule's own margin-top:0 outranked it at (0,0,1), so paragraphs inside a
+   card sat flush against each other. (0,1,0) clears element rules, and still
+   loses on source order to every component rule further down this file, which
+   is where the real exceptions live. */
+.card > * + *{margin-top:var(--s-5)}
+
+/* Between the big pieces of a view, where nothing closer applies. The rhythm is
+   three-tier on purpose, and these are the only three vertical gaps in the app:
+     12px  inside a card (8px straight after a heading)
+     16px  between cards and grids   -- .card + .card, .grid + .card
+     24px  between sections of a page
+   Before this, the same three relationships were spaced with 0, 12, 14, 16, 18,
+   20, 22, 24, 28 and 32px depending on which element happened to be involved. */
+.view > * + *{margin-top:var(--s-7)}
+
+/* Inside a card the flow rule above is the only source of vertical spacing.
+   Anything that also carries a bottom margin gets counted twice, which is
+   exactly where the leftover 20px and 28px gaps came from: a paragraph's 12px
+   bottom margin plus the flow's top margin, and .field's 16px plus the same. */
+:is(.card) > :is(p, h1, h2, h3, h4, ul, ol, .field){margin-bottom:0}
+   /* :is(), not :where(): this one has to beat .field's own 16px bottom
+      margin, so it needs real specificity. The flow default above stays
+      :where() because components should be able to override it. */
+
+/* A heading sits closer to the text it introduces than two blocks sit to each
+   other. This is the only intentional exception to the single step above. */
+:is(.card) > :is(h1, h2, h3, h4) + *{margin-top:var(--s-4)}
+
+/* A card's own full-width action, at its foot. Was repeated inline eight times
+   as margin-top:10px; width:100%; justify-content:center -- the margin is left
+   to the flow rule now, so it cannot disagree with everything around it. */
+.card-action{width:100%; justify-content:center}
+.is-muted{opacity:.6; pointer-events:none}
+
+/* Fieldsets used only to group inputs for assistive tech, with no frame of
+   their own. Was repeated inline five times as border:0;padding:0;margin:0. */
+.plain-fieldset{border:0; padding:0; margin:0}
+
+/* A tab strip is always followed by the panel it switches, so it owns the gap
+   rather than each instance declaring one. */
+.segmented{margin-bottom:var(--s-6)}
+
+/* Cards in a grid are spaced by the grid's own gap. The block-flow rule above
+   charged them a second time, which is where the 32px gaps came from in a grid
+   asking for 16. Needs real specificity to beat .card + .card. */
+.grid > .card + .card{margin-top:0}
+
+h1,h2,h3,h4{font-family:var(--font-head); font-weight:600; line-height:1.25; margin:0 0 var(--s-4)}
 h1{font-size:1.5rem; letter-spacing:-.01em}
 h2{font-size:1.18rem}
 h3{font-size:1rem}
-p{margin:0 0 .9em; max-width:72ch}
+p{margin:0 0 var(--s-5); max-width:72ch}
 
 
 :focus-visible{outline:3px solid var(--focus); outline-offset:2px; border-radius:6px}
@@ -681,13 +745,13 @@ button{font:inherit}
 .rail-brand small{display:block; line-height:1.3}
 :root[data-rail="collapsed"] .rail-brand .names{display:none}
 
-.rail-scroll{flex:1; overflow-y:auto; padding:14px 12px 24px}
-.rail-group{margin-bottom:22px}
-.rail-group:last-child{margin-bottom:8px}
+.rail-scroll{flex:1; overflow-y:auto; padding:var(--s-5) var(--s-5) var(--s-7)}
+.rail-group{margin-bottom:var(--s-7)}
+.rail-group:last-child{margin-bottom:var(--s-4)}
 .rail-group > h4{
   font-family:var(--font);
 }
-:root[data-rail="collapsed"] .rail-group{margin-bottom:16px}
+:root[data-rail="collapsed"] .rail-group{margin-bottom:var(--s-6)}
 
 /* Group headings will not fit a 72px rail: "Assessment" needs 61px of text in a
    47px box, so it was rendering clipped. Hide it from sight but keep it for
@@ -702,24 +766,24 @@ button{font:inherit}
 }
 
 .rail a{
-  position:relative; display:flex; align-items:center; gap:13px; text-decoration:none; font-size:.9rem; font-weight:500; margin-bottom:6px; line-height:1.3;
+  position:relative; display:flex; align-items:center; gap:var(--s-5); text-decoration:none; font-size:.9rem; font-weight:500; margin-bottom:var(--s-3); line-height:1.3;
 }
 
 .rail a .ico{flex:0 0 20px; width:20px; height:20px; display:grid; place-items:center;}
 .rail a .lbl{min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
-:root[data-rail="collapsed"] .rail a{justify-content:center; padding:12px 0; margin-bottom:8px}
+:root[data-rail="collapsed"] .rail a{justify-content:center; padding:var(--s-5) 0; margin-bottom:var(--s-4)}
 :root[data-rail="collapsed"] .rail a .lbl{display:none}
 :root[data-rail="collapsed"] .rail a::after{
   content:attr(data-tip); position:absolute; left:calc(100% + 8px); white-space:nowrap;
-  background:var(--text); color:var(--card); padding:5px 9px; border-radius:var(--r-sm);
+  background:var(--text); color:var(--card); padding:var(--s-2) var(--s-4); border-radius:var(--r-sm);
   font-size:.78rem; opacity:0; pointer-events:none; transition:opacity .12s; z-index:60;
 }
 :root[data-rail="collapsed"] .rail a:hover::after,
 :root[data-rail="collapsed"] .rail a:focus-visible::after{opacity:1}
 
-.rail-foot{padding:10px; border-top:1px solid var(--line)}
+.rail-foot{padding:var(--s-4); border-top:1px solid var(--line)}
 .railtoggle{
-  width:100%; display:flex; align-items:center; justify-content:center; gap:8px;
+  width:100%; display:flex; align-items:center; justify-content:center; gap:var(--s-4);
   min-height:40px; border:1px solid var(--line); background:transparent; border-radius:var(--r-md); cursor:pointer; font-size:.82rem;
 }
 
@@ -731,13 +795,13 @@ button{font:inherit}
 
 .topbar{
   position:sticky; top:0; z-index:30;
-  display:flex; align-items:center; gap:12px; padding:10px 20px;
+  display:flex; align-items:center; gap:var(--s-5); padding:var(--s-4) var(--s-6);
   padding-top:calc(10px + env(safe-area-inset-top,0px));
 }
 .topbar .crumb{font-size:.84rem; color:var(--text-2); min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 
 .pill{
-  display:inline-flex; align-items:center; gap:7px; padding:5px 11px;
+  display:inline-flex; align-items:center; gap:var(--s-3); padding:var(--s-2) var(--s-5);
   border-radius:var(--r-pill); border:1px solid var(--line); background:var(--card);
   font-size:.78rem; color:var(--text-2); white-space:nowrap;
 }
@@ -752,23 +816,23 @@ button{font:inherit}
   color:var(--text); cursor:pointer;
 }
 
-.work{padding:22px 20px 100px; max-width:1240px}
+.work{padding:var(--s-7) var(--s-6) 100px; max-width:1240px}
 .view{display:none}
 .view.active{display:block}
-.pagehead{margin-bottom:18px}
+.pagehead{margin-bottom:var(--s-6)}
 .pagehead p{color:var(--text-2); margin-bottom:0}
-.pagehead .row{display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end; justify-content:space-between}
+.pagehead .row{display:flex; flex-wrap:wrap; gap:var(--s-5); align-items:flex-end; justify-content:space-between}
 
 /* ---------------------------------------------------------------- cards */
 
-.card + .card{margin-top:16px}
-.card-head{display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap}
+.card + .card{margin-top:var(--s-6)}
+.card-head{display:flex; align-items:center; gap:var(--s-4); margin-bottom:var(--s-5); flex-wrap:wrap}
 .card-head h2,.card-head h3{margin:0}
 .card-head .spacer{margin-left:auto}
-.card-sub{color:var(--text-2); font-size:.86rem; margin:-8px 0 14px}
+.card-sub{color:var(--text-2); font-size:.86rem; margin:-8px 0 var(--s-5)}
 
-.grid{display:grid; gap:16px}
-.grid + .grid, .grid + .card, .card + .grid{margin-top:16px}
+.grid{display:grid; gap:var(--s-6)}
+.grid + .grid, .grid + .card, .card + .grid{margin-top:var(--s-6)}
 @media (min-width:700px){ .grid.g2{grid-template-columns:repeat(2,1fr)} }
 @media (min-width:1000px){
   .grid.g3{grid-template-columns:repeat(3,1fr)}
@@ -776,73 +840,73 @@ button{font:inherit}
   .grid.split{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
 }
 
-.stat .k{ align-items:center; gap:8px;}
+.stat .k{ align-items:center; gap:var(--s-4);}
 .stat .k i{width:26px;height:26px;border-radius:var(--r-sm);place-items:center;flex:0 0 auto}
 .stat .v{ line-height:1.15}
 
 .banner{
-  border-radius:var(--r-lg); padding:26px 22px; color:var(--rail-text);
+  border-radius:var(--r-lg); padding:var(--s-7) var(--s-7); color:var(--rail-text);
   box-shadow:var(--sh-2);
 }
-.banner h2{color:var(--rail-text); margin-bottom:.3em}
+.banner h2{color:var(--rail-text); margin-bottom:var(--s-3)}
 .banner p{color:var(--rail-dim); margin-bottom:0}
-.banner .eyebrow{font-size:.71rem; letter-spacing:.14em; text-transform:uppercase; margin-bottom:8px}
+.banner .eyebrow{font-size:.71rem; letter-spacing:.14em; text-transform:uppercase; margin-bottom:var(--s-4)}
 
 /* ---------------------------------------------------------------- notes */
-.note{border:1px solid; border-left-width:4px; border-radius:var(--r-md); padding:13px 15px; margin:0 0 14px}
+.note{border:1px solid; border-left-width:4px; border-radius:var(--r-md); padding:var(--s-5) var(--s-6); margin:0 0 var(--s-5)}
 .note > :last-child{margin-bottom:0}
-.note h3{margin-bottom:.25em; font-size:.98rem}
+.note h3{margin-bottom:var(--s-2); font-size:.98rem}
 .note-info{background:var(--info-bg); border-color:var(--info-line); color:var(--info-ink)}
 .note-warn{background:var(--warn-bg); border-color:var(--warn-line); color:var(--warn-ink)}
 .note-danger{background:var(--danger-bg); border-color:var(--danger-line); color:var(--danger-ink)}
 .note-ok{background:var(--ok-bg); border-color:var(--ok-line); color:var(--ok-ink)}
 
 .tag{
-  display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:var(--r-pill);
+  display:inline-flex; align-items:center; gap:var(--s-3); padding:var(--s-1) var(--s-4); border-radius:var(--r-pill);
   font-size:.74rem; font-weight:600; border:1px solid var(--line-strong); background:var(--bg); color:var(--text-2);
 }
 
-.tags{display:flex; flex-wrap:wrap; gap:6px}
+.tags{display:flex; flex-wrap:wrap; gap:var(--s-3)}
 
 /* ------------------------------------------------------------- controls */
 .btn{
-  display:inline-flex; align-items:center; justify-content:center; gap:7px;
-  min-height:42px; padding:10px 17px; border-radius:var(--r-md); cursor:pointer;
+  display:inline-flex; align-items:center; justify-content:center; gap:var(--s-3);
+  min-height:42px; padding:var(--s-4) var(--s-6); border-radius:var(--r-md); cursor:pointer;
   border:1px solid transparent; font-size:.9rem; font-weight:600; text-decoration:none;
 }
 
 .btn[disabled]{opacity:.5; cursor:not-allowed}
-.btn-sm{min-height:36px; padding:7px 13px; font-size:.83rem}
-.btnrow{display:flex; flex-wrap:wrap; gap:10px}
+.btn-sm{min-height:36px; padding:var(--s-3) var(--s-5); font-size:.83rem}
+.btnrow{display:flex; flex-wrap:wrap; gap:var(--s-4)}
 @media (max-width:440px){ .btnrow .btn{flex:1 1 100%} }
 
-.segmented{display:inline-flex; background:var(--bg); border:1px solid var(--line); border-radius:var(--r-pill); padding:3px; gap:3px; flex-wrap:wrap}
+.segmented{display:inline-flex; background:var(--bg); border:1px solid var(--line); border-radius:var(--r-pill); padding:var(--s-1); gap:var(--s-1); flex-wrap:wrap}
 .segmented button{
-  min-height:34px; padding:6px 14px; border:0; background:transparent; cursor:pointer;
+  min-height:34px; padding:var(--s-3) var(--s-5); border:0; background:transparent; cursor:pointer;
   border-radius:var(--r-pill); color:var(--text-2); font-size:.84rem; font-weight:600;
 }
 
-label.fl{display:block; font-weight:600; font-size:.88rem; margin-bottom:3px}
-.hint{display:block; color:var(--text-2); font-size:.81rem; margin-bottom:7px}
-.field{margin-bottom:15px}
+label.fl{display:block; font-weight:600; font-size:.88rem; margin-bottom:var(--s-1)}
+.hint{display:block; color:var(--text-2); font-size:.81rem; margin-bottom:var(--s-3)}
+.field{margin-bottom:var(--s-6)}
 input[type=text],input[type=number],input[type=date],input[type=password],select,textarea{
-  width:100%; min-height:44px; padding:10px 12px; font:inherit; color:var(--text);
+  width:100%; min-height:44px; padding:var(--s-4) var(--s-5); font:inherit; color:var(--text);
   background:var(--card); border:1px solid var(--line-strong); border-radius:var(--r-md);
 }
 textarea{min-height:84px; resize:vertical}
 input:focus,select:focus,textarea:focus{border-color:var(--green)}
 input[aria-invalid="true"]{border-color:var(--danger-line); background:var(--danger-bg)}
-.inline{display:flex; flex-wrap:wrap; gap:12px}
+.inline{display:flex; flex-wrap:wrap; gap:var(--s-5)}
 .inline > *{flex:1 1 180px}
-.err{display:none; color:var(--danger-ink); font-size:.83rem; font-weight:600; margin-top:5px}
+.err{display:none; color:var(--danger-ink); font-size:.83rem; font-weight:600; margin-top:var(--s-2)}
 .err.show{display:block}
 
 .choice{
-  display:flex; gap:10px; align-items:flex-start; padding:11px 13px; cursor:pointer;
-  border:1px solid var(--line-strong); border-radius:var(--r-md); margin-bottom:8px;
+  display:flex; gap:var(--s-4); align-items:flex-start; padding:var(--s-5) var(--s-5); cursor:pointer;
+  border:1px solid var(--line-strong); border-radius:var(--r-md); margin-bottom:var(--s-4);
   background:var(--card); min-height:44px;
 }
-.choice input{margin:2px 0 0; width:19px; height:19px; flex:0 0 auto; accent-color:var(--green)}
+.choice input{margin:var(--s-1) 0 0; width:19px; height:19px; flex:0 0 auto; accent-color:var(--green)}
 .choice:has(input:checked){border-color:var(--green); background:var(--green-wash)}
 .choice.alarm:has(input:checked){border-color:var(--danger-line); background:var(--danger-bg); color:var(--danger-ink)}
 
@@ -851,17 +915,17 @@ input[aria-invalid="true"]{border-color:var(--danger-line); background:var(--dan
    announced group come free. The three dots read from --sw-<palette>-n, which
    every theme block declares, so a swatch previews its palette without the
    page having to switch to it. */
-.swatches{display:flex; flex-wrap:wrap; gap:9px; margin:0}
+.swatches{display:flex; flex-wrap:wrap; gap:var(--s-4); margin:0}
 .swatch{position:relative; display:block}
 .swatch input{position:absolute; width:1px; height:1px; opacity:0; margin:0}
 .swatch > span{
-  display:flex; flex-direction:column; gap:8px; min-height:44px; cursor:pointer;
-  padding:10px 12px; border:2px solid var(--line-strong); border-radius:var(--r-md);
+  display:flex; flex-direction:column; gap:var(--s-4); min-height:44px; cursor:pointer;
+  padding:var(--s-4) var(--s-5); border:2px solid var(--line-strong); border-radius:var(--r-md);
   background:var(--card); color:var(--text); font-size:.8rem; font-weight:600;
 }
 .swatch input:checked + span{border-color:var(--green); background:var(--green-wash)}
 .swatch input:focus-visible + span{outline:3px solid var(--focus); outline-offset:2px}
-.swatch em{display:flex; gap:4px; font-style:normal}
+.swatch em{display:flex; gap:var(--s-2); font-style:normal}
 .swatch em b{width:15px; height:15px; border-radius:50%; border:1px solid var(--line)}
 .swatch em b:nth-child(1){background:var(--d1)}
 .swatch em b:nth-child(2){background:var(--d2)}
@@ -873,7 +937,7 @@ input[aria-invalid="true"]{border-color:var(--danger-line); background:var(--dan
 .swatch[data-pal="contrast"]{--d1:var(--sw-contrast-1); --d2:var(--sw-contrast-2); --d3:var(--sw-contrast-3)}
 .swatch small{display:block; font-weight:400; color:var(--text-2); font-size:.72rem}
 
-.steps{display:flex; gap:5px; list-style:none; padding:0; margin:0 0 10px}
+.steps{display:flex; gap:var(--s-2); list-style:none; padding:0; margin:0 0 var(--s-4)}
 .steps li{flex:1; height:6px; border-radius:var(--r-pill); background:var(--line)}
 .steps li.done{background:var(--accent-2)}
 .steps li.now{background:var(--green)}
@@ -881,7 +945,7 @@ input[aria-invalid="true"]{border-color:var(--danger-line); background:var(--dan
 /* --------------------------------------------------------------- tables */
 .tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:var(--r-md)}
 table{border-collapse:collapse; width:100%; min-width:460px; font-size:.87rem}
-th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+th,td{text-align:left; padding:var(--s-4) var(--s-5); border-bottom:1px solid var(--line); vertical-align:top}
 th{background:var(--bg); font-weight:600; color:var(--text-2); font-size:.78rem}
 tr:last-child td{border-bottom:0}
 
@@ -890,17 +954,17 @@ tr:last-child td{border-bottom:0}
 .chart text{font-family:var(--font); fill:var(--text-2); font-size:11px}
 .chart .axis{stroke:var(--line-strong); stroke-width:1}
 .chart .gridline{stroke:var(--line); stroke-dasharray:3 4}
-.legend{display:flex; flex-wrap:wrap; gap:12px; margin-top:10px; font-size:.8rem; color:var(--text-2)}
-.legend i{width:11px; height:11px; border-radius:3px; display:inline-block; margin-right:5px; vertical-align:-1px}
+.legend{display:flex; flex-wrap:wrap; gap:var(--s-5); margin-top:var(--s-4); font-size:.8rem; color:var(--text-2)}
+.legend i{width:11px; height:11px; border-radius:3px; display:inline-block; margin-right:var(--s-2); vertical-align:-1px}
 
 .empty{
   border:1px dashed var(--line-strong); border-radius:var(--r-md);
-  padding:26px 18px; text-align:center; color:var(--text-2); background:var(--bg);
+  padding:var(--s-7) var(--s-6); text-align:center; color:var(--text-2); background:var(--bg);
 }
-.empty h3{color:var(--text); margin-bottom:.3em}
+.empty h3{color:var(--text); margin-bottom:var(--s-3)}
 .empty p{margin-inline:auto}
 .skel{background:linear-gradient(90deg,var(--line),var(--bg),var(--line)); background-size:200% 100%;
-      animation:sk 1.2s linear infinite; border-radius:var(--r-sm); height:14px; margin:7px 0}
+      animation:sk 1.2s linear infinite; border-radius:var(--r-sm); height:14px; margin:var(--s-3) 0}
 @keyframes sk{to{background-position:-200% 0}}
 
 /* ------------------------------------------------------------- locator */
@@ -913,7 +977,7 @@ tr:last-child td{border-bottom:0}
        background:var(--green); border:2px solid var(--card); box-shadow:var(--sh-1)}
 .pin.has b{background:var(--accent-1)}
 .pin span{font-size:.65rem; font-weight:600; background:var(--card); color:var(--text);
-          border:1px solid var(--line); border-radius:5px; padding:1px 5px; margin-top:3px; white-space:nowrap}
+          border:1px solid var(--line); border-radius:5px; padding:1px var(--s-2); margin-top:var(--s-1); white-space:nowrap}
 .pin:focus-visible b{outline:3px solid var(--focus); outline-offset:3px}
 
 /* ---------------------------------------------------------------- chat */
@@ -928,21 +992,21 @@ tr:last-child td{border-bottom:0}
   background:var(--card); border:1px solid var(--line);
 }
 .chatpanel.open{display:flex}
-.chatpanel header{display:flex; align-items:center; gap:9px;}
+.chatpanel header{display:flex; align-items:center; gap:var(--s-4);}
 .chatpanel header b{font-family:var(--font-head); display:block}
 .chatpanel header small{display:block;}
-.chatpanel .x{margin-left:auto; display:flex; gap:6px}
+.chatpanel .x{margin-left:auto; display:flex; gap:var(--s-3)}
 .iconbtn{min-width:34px; min-height:34px; border:1px solid var(--line); background:var(--card);
          border-radius:var(--r-sm); cursor:pointer; color:var(--text-2); display:grid; place-items:center}
 .iconbtn:hover{background:var(--bg)}
-.chatlog{flex:1; overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:9px; background:var(--bg)}
+.chatlog{flex:1; overflow-y:auto; padding:var(--s-5); display:flex; flex-direction:column; gap:var(--s-4); background:var(--bg)}
 
 :root[data-theme="dark"] .bubble.me{background:var(--green); color:var(--on-primary)}
 
-.bubble p{margin:0 0 .5em; max-width:none} .bubble p:last-child{margin:0}
-.chatsug{display:flex; flex-wrap:wrap; gap:6px; padding:10px 14px 0}
+.bubble p{margin:0 0 var(--s-4); max-width:none} .bubble p:last-child{margin:0}
+.chatsug{display:flex; flex-wrap:wrap; gap:var(--s-3); padding:var(--s-4) var(--s-5) 0}
 .chatsug button{border:1px solid var(--line-strong); background:var(--card); color:var(--text);
-  border-radius:var(--r-pill); padding:7px 11px; font-size:.78rem; cursor:pointer; min-height:34px}
+  border-radius:var(--r-pill); padding:var(--s-3) var(--s-5); font-size:.78rem; cursor:pointer; min-height:34px}
 .chatsug button:hover{background:var(--bg)}
 
 /* -------------------------------------------------------------- mobile */
@@ -958,14 +1022,14 @@ tr:last-child td{border-bottom:0}
   :root[data-rail="collapsed"] .main{margin-left:0}
   .burger{display:inline-flex}
   .rail-foot{display:none}
-  :root[data-rail="collapsed"] .rail a{justify-content:flex-start; padding:9px 10px}
+  :root[data-rail="collapsed"] .rail a{justify-content:flex-start; padding:var(--s-4) var(--s-4)}
   :root[data-rail="collapsed"] .rail a .lbl{display:block}
   :root[data-rail="collapsed"] .rail-brand .names{display:block}
-  .work{padding:16px 14px 100px}
+  .work{padding:var(--s-6) var(--s-5) 100px}
 
 }
 @media (max-width:420px){
-  .topbar{padding-inline:12px}
+  .topbar{padding-inline:var(--s-5)}
   h1{font-size:1.25rem}
 }
 
@@ -987,18 +1051,18 @@ tr:last-child td{border-bottom:0}
   .card{box-shadow:none; border:1px solid #999; break-inside:avoid}
   .view#v-results::after{
     content:"DiabetEASE research prototype. Not a diagnosis. Rule check against published thresholds; no trained model was used.";
-    display:block; margin-top:16px; padding-top:10px; border-top:1px solid #000; font-size:10pt;
+    display:block; margin-top:var(--s-6); padding-top:var(--s-4); border-top:1px solid #000; font-size:10pt;
   }
 }
 
 /* ---------------------------------------------------------- Candie */
 .candie-card{
-  display:flex; gap:18px; align-items:center; margin-bottom:16px;
+  display:flex; gap:var(--s-6); align-items:center; margin-bottom:var(--s-6);
   background:var(--card);
 }
 .candie-hero{flex:0 0 auto;}
-.candie-card h2{margin-bottom:.3em}
-.candie-card p{margin-bottom:12px}
+.candie-card h2{margin-bottom:var(--s-3)}
+.candie-card p{margin-bottom:var(--s-5)}
 
 .bubble.bot{position:relative}
 @media (max-width:620px){
@@ -1011,7 +1075,7 @@ tr:last-child td{border-bottom:0}
 /* ---------------------------------------------------------- boot screen */
 .boot{
   position:fixed; inset:0; z-index:200; display:grid; place-content:center; justify-items:center;
-  gap:14px; transition:opacity .35s ease;
+  gap:var(--s-5); transition:opacity .35s ease;
 }
 .boot.gone{opacity:0; pointer-events:none}
 
@@ -1043,13 +1107,13 @@ tr:last-child td{border-bottom:0}
 }
 .pin-dot span{transform:rotate(45deg)}
 
-.maplegend i{width:12px; height:12px; border-radius:3px; display:inline-block; margin-right:6px; vertical-align:-1px}
+.maplegend i{width:12px; height:12px; border-radius:3px; display:inline-block; margin-right:var(--s-3); vertical-align:-1px}
 
 /* ---------------------------------------------------------------- quiz */
-.quizq{border:1px solid var(--line); border-radius:var(--r-md); padding:14px; margin-bottom:12px; background:var(--card)}
-.quizq > p{font-weight:600; margin-bottom:10px}
+.quizq{border:1px solid var(--line); border-radius:var(--r-md); padding:var(--s-5); margin-bottom:var(--s-5); background:var(--card)}
+.quizq > p{font-weight:600; margin-bottom:var(--s-4)}
 .quizopt{
-  display:block; width:100%; text-align:left; padding:10px 13px; margin-bottom:7px; cursor:pointer;
+  display:block; width:100%; text-align:left; padding:var(--s-4) var(--s-5); margin-bottom:var(--s-3); cursor:pointer;
   border:1px solid var(--line-strong); border-radius:var(--r-md); background:var(--card); color:var(--text);
   font-size:.9rem; min-height:44px;
 }
@@ -1057,23 +1121,23 @@ tr:last-child td{border-bottom:0}
 .quizopt:disabled{cursor:default}
 .quizopt.right{background:var(--ok-bg); border-color:var(--ok-line); color:var(--ok-ink); font-weight:600}
 .quizopt.wrong{background:var(--danger-bg); border-color:var(--danger-line); color:var(--danger-ink)}
-.quizwhy{font-size:.85rem; color:var(--text-2); margin:8px 0 0; padding-left:12px; border-left:3px solid var(--accent-2)}
+.quizwhy{font-size:.85rem; color:var(--text-2); margin:var(--s-4) 0 0; padding-left:var(--s-5); border-left:3px solid var(--accent-2)}
 
-.mythgrid{display:grid; gap:12px; grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.mythgrid{display:grid; gap:var(--s-5); grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
 .myth{
-  border:1px solid var(--line-strong); border-radius:var(--r-md); padding:16px; cursor:pointer;
+  border:1px solid var(--line-strong); border-radius:var(--r-md); padding:var(--s-6); cursor:pointer;
   background:var(--card); min-height:118px; text-align:left; color:var(--text);
 }
 .myth:hover{border-color:var(--green)}
-.myth b{display:block; font-family:var(--font-head); font-size:.95rem; margin-bottom:6px}
+.myth b{display:block; font-family:var(--font-head); font-size:.95rem; margin-bottom:var(--s-3)}
 .myth .verdict{font-size:.74rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase}
 .myth.flipped{background:var(--green-wash); border-color:var(--green)}
-.myth p{font-size:.85rem; margin:6px 0 0; color:var(--text-2)}
+.myth p{font-size:.85rem; margin:var(--s-3) 0 0; color:var(--text-2)}
 
 /* -------------------------------------------------------------- avatar */
-.whoami{display:flex; align-items:center; gap:8px; font-size:.82rem; color:var(--text-2)}
+.whoami{display:flex; align-items:center; gap:var(--s-4); font-size:.82rem; color:var(--text-2)}
 .rolebadge{font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em;
-  padding:2px 7px; border-radius:999px; background:var(--accent-4); color:var(--accent-4-ink)}
+  padding:var(--s-1) var(--s-3); border-radius:999px; background:var(--accent-4); color:var(--accent-4-ink)}
 
 /* --------------------------------------------------- draggable chat */
 .chatpanel.dragging{transition:none; user-select:none}
@@ -1081,7 +1145,7 @@ tr:last-child td{border-bottom:0}
 .chatpanel header:active{cursor:grabbing}
 .draghint{
   width:34px; height:4px; border-radius:999px; background:var(--line-strong);
-  margin:6px auto 0; flex:0 0 auto;
+  margin:var(--s-3) auto 0; flex:0 0 auto;
 }
 
 /* ------------------------------------------------- map popup layout */
@@ -1089,16 +1153,16 @@ tr:last-child td{border-bottom:0}
    stacked one word per line. */
 .leaflet-popup-content-wrapper{border-radius:var(--r-md); background:var(--card); color:var(--text)}
 .leaflet-popup-content{
-  margin:12px 14px; min-width:220px; width:auto !important;
+  margin:var(--s-5) var(--s-5); min-width:220px; width:auto !important;
   font-size:.85rem; line-height:1.5; word-break:normal; overflow-wrap:anywhere;
 }
 .leaflet-popup-content h4{
-  font-family:var(--font-head); margin:0 0 6px; font-size:.95rem; line-height:1.3;
+  font-family:var(--font-head); margin:0 0 var(--s-3); font-size:.95rem; line-height:1.3;
 }
-.leaflet-popup-content p{margin:0 0 5px; max-width:none}
+.leaflet-popup-content p{margin:0 0 var(--s-2); max-width:none}
 .leaflet-popup-content p:last-child{margin:0; color:var(--text-2); font-size:.78rem}
 .leaflet-popup-tip{background:var(--card)}
-.leaflet-container a.leaflet-popup-close-button{color:var(--text-2); padding:6px 7px 0 0}
+.leaflet-container a.leaflet-popup-close-button{color:var(--text-2); padding:var(--s-3) var(--s-3) 0 0}
 
 /* ===========================================================================
    Component overrides that go with the swatch palette. The palette itself now
@@ -1148,7 +1212,7 @@ a{color:var(--green-ink)}
 :root[data-rail="collapsed"] .rail a .navcandy{display:none}
 @keyframes candybob{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(10deg) translateY(-1px)}}
 
-.view.active .pagehead h1{display:inline-flex; align-items:center; gap:10px}
+.view.active .pagehead h1{display:inline-flex; align-items:center; gap:var(--s-4)}
 .view.active .pagehead h1::after{
   /* A data URI cannot read a custom property, so the sweet is a MASK and the
      colour comes from a token -- which is also why it follows a theme change.
@@ -1201,10 +1265,10 @@ a{color:var(--green-ink)}
 .boot img{width:96px; height:96px; border-radius:50%; object-fit:cover; background:var(--accent-2)}
 
 /* ------------------------------------------------------- range scale */
-.rangescale{margin-top:10px}
+.rangescale{margin-top:var(--s-4)}
 .rangescale:empty{display:none}
-.rs{border:1px solid var(--line); border-radius:var(--r-md); padding:12px 14px; background:var(--card)}
-.rs-tiers{display:grid; grid-template-columns:repeat(3,1fr); margin-bottom:6px;
+.rs{border:1px solid var(--line); border-radius:var(--r-md); padding:var(--s-5) var(--s-5); background:var(--card)}
+.rs-tiers{display:grid; grid-template-columns:repeat(3,1fr); margin-bottom:var(--s-3);
   font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--text-2)}
 .rs-tiers span:nth-child(2){text-align:center}
 .rs-tiers span:nth-child(3){text-align:right}
@@ -1217,23 +1281,23 @@ a{color:var(--green-ink)}
 .rs-band.b-high{background:var(--danger-line)}
 .rs-marker{position:absolute; top:-6px; width:4px; height:28px; margin-left:-2px;
   background:var(--rail-bg); border-radius:2px; box-shadow:0 0 0 2px var(--card)}
-.rs-ticks{position:relative; height:16px; margin-top:4px; font-size:.7rem; color:var(--text-2)}
+.rs-ticks{position:relative; height:16px; margin-top:var(--s-2); font-size:.7rem; color:var(--text-2)}
 .rs-ticks span{position:absolute; transform:translateX(-50%); white-space:nowrap}
 .rs-ticks span.edge-l{transform:none}
 .rs-ticks span.edge-r{transform:translateX(-100%)}
-.rs-labels{display:flex; flex-wrap:wrap; gap:6px 14px; margin-top:6px; font-size:.75rem; color:var(--text-2)}
-.rs-labels i{display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:5px; vertical-align:-1px}
-.rs-read{margin-top:8px; font-size:.86rem; font-weight:600}
+.rs-labels{display:flex; flex-wrap:wrap; gap:var(--s-3) var(--s-5); margin-top:var(--s-3); font-size:.75rem; color:var(--text-2)}
+.rs-labels i{display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:var(--s-2); vertical-align:-1px}
+.rs-read{margin-top:var(--s-4); font-size:.86rem; font-weight:600}
 .rs-read.t-low{color:var(--green-ink)}
 .rs-read.t-normal{color:var(--text)}
 .rs-read.t-mid{color:var(--warn-ink)}
 .rs-read.t-high{color:var(--danger-ink)}
-.rs-note{margin-top:4px; font-size:.75rem; color:var(--text-2)}
+.rs-note{margin-top:var(--s-2); font-size:.75rem; color:var(--text-2)}
 
 /* ----------------------------------------------------- map legend */
 
 .maplegend .lg{display:inline-block; width:12px; height:12px; border-radius:50% 50% 50% 0;
-  transform:rotate(-45deg); margin-right:7px; vertical-align:-1px; border:1.5px solid var(--card);
+  transform:rotate(-45deg); margin-right:var(--s-3); vertical-align:-1px; border:1.5px solid var(--card);
   box-shadow:0 0 0 1px var(--line-strong)}
 .lg-verified{background:var(--green)}
 .lg-unconfirmed{background:var(--warn-line)}
@@ -1242,34 +1306,34 @@ a{color:var(--green-ink)}
 .lg-pharmacy{background:var(--info-line); border-radius:3px !important}
 
 /* services, readable at a glance */
-.svcrow{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px}
-.svc{display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:var(--r-sm);
+.svcrow{display:flex; flex-wrap:wrap; gap:var(--s-3); margin-top:var(--s-4)}
+.svc{display:inline-flex; align-items:center; gap:var(--s-3); padding:var(--s-2) var(--s-4); border-radius:var(--r-sm);
   font-size:.8rem; font-weight:600; border:1px solid}
 .svc.yes{background:var(--ok-bg); border-color:var(--ok-line); color:var(--ok-ink)}
 .svc.yes::before{content:"\2713"; font-weight:800; color:var(--green-ink)}
 .svc.no{background:transparent; border-style:dashed; border-color:var(--line-strong); color:var(--text-2); font-weight:500}
 .svc.no::before{content:"?"; font-weight:800}
 .svchead{font-size:.72rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
-  color:var(--text-2); margin-top:12px}
-.leaflet-popup-content .svcrow{margin-top:6px}
-.leaflet-popup-content .svc{font-size:.74rem; padding:3px 8px}
+  color:var(--text-2); margin-top:var(--s-5)}
+.leaflet-popup-content .svcrow{margin-top:var(--s-3)}
+.leaflet-popup-content .svc{font-size:.74rem; padding:var(--s-1) var(--s-4)}
 .pop-type{display:inline-block; font-size:.68rem; font-weight:700; text-transform:uppercase;
-  letter-spacing:.06em; padding:2px 7px; border-radius:6px; background:var(--rail-bg); color:var(--rail-text); margin-bottom:6px}
+  letter-spacing:.06em; padding:var(--s-1) var(--s-3); border-radius:6px; background:var(--rail-bg); color:var(--rail-text); margin-bottom:var(--s-3)}
 .pop-type.ph{background:var(--info-line); color:var(--rail-text)}
 
 /* ---------------------------------------------- nearby list on results */
-.nearrow{padding:12px 0; border-bottom:1px solid var(--line)}
+.nearrow{padding:var(--s-5) 0; border-bottom:1px solid var(--line)}
 .nearrow:first-child{padding-top:0}
 .nearrow:last-of-type{border-bottom:0}
-.neartop{display:flex; flex-wrap:wrap; gap:4px 12px; align-items:baseline}
+.neartop{display:flex; flex-wrap:wrap; gap:var(--s-2) var(--s-5); align-items:baseline}
 .nearmeta{color:var(--text-2); font-size:.84rem}
-.nearrow .svcrow{margin-top:6px}
+.nearrow .svcrow{margin-top:var(--s-3)}
 
 /* ------------------------------------------------------- user guide */
 .guidelist{list-style:none; padding:0; margin:0}
-.guidelist li{padding:7px 0; border-bottom:1px solid var(--line); font-size:.9rem; line-height:1.55}
+.guidelist li{padding:var(--s-3) 0; border-bottom:1px solid var(--line); font-size:.9rem; line-height:1.55}
 .guidelist li:last-child{border-bottom:0}
-.guidelist .tag{margin-right:8px; vertical-align:1px}
+.guidelist .tag{margin-right:var(--s-4); vertical-align:1px}
 
 /* =======================================================================
    Map markers and legend
@@ -1283,13 +1347,13 @@ a{color:var(--green-ink)}
   filter:drop-shadow(0 1px 2px color-mix(in srgb, var(--rail-bg) 35%, transparent))}
 .leaflet-marker-icon.pin-wrap:focus-visible svg{outline:3px solid var(--focus); outline-offset:2px; border-radius:4px}
 
-.maplegend{display:flex; flex-wrap:wrap; gap:10px 18px; margin-top:12px;
+.maplegend{display:flex; flex-wrap:wrap; gap:var(--s-4) var(--s-6); margin-top:var(--s-5);
   font-size:.8rem; color:var(--text-2)}
-.lgitem{display:inline-flex; align-items:center; gap:7px}
+.lgitem{display:inline-flex; align-items:center; gap:var(--s-3)}
 .lgico{display:inline-flex; line-height:0; flex:0 0 auto}
 .lgico svg{display:block}
 
-.leaflet-popup-content .v{display:flex; align-items:center; gap:7px}
+.leaflet-popup-content .v{display:flex; align-items:center; gap:var(--s-3)}
 
 /* =======================================================================
    Candie: thinking state and answer provenance
@@ -1298,7 +1362,7 @@ a{color:var(--green-ink)}
    a generated one is tinted and labelled. That distinction is a safety
    feature, so it should be visible at a glance.
    ======================================================================= */
-.bubble.thinking{display:flex; align-items:center; gap:4px; padding:13px 15px}
+.bubble.thinking{display:flex; align-items:center; gap:var(--s-2); padding:var(--s-5) var(--s-6)}
 .bubble.thinking i{
   width:7px; height:7px; border-radius:50%; background:var(--text-2);
   display:inline-block; animation:thinkdot 1.3s ease-in-out infinite;
@@ -1309,7 +1373,7 @@ a{color:var(--green-ink)}
   0%,60%,100%{transform:translateY(0); opacity:.4}
   30%{transform:translateY(-4px); opacity:1}
 }
-.thinking-note{font-size:.76rem; color:var(--text-2); margin-left:4px}
+.thinking-note{font-size:.76rem; color:var(--text-2); margin-left:var(--s-2)}
 :root[data-motion="off"] .bubble.thinking i{animation:none; opacity:.7}
 @media (prefers-reduced-motion: reduce){ .bubble.thinking i{animation:none; opacity:.7} }
 
@@ -1339,14 +1403,14 @@ a{color:var(--green-ink)}
    actions docked to the viewport on phones so Continue is never below
    the fold after a long symptom list.
    ======================================================================= */
-.stepper{display:flex; gap:6px; margin-bottom:10px}
+.stepper{display:flex; gap:var(--s-3); margin-bottom:var(--s-4)}
 .stepseg{flex:1; min-width:0; text-align:center}
 .stepseg .bar{
   height:6px; border-radius:var(--r-pill); background:var(--line);
   transition:background .2s ease;
 }
 .stepseg .nm{
-  display:block; font-size:.66rem; margin-top:6px; color:var(--text-2);
+  display:block; font-size:.66rem; margin-top:var(--s-3); color:var(--text-2);
   overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
 }
 .stepseg.done .bar{background:var(--accent-2)}
@@ -1354,21 +1418,22 @@ a{color:var(--green-ink)}
 .stepseg.now .nm{color:var(--green-ink); font-weight:700}
 @media (max-width:560px){ .stepseg:not(.now) .nm{display:none} }
 
-.steplabel{font-family:var(--font-head); font-size:.95rem; margin:0 0 2px; color:var(--head)}
-.stepnote{color:var(--text-2); font-size:.84rem; margin:0 0 16px}
+.steplabel{font-family:var(--font-head); font-size:.95rem; margin:0 0 var(--s-1); color:var(--head)}
+.stepnote{color:var(--text-2); font-size:.84rem; margin:0 0 var(--s-6)}
 .stepnote:empty{display:none}
+.steplabel + .stepnote{margin-top:var(--s-1)}   /* title/subtitle pair, not two blocks */
 
 /* 52px rows: comfortable for a thumb, and the whole row is the target */
-.step .choice{min-height:52px; align-items:center; padding:13px 14px;
+.step .choice{min-height:52px; align-items:center; padding:var(--s-5) var(--s-5);
   transition:background .12s ease, border-color .12s ease, transform .06s ease}
 .step .choice:active{transform:scale(.995)}
 .step .choice input{width:22px; height:22px; margin:0}
 
-.stepactions{display:flex; gap:10px; margin-top:20px}
+.stepactions{display:flex; gap:var(--s-4); margin-top:var(--s-6)}
 .stepactions .btn{flex:1; min-height:48px}
 @media (max-width:760px){
   .stepactions{
-    position:sticky; bottom:0; z-index:20; margin:20px -18px -18px;
+    position:sticky; bottom:0; z-index:20; margin:var(--s-6) -18px -18px;
     padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px));
     background:var(--card); border-top:1px solid var(--line);
     /* Upward: the scale's two steps both point down, so the geometry stays
@@ -1380,7 +1445,7 @@ a{color:var(--green-ink)}
 /* =======================================================================
    Dashboard: empty states and loading
    ======================================================================= */
-.empty{display:flex; flex-direction:column; align-items:center; gap:10px}
+.empty{display:flex; flex-direction:column; align-items:center; gap:var(--s-4)}
 .empty svg{opacity:.9}
 .empty h3{margin:0}
 .empty p{margin:0; max-width:40ch}
@@ -1404,8 +1469,8 @@ a{color:var(--green-ink)}
   .chatpanel.open{transform:translateY(0); pointer-events:auto}
   .chatpanel.sheet-peek{transform:translateY(calc(72vh - 132px))}
   .chatpanel.dragging{transition:none}
-  .chatpanel header{cursor:grab; touch-action:none; padding-top:6px}
-  .draghint{width:44px; height:5px; margin:8px auto 2px; background:var(--line-strong);
+  .chatpanel header{cursor:grab; touch-action:none; padding-top:var(--s-3)}
+  .draghint{width:44px; height:5px; margin:var(--s-4) auto var(--s-1); background:var(--line-strong);
     border-radius:999px; order:-1}
   .chatsheet-scrim{
     position:fixed; inset:0; z-index:44; background:color-mix(in srgb, var(--rail-bg) 35%, transparent);
@@ -1425,7 +1490,7 @@ a{color:var(--green-ink)}
    ======================================================================= */
 
 /* ---- topbar: breadcrumbs ---- */
-.crumbs{display:flex; align-items:center; gap:9px; font-size:.78rem; color:var(--text-2);
+.crumbs{display:flex; align-items:center; gap:var(--s-4); font-size:.78rem; color:var(--text-2);
   min-width:0; overflow:hidden; white-space:nowrap}
 .crumbs strong{color:var(--text); font-weight:600; overflow:hidden; text-overflow:ellipsis}
 .crumb-slash{color:var(--line-strong)}
@@ -1434,70 +1499,70 @@ a{color:var(--green-ink)}
 /* ---- eyebrow + heading chip ---- */
 
 .eyebrow:empty{display:none}
-.headchip{display:inline-flex; align-items:center; gap:7px; padding:8px 13px; flex:0 0 auto;
+.headchip{display:inline-flex; align-items:center; gap:var(--s-3); padding:var(--s-4) var(--s-5); flex:0 0 auto;
   border:1px solid var(--line-strong); border-radius:var(--r-pill); background:var(--card);
   color:var(--text-2); font-size:.75rem; font-weight:600; white-space:nowrap}
 .headchip svg{color:var(--green-ink)}
 
 /* ---- sidebar: reassurance note + account row ---- */
-.rail-note{margin:16px 10px 0; padding:15px 14px; border:1px solid rgba(255,255,255,.14);
+.rail-note{margin:var(--s-6) var(--s-4) 0; padding:var(--s-6) var(--s-5); border:1px solid rgba(255,255,255,.14);
   border-radius:var(--r-lg); background:rgba(255,255,255,.06)}
-.note-icon{display:grid; place-items:center; width:31px; height:31px; margin-bottom:11px;
+.note-icon{display:grid; place-items:center; width:31px; height:31px; margin-bottom:var(--s-5);
   border-radius:10px; background:color-mix(in srgb, var(--accent-2) 22%, transparent);
   color:var(--rail-dim)}
 .rail-note strong{display:block; font-family:var(--font-head); font-size:.84rem; color:var(--rail-text)}
-.rail-note p{margin:5px 0 11px; color:var(--rail-dim); font-size:.72rem; line-height:1.55; max-width:none}
-.privacy-label{display:flex; align-items:center; gap:7px; color:var(--rail-dim); font-size:.68rem}
+.rail-note p{margin:var(--s-2) 0 var(--s-5); color:var(--rail-dim); font-size:.72rem; line-height:1.55; max-width:none}
+.privacy-label{display:flex; align-items:center; gap:var(--s-3); color:var(--rail-dim); font-size:.68rem}
 .privacy-label i{width:7px; height:7px; border-radius:50%; background:var(--accent-2); flex:0 0 auto}
 :root[data-rail="collapsed"] .rail-note{display:none}
 @media (max-width:1023px){ :root[data-rail="collapsed"] .rail-note{display:block} }
 
 /* ---- dashboard welcome ---- */
 
-.welcome-copy .btnrow{margin-top:16px}
+.welcome-copy .btnrow{margin-top:var(--s-6)}
 /* mixed from --card, not a fixed white veil: --green-ink flips light in dark
    mode, so a surface that stayed white would put light ink on light ground */
 .btn-light{background:color-mix(in srgb, var(--card) 72%, transparent); border-color:var(--line-strong); color:var(--green-ink)}
 .btn-light:hover{background:var(--card)}
 
 @media (max-width:860px){
-  .welcome{flex-direction:column; align-items:flex-start; padding:22px}
-  .mascot-scene{width:100%; margin-top:8px}
+  .welcome{flex-direction:column; align-items:flex-start; padding:var(--s-7)}
+  .mascot-scene{width:100%; margin-top:var(--s-4)}
   .welcome-deco{display:none}
 }
 
 /* ---- section label ---- */
-.sectionlabel{display:flex; align-items:flex-end; justify-content:space-between; gap:16px;
-  margin:26px 0 13px}
-.sectionlabel h2{margin:0 0 3px; font-size:1.05rem}
+.sectionlabel{display:flex; align-items:flex-end; justify-content:space-between; gap:var(--s-6);
+  margin:var(--s-7) 0 var(--s-5)}
+.sectionlabel h2{margin:0 0 var(--s-1); font-size:1.05rem}
 .sectionlabel p{margin:0; color:var(--text-2); font-size:.8rem}
 
 /* ---- stat cards: tone-tinted icon tile, as in the reference ---- */
 
 /* ---- assessment: reassurance aside ---- */
-.assesslayout{display:grid; grid-template-columns:minmax(0,1fr) 256px; gap:18px; align-items:start}
+.assesslayout{display:grid; grid-template-columns:minmax(0,1fr) 256px; gap:var(--s-6); align-items:start}
 @media (max-width:900px){ .assesslayout{grid-template-columns:1fr} .assessaside{order:-1} }
-.assessaside{padding:20px 18px; border:1px solid var(--line); border-radius:var(--r-lg);
+.assessaside{padding:var(--s-6) var(--s-6); border:1px solid var(--line); border-radius:var(--r-lg);
   background:var(--card); box-shadow:var(--sh-1)}
-.assessaside h3{margin:0 0 6px; font-size:.98rem}
-.assessaside > p{margin:0 0 14px; color:var(--text-2); font-size:.82rem; line-height:1.6}
-.asidecircle{display:grid; place-items:center; width:54px; height:54px; margin-bottom:14px;
+.assessaside h3{margin:0 0 var(--s-3); font-size:.98rem}
+.assessaside > p{margin:0 0 var(--s-5); color:var(--text-2); font-size:.82rem; line-height:1.6}
+.asidecircle{display:grid; place-items:center; width:54px; height:54px; margin-bottom:var(--s-5);
   border-radius:50%; background:var(--green-wash); color:var(--green-ink)}
-.reassure{display:flex; align-items:center; gap:10px; padding:9px 0; color:var(--text-2);
+.reassure{display:flex; align-items:center; gap:var(--s-4); padding:var(--s-4) 0; color:var(--text-2);
   font-size:.8rem; border-top:1px solid var(--line)}
 .reassure svg{color:var(--green-ink); flex:0 0 auto}
 
 /* ---- result: alert banner ---- */
-.resultalert{display:flex; align-items:flex-start; gap:16px; padding:20px;
-  border:1px solid; border-left-width:5px; border-radius:var(--r-lg); margin-bottom:16px}
+.resultalert{display:flex; align-items:flex-start; gap:var(--s-6); padding:var(--s-6);
+  border:1px solid; border-left-width:5px; border-radius:var(--r-lg); margin-bottom:var(--s-6)}
 .resultalert .alerticon{display:grid; place-items:center; width:46px; height:46px; flex:0 0 auto;
   border-radius:14px; background:rgba(255,255,255,.6)}
 .resultalert .alertbody{flex:1; min-width:0}
 .resultalert .alert-eyebrow{display:block; font-size:.64rem; font-weight:800;
-  letter-spacing:.14em; opacity:.85; margin-bottom:5px}
-.resultalert h2{margin:0 0 6px; font-size:1.25rem; color:inherit}
+  letter-spacing:.14em; opacity:.85; margin-bottom:var(--s-2)}
+.resultalert h2{margin:0 0 var(--s-3); font-size:1.25rem; color:inherit}
 .resultalert p{margin:0; font-size:.88rem; line-height:1.6; max-width:60ch}
-.urgency{flex:0 0 auto; align-self:flex-start; padding:6px 12px; border-radius:var(--r-pill);
+.urgency{flex:0 0 auto; align-self:flex-start; padding:var(--s-3) var(--s-5); border-radius:var(--r-pill);
   border:1px solid currentColor; font-size:.72rem; font-weight:700; white-space:nowrap}
 @media (max-width:620px){
   .resultalert{flex-wrap:wrap}
@@ -1515,7 +1580,7 @@ a{color:var(--green-ink)}
    ======================================================================= */
 .onboard{
   position:fixed; inset:0; z-index:150; display:grid; place-items:center;
-  padding:18px; background:color-mix(in srgb, var(--rail-bg) 55%, transparent);
+  padding:var(--s-6); background:color-mix(in srgb, var(--rail-bg) 55%, transparent);
   backdrop-filter:blur(3px);
   padding-top:calc(18px + env(safe-area-inset-top,0px));
   padding-bottom:calc(18px + env(safe-area-inset-bottom,0px));
@@ -1526,20 +1591,20 @@ a{color:var(--green-ink)}
   background:var(--card); box-shadow:var(--sh-2);
 }
 .onboard-skip{
-  position:absolute; top:12px; right:14px; padding:6px 10px; min-height:36px;
+  position:absolute; top:12px; right:14px; padding:var(--s-3) var(--s-4); min-height:36px;
   border:0; background:none; color:var(--text-2); font-size:.8rem; font-weight:600;
   border-radius:var(--r-sm); cursor:pointer;
 }
 .onboard-skip:hover{background:var(--bg); color:var(--text)}
-.onboard-art{position:relative; display:grid; place-items:center; height:150px; margin-bottom:6px}
+.onboard-art{position:relative; display:grid; place-items:center; height:150px; margin-bottom:var(--s-3)}
 .onboard-art img{position:relative; z-index:2; object-fit:contain}
-.onboard-card h2{margin:0 0 10px;}
+.onboard-card h2{margin:0 0 var(--s-4);}
 .onboard-card .eyebrow{justify-content:center}
 #obBody{color:var(--text-2); font-size:.92rem; line-height:1.65; text-align:left}
-#obBody p{margin:0 0 12px; max-width:none}
+#obBody p{margin:0 0 var(--s-5); max-width:none}
 #obBody p:last-child{margin-bottom:0}
 .onboard-points{list-style:none; padding:0; margin:0; text-align:left}
-.onboard-points li{display:flex; gap:11px; align-items:flex-start; padding:9px 0;
+.onboard-points li{display:flex; gap:var(--s-5); align-items:flex-start; padding:var(--s-4) 0;
   border-bottom:1px solid var(--line); font-size:.88rem; line-height:1.55}
 .onboard-points li:last-child{border-bottom:0}
 .onboard-points .mk{flex:0 0 auto; display:grid; place-items:center; width:26px; height:26px;
@@ -1550,12 +1615,12 @@ a{color:var(--green-ink)}
    and announced as an action rather than as a list item with a picture in it.
    56px tall because this is the one screen a person uses on a phone before they
    have any idea where anything is. */
-.onboard-nav{list-style:none; padding:0; margin:14px 0 0; text-align:left}
-.onboard-nav li{margin-bottom:8px}
+.onboard-nav{list-style:none; padding:0; margin:var(--s-5) 0 0; text-align:left}
+.onboard-nav li{margin-bottom:var(--s-4)}
 .onboard-nav li:last-child{margin-bottom:0}
 .onboard-nav-go{
-  display:flex; align-items:center; gap:12px; width:100%; min-height:56px;
-  padding:10px 12px; text-align:left; cursor:pointer;
+  display:flex; align-items:center; gap:var(--s-5); width:100%; min-height:56px;
+  padding:var(--s-4) var(--s-5); text-align:left; cursor:pointer;
   font:inherit; color:var(--text);
   background:var(--card); border:1px solid var(--line-strong);
   border-radius:var(--r-md);
@@ -1566,24 +1631,24 @@ a{color:var(--green-ink)}
   flex:0 0 auto; display:grid; place-items:center; width:34px; height:34px;
   border-radius:var(--r-sm); background:var(--green-wash); color:var(--green-ink);
 }
-.onboard-nav-txt{display:flex; flex-direction:column; gap:2px; min-width:0}
+.onboard-nav-txt{display:flex; flex-direction:column; gap:var(--s-1); min-width:0}
 .onboard-nav-txt strong{font-size:.92rem; font-weight:600; line-height:1.3}
 .onboard-nav-txt span{font-size:.78rem; line-height:1.45; color:var(--text-2)}
 .onboard-nav-arrow{flex:0 0 auto; margin-left:auto; color:var(--text-2)}
 .onboard-nav-go:hover .onboard-nav-arrow{color:var(--green-ink)}
 
-.onboard-field{text-align:left; margin-top:4px}
-.onboard-field label{display:block; font-weight:600; font-size:.88rem; margin-bottom:6px}
-.onboard-dots{display:flex; justify-content:center; gap:7px; margin:20px 0 16px}
+.onboard-field{text-align:left; margin-top:var(--s-2)}
+.onboard-field label{display:block; font-weight:600; font-size:.88rem; margin-bottom:var(--s-3)}
+.onboard-dots{display:flex; justify-content:center; gap:var(--s-3); margin:var(--s-6) 0 var(--s-6)}
 .onboard-dots i{width:7px; height:7px; border-radius:50%; background:var(--line-strong);
   transition:width .2s ease, background .2s ease}
 .onboard-dots i.on{width:22px; border-radius:999px; background:var(--green)}
-.onboard-actions{display:flex; gap:10px}
+.onboard-actions{display:flex; gap:var(--s-4)}
 .onboard-actions .btn{flex:1; min-height:46px}
 :root[data-motion="off"] .onboard-dots i{transition:none}
 @media (prefers-reduced-motion: reduce){ .onboard-dots i{transition:none} }
 @media (max-width:520px){
-  .onboard-card{padding:26px 20px 20px}
+  .onboard-card{padding:var(--s-7) var(--s-6) var(--s-6)}
   .onboard-art{height:120px}
   .onboard-art img{width:96px; height:96px}
 }
@@ -1593,37 +1658,37 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 ======================================================================= */
 .onboard-card {
     max-width: 560px;
-    padding: 32px 28px 24px;
+    padding: var(--s-8) var(--s-7) var(--s-7);
     text-align: center;
 }
 .onboard-card h2 {
     font-size: 1.4rem;
-    margin-bottom: 12px;
+    margin-bottom: var(--s-5);
 }
 .onboard-illustration {
     display: grid; place-items: center; width: 100px; height: 100px;
-    margin: 0 auto 20px; border-radius: 50%;
+    margin: 0 auto var(--s-6); border-radius: 50%;
     background: var(--green-wash); color: var(--green-ink);
 }
 .onboard-illustration svg { width: 50px; height: 50px; }
 .onboard-steps-visual {
-    display: flex; gap: 10px; margin: 20px 0;
+    display: flex; gap: var(--s-4); margin: var(--s-6) 0;
 }
 .onboard-step-item {
-    flex: 1; text-align: center; padding: 12px 8px;
+    flex: 1; text-align: center; padding: var(--s-5) var(--s-4);
     border: 1px solid var(--line); border-radius: var(--r-md);
     background: var(--bg);
 }
 .onboard-step-item b {
-    display: block; font-size: 0.85rem; margin-bottom: 4px;
+    display: block; font-size: 0.85rem; margin-bottom: var(--s-2);
     color: var(--text); font-family: var(--font-head);
 }
 .onboard-step-item span {
     font-size: 0.72rem; color: var(--text-2); line-height: 1.3;
 }
 @media (max-width: 520px) {
-    .onboard-steps-visual { flex-direction: column; gap: 8px; }
-    .onboard-card { padding: 24px 20px 20px; }
+    .onboard-steps-visual { flex-direction: column; gap: var(--s-4); }
+    .onboard-card { padding: var(--s-7) var(--s-6) var(--s-6); }
 }
 
 /* =======================================================================
@@ -1640,8 +1705,8 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 }
 .rail-brand {
   border-bottom-color: rgba(255,255,255,.10);
-  padding: 18px 16px;
-  gap: 12px;
+  padding: var(--s-6) var(--s-6);
+  gap: var(--s-5);
 }
 .rail-brand .logo-drop {
   width: 36px; height: 36px; flex: 0 0 auto;
@@ -1659,7 +1724,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
   letter-spacing: .14em;
   text-transform: uppercase;
   font-weight: 700;
-  margin: 0 12px 8px;
+  margin: 0 var(--s-5) var(--s-4);
   padding: 0;
 }
 
@@ -1667,8 +1732,8 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
   color: var(--rail-text);
   border-left: 0;
   border-radius: 10px;
-  margin: 2px 8px;
-  padding: 10px 12px;
+  margin: var(--s-1) var(--s-4);
+  padding: var(--s-4) var(--s-5);
   min-height: 42px;
 }
 .rail a:hover { background: rgba(255,255,255,.07); }
@@ -1689,8 +1754,8 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 
 /* ---- Sidebar bottom: reassurance card + account ---- */
 .rail-bottom {
-  margin: auto 10px 10px;
-  padding: 14px;
+  margin: auto var(--s-4) var(--s-4);
+  padding: var(--s-5);
   border: 1px solid rgba(255,255,255,.12);
   border-radius: 14px;
   background: rgba(255,255,255,.05);
@@ -1699,18 +1764,18 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
   width: 32px; height: 32px; border-radius: 10px;
   background: color-mix(in srgb, var(--accent-2) 22%, transparent);
   display: grid; place-items: center;
-  color: var(--rail-dim); margin-bottom: 10px;
+  color: var(--rail-dim); margin-bottom: var(--s-4);
 }
 .rail-bottom strong {
   display: block; color: var(--rail-text); font-family: var(--font-head);
-  font-size: .88rem; margin-bottom: 4px;
+  font-size: .88rem; margin-bottom: var(--s-2);
 }
 .rail-bottom p {
-  color: var(--rail-dim); font-size: .72rem; margin: 0 0 10px; line-height: 1.5;
+  color: var(--rail-dim); font-size: .72rem; margin: 0 0 var(--s-4); line-height: 1.5;
   max-width: none;
 }
 .rail-bottom .rb-priv {
-  display: flex; align-items: center; gap: 7px;
+  display: flex; align-items: center; gap: var(--s-3);
   color: var(--rail-dim); font-size: .68rem;
 }
 .rail-bottom .rb-priv i {
@@ -1724,8 +1789,8 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 }
 
 .rail-account {
-  display: flex; align-items: center; gap: 10px;
-  padding: 12px 14px;
+  display: flex; align-items: center; gap: var(--s-4);
+  padding: var(--s-5) var(--s-5);
   border-top: 1px solid rgba(255,255,255,.10);
   cursor: pointer;
 }
@@ -1750,7 +1815,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
    rail (they reached x=109 in a 72px rail). Keep the avatar, centred; drop the
    text and the chevron. The aria-label on .rail-account still names it. */
 @media (min-width:1024px){
-  :root[data-rail="collapsed"] .rail-account{justify-content:center; gap:0; padding:12px 0}
+  :root[data-rail="collapsed"] .rail-account{justify-content:center; gap:0; padding:var(--s-5) 0}
   :root[data-rail="collapsed"] .rail-account > span:not(.ra-avatar),
   :root[data-rail="collapsed"] .rail-account .ra-chevron{display:none}
 }
@@ -1762,7 +1827,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
   min-height: 56px;
 }
 .topbar .crumbs {
-  display: flex; align-items: center; gap: 8px;
+  display: flex; align-items: center; gap: var(--s-4);
   font-size: .82rem; color: var(--text-2);
 }
 .topbar .crumbs strong { color: var(--text); font-weight: 600; }
@@ -1788,17 +1853,17 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 /* ---- Dashboard date label + title row ---- */
 .dash-date {
   font-size: .7rem; font-weight: 700; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--green-ink); margin-bottom: 6px;
+  text-transform: uppercase; color: var(--green-ink); margin-bottom: var(--s-3);
 }
 .dash-title-row {
   display: flex; align-items: flex-end; justify-content: space-between;
-  gap: 16px; flex-wrap: wrap; margin-bottom: 22px;
+  gap: var(--s-6); flex-wrap: wrap; margin-bottom: var(--s-7);
 }
 .dash-title-row h1 { margin: 0; font-size: 1.75rem; color: var(--text); letter-spacing: -.01em; }
-.dash-title-row .subtitle { color: var(--text-2); margin: 4px 0 0; font-size: .92rem; }
+.dash-title-row .subtitle { color: var(--text-2); margin: var(--s-2) 0 0; font-size: .92rem; }
 .chip-step {
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 7px 14px; border-radius: 999px;
+  display: inline-flex; align-items: center; gap: var(--s-3);
+  padding: var(--s-3) var(--s-5); border-radius: 999px;
   background: var(--card); border: 1px solid var(--line-strong);
   color: var(--text); font-size: .82rem; font-weight: 600;
 }
@@ -1810,27 +1875,27 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
   background: linear-gradient(108deg, var(--ok-bg) 0%, var(--card) 55%, var(--accent-2) 140%);
   border: 1px solid var(--line-strong);
   border-radius: var(--r-lg);
-  padding: 32px 36px;
+  padding: var(--s-8) var(--s-8);
   min-height: 220px;
   display: flex; align-items: center; justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 22px;
+  gap: var(--s-7);
+  margin-bottom: var(--s-7);
 }
 .welcome-copy { position: relative; z-index: 2; max-width: 520px; }
 .welcome-eyebrow {
-  display: flex; align-items: center; gap: 7px;
+  display: flex; align-items: center; gap: var(--s-3);
   font-size: .64rem; font-weight: 800; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--green-ink); margin-bottom: 10px;
+  text-transform: uppercase; color: var(--green-ink); margin-bottom: var(--s-4);
 }
 .welcome-copy h2 {
-  margin: 0 0 10px; font-size: clamp(1.4rem, 3.4vw, 1.75rem);
+  margin: 0 0 var(--s-4); font-size: clamp(1.4rem, 3.4vw, 1.75rem);
   color: var(--text); letter-spacing: -.01em; line-height: 1.2;
 }
 .welcome-copy > p {
   margin: 0; color: var(--text-2); font-size: .92rem; line-height: 1.6;
   max-width: 46ch;
 }
-.welcome-actions { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+.welcome-actions { display: flex; gap: var(--s-4); margin-top: var(--s-6); flex-wrap: wrap; }
 .welcome-actions .btn-primary {
   background: var(--green); color: var(--on-primary); border-color: var(--green);
   min-height: 44px;
@@ -1860,8 +1925,8 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .orbit-two { width: 140px; height: 140px; border-color: var(--accent-2); }
 .mascot-caption {
   position: absolute; bottom: -4px; z-index: 3;
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px;
+  display: inline-flex; align-items: center; gap: var(--s-3);
+  padding: var(--s-3) var(--s-5); border: 1px solid var(--line); border-radius: 999px;
   /* was rgba(255,255,255,.92): a fixed near-white pill under --text-2, which
      flips light in dark mode, leaving this caption at 1.40:1 on the
      high-contrast palette. The surface has to flip with the ink. */
@@ -1879,20 +1944,20 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .deco-b { bottom: -86px; left: 40%; }
 
 @media (max-width: 860px) {
-  .welcome { flex-direction: column; align-items: flex-start; padding: 24px; }
-  .mascot-scene { width: 100%; margin-top: 10px; }
+  .welcome { flex-direction: column; align-items: flex-start; padding: var(--s-7); }
+  .mascot-scene { width: 100%; margin-top: var(--s-4); }
   .welcome-deco { display: none; }
 }
 
 /* ---- Section label ---- */
 .section-label {
   display: flex; align-items: flex-end; justify-content: space-between;
-  gap: 16px; margin: 28px 0 14px; flex-wrap: wrap;
+  gap: var(--s-6); margin: var(--s-7) 0 var(--s-5); flex-wrap: wrap;
 }
-.section-label h2 { margin: 0 0 3px; font-size: 1.1rem; color: var(--text); }
+.section-label h2 { margin: 0 0 var(--s-1); font-size: 1.1rem; color: var(--text); }
 .section-label p { margin: 0; color: var(--text-2); font-size: .82rem; }
 .textlink {
-  display: inline-flex; align-items: center; gap: 6px;
+  display: inline-flex; align-items: center; gap: var(--s-3);
   color: var(--green-ink); font-size: .8rem; font-weight: 700;
   text-decoration: none; white-space: nowrap;
 }
@@ -1900,12 +1965,12 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 
 /* ---- Stat cards with tinted icon tiles ---- */
 .stat {
-  display: flex; align-items: flex-start; gap: 12px;
+  display: flex; align-items: flex-start; gap: var(--s-5);
   min-height: 108px;
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 14px;
-  padding: 16px;
+  padding: var(--s-6);
   box-shadow: var(--sh-1);
 }
 .stat .k {
@@ -1917,12 +1982,12 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
   width: 38px; height: 38px; flex: 0 0 auto;
   border-radius: 10px;
 }
-.stat-body { min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.stat-body { min-width: 0; display: flex; flex-direction: column; gap: var(--s-1); }
 .stat .v {
-  margin: 2px 0 0; font-size: 1.55rem; color: var(--text);
+  margin: var(--s-1) 0 0; font-size: 1.55rem; color: var(--text);
   font-family: var(--font-head); font-weight: 600;
 }
-.stat .v.sm { font-size: 1rem; margin-top: 4px; }
+.stat .v.sm { font-size: 1rem; margin-top: var(--s-2); }
 .stat .n { font-size: .74rem; color: var(--text-2); }
 
 .tone-mint   { background: var(--accent-2); color: var(--accent-2-ink); }
@@ -1931,14 +1996,14 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .tone-lav    { background: var(--accent-4); color: var(--accent-4-ink); }
 
 /* ---- Bottom row cards ---- */
-.bottom-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+.bottom-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-6); margin-top: var(--s-6); }
 @media (max-width: 900px) { .bottom-row { grid-template-columns: 1fr; } }
 .bottom-row .card {
   background: var(--card); border: 1px solid var(--line); border-radius: 14px;
-  padding: 18px; box-shadow: var(--sh-1);
+  padding: var(--s-6); box-shadow: var(--sh-1);
 }
 .bottom-row .card-head {
-  display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+  display: flex; align-items: center; gap: var(--s-4); margin-bottom: var(--s-5);
 }
 .bottom-row .card-head h2 { margin: 0; font-size: 1rem; color: var(--text); }
 .bottom-row .card-head .spacer { margin-left: auto; }
@@ -1950,7 +2015,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
   box-shadow: var(--sh-2);
 }
 .chatpanel header {
-  padding: 14px 16px;
+  padding: var(--s-5) var(--s-6);
   background: var(--card);
   border-bottom: 1px solid var(--line);
 }
@@ -1961,18 +2026,18 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .chatpanel header b { font-size: 1rem; color: var(--text); }
 .chatpanel header small { color: var(--green); font-size: .72rem; }
 .chatpanel header .mode-tag {
-  font-size: .68rem; padding: 3px 8px; border-radius: 6px;
+  font-size: .68rem; padding: var(--s-1) var(--s-4); border-radius: 6px;
   background: var(--ok-bg); color: var(--ok-ink); font-weight: 600;
 }
 
 .chatday {
-  align-self: center; margin: 4px 0 6px;
-  padding: 3px 10px; border-radius: 999px;
+  align-self: center; margin: var(--s-2) 0 var(--s-3);
+  padding: var(--s-1) var(--s-4); border-radius: 999px;
   background: var(--card); border: 1px solid var(--line);
   color: var(--text-2); font-size: .64rem; font-weight: 700;
   letter-spacing: .1em;
 }
-.chatrow { display: flex; gap: 8px; align-items: flex-end; max-width: 100%; }
+.chatrow { display: flex; gap: var(--s-4); align-items: flex-end; max-width: 100%; }
 .chatrow.me { justify-content: flex-end; }
 .miniavatar {
   width: 28px; height: 28px; flex: 0 0 auto;
@@ -1980,7 +2045,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
   background: var(--accent-2);
 }
 .bubble {
-  max-width: 85%; padding: 10px 13px;
+  max-width: 85%; padding: var(--s-4) var(--s-5);
   border-radius: 14px; font-size: .88rem; line-height: 1.5;
 }
 .bubble.bot {
@@ -1998,14 +2063,14 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
   font-size: .82rem;
 }
 .msgtime {
-  display: block; margin-top: 5px; font-size: .64rem;
+  display: block; margin-top: var(--s-2); font-size: .64rem;
   opacity: .7; text-align: right;
 }
 
 /* provenance tags inside bot bubbles */
 .prov {
-  display: flex; align-items: center; gap: 6px;
-  margin-top: 8px; padding-top: 7px;
+  display: flex; align-items: center; gap: var(--s-3);
+  margin-top: var(--s-4); padding-top: var(--s-3);
   border-top: 1px solid var(--line);
   font-size: .72rem; color: var(--text-2); line-height: 1.4;
 }
@@ -2014,27 +2079,27 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
 .prov.generated { color: var(--warn-ink); font-weight: 600; }
 
 .chatfoot {
-  padding: 0 16px 14px;
+  padding: 0 var(--s-6) var(--s-5);
   color: var(--text-2); font-size: .7rem;
   text-align: center;
 }
 
 /* chat input */
-.chatform { display: flex; gap: 8px; padding: 12px 16px 4px; }
+.chatform { display: flex; gap: var(--s-4); padding: var(--s-5) var(--s-6) var(--s-2); }
 .chatform input {
   min-height: 42px; border-radius: 10px;
   border: 1px solid var(--line-strong); background: var(--card);
 }
 .chatform .btn-primary {
   background: var(--green); border-color: var(--green); color: var(--on-primary);
-  min-width: 42px; padding: 0 14px;
+  min-width: 42px; padding: 0 var(--s-5);
 }
 
 /* ---- Page head eyebrow ---- */
 .eyebrow {
-  display: flex; align-items: center; gap: 6px;
+  display: flex; align-items: center; gap: var(--s-3);
   font-size: .64rem; font-weight: 800; letter-spacing: .14em;
-  color: var(--green-ink); text-transform: uppercase; margin: 0 0 6px;
+  color: var(--green-ink); text-transform: uppercase; margin: 0 0 var(--s-3);
 }
 
 /* ---- Card base (lighter) ---- */
@@ -2042,7 +2107,7 @@ Enhanced Onboarding UI: Visual "How to Use" Guide
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 14px;
-  padding: 18px;
+  padding: var(--s-6);
   box-shadow: var(--sh-1);
 }
 .card-head h2, .card-head h3 { color: var(--text); }
