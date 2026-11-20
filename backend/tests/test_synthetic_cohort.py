@@ -353,3 +353,37 @@ def test_cohort_agreement_reports_the_baseline_beside_the_accuracy(client, admin
         "the model now beats the baseline; that is a real change and the write-up "
         "and the limitation text both need revisiting")
     assert body["missed_cases"] > 0
+
+
+def test_the_shipped_model_is_actually_in_the_repository():
+    """The bug this test exists for: it worked here and nowhere else.
+
+    backend/ml/artifacts/ is gitignored, correctly -- trained pickles are build
+    output. But the exported coefficients are the artifact the server loads, and
+    they were caught by the same rule, so the model was committed nowhere. Every
+    test still passed, because the file was sitting on the machine that wrote it.
+    The deployed site had no model at all.
+
+    Checking that a file exists cannot catch that. Checking that git tracks it
+    can.
+    """
+    import subprocess
+
+    repo = Path(__file__).resolve().parents[2]
+    if not (repo / ".git").exists():
+        pytest.skip("not a git checkout")
+
+    needed = [
+        Path("backend/ml/artifacts/model.json"),       # the model the server loads
+        Path("backend/app/data/synthetic_cohort.csv"),  # scored by cohort-agreement
+        Path("backend/app/data/model_evaluation.json"), # read by /admin/metrics
+    ]
+    untracked = []
+    for rel in needed:
+        done = subprocess.run(["git", "ls-files", "--error-unmatch", str(rel)],
+                              cwd=repo, capture_output=True, text=True)
+        if done.returncode != 0:
+            untracked.append(str(rel))
+    assert not untracked, (
+        "these are loaded at runtime but are not in the repository, so they exist "
+        f"only on this machine and the deployed site does without them: {untracked}")

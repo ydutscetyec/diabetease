@@ -6,7 +6,15 @@ env/
 .env
 *.db
 *.sqlite3
-backend/ml/artifacts/
+# Trained artifacts are build output and stay out of the repo -- except the one
+# the server actually loads. app/services/linear_model.py scores an exported
+# logistic regression with the standard library, because the runtime is
+# pure-Python wheels only; that file is ~20 KB of coefficients and has to ship or
+# the deployed site has no model at all. Pickles stay ignored.
+# (the pattern ends in /* on purpose: git will not descend into an excluded
+#  directory, so a negation under `backend/ml/artifacts/` never applies)
+backend/ml/artifacts/*
+!backend/ml/artifacts/model.json
 backend/ml/data/*.csv
 !backend/ml/data/.gitkeep
 .pytest_cache/

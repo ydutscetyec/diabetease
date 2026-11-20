@@ -1,0 +1,399 @@
+{
+ "kind": "logistic_regression",
+ "version": "synthetic-nolabs-v1",
+ "trained_on": "DiabetEASE synthetic South Cotabato cohort (n=500)",
+ "dataset_is_synthetic": true,
+ "research_only": true,
+ "calibration_assessed": false,
+ "is_active": true,
+ "limitations": "Research use only, on synthetic data. Does not beat the always-negative baseline on accuracy; emits no probability because calibration has not been assessed.",
+ "numeric": [
+  {
+   "name": "Age_Years",
+   "mean": 48.214,
+   "scale": 13.748316406018592
+  },
+  {
+   "name": "BMI_kg_m2",
+   "mean": 27.076400000000003,
+   "scale": 4.939984113334779
+  }
+ ],
+ "categorical": [
+  {
+   "name": "Sex",
+   "levels": [
+    "Female",
+    "Male"
+   ]
+  },
+  {
+   "name": "Family_History_of_T2D",
+   "levels": [
+    "No",
+    "Yes"
+   ]
+  },
+  {
+   "name": "Physical_Activity",
+   "levels": [
+    "High",
+    "Low",
+    "Moderate"
+   ]
+  },
+  {
+   "name": "Hypertension_History",
+   "levels": [
+    "No",
+    "Yes"
+   ]
+  },
+  {
+   "name": "Municipality",
+   "levels": [
+    "Banga",
+    "Koronadal City",
+    "Lake Sebu",
+    "Norala",
+    "Polomolok",
+    "Santo Ni\u00f1o",
+    "Surallah",
+    "T'boli",
+    "Tampakan",
+    "Tantangan",
+    "Tupi"
+   ]
+  }
+ ],
+ "coefficients": [
+  0.34183907022878635,
+  0.5335511997846237,
+  0.06815190442153474,
+  -0.11425608623605336,
+  -0.37668453627253745,
+  0.3305803544580185,
+  -0.07780381295338062,
+  0.05165639951613143,
+  -0.019956768377270215,
+  3.28158928587462e-05,
+  -0.04613699770737787,
+  -0.34580460984007755,
+  0.2718093637862781,
+  0.6489825936068399,
+  0.043627956300652485,
+  0.32234653658822887,
+  0.2701018018069426,
+  0.23764075228341802,
+  -0.2920118836976682,
+  -0.10580710526723604,
+  -0.5293914806582184,
+  -0.5675981067236795
+ ],
+ "intercept": -0.06640622962656748,
+ "threshold": 0.5,
+ "positive_label": "Positive",
+ "negative_label": "Negative",
+ "parity_fixture": [
+  {
+   "features": {
+    "Age_Years": 53.0,
+    "BMI_kg_m2": 22.4,
+    "Sex": "Female",
+    "Family_History_of_T2D": "No",
+    "Physical_Activity": "Low",
+    "Hypertension_History": "Yes",
+    "Municipality": "Santo Ni\u00f1o"
+   },
+   "sklearn_probability": 0.38097766831925733
+  },
+  {
+   "features": {
+    "Age_Years": 44.0,
+    "BMI_kg_m2": 33.4,
+    "Sex": "Male",
+    "Family_History_of_T2D": "No",
+    "Physical_Activity": "Low",
+    "Hypertension_History": "No",
+    "Municipality": "Tampakan"
+   },
+   "sklearn_probability": 0.49168801864340866
+  },
+  {
+   "features": {
+    "Age_Years": 47.0,
+    "BMI_kg_m2": 28.9,
+    "Sex": "Male",
+    "Family_History_of_T2D": "Yes",
+    "Physical_Activity": "Moderate",
+    "Hypertension_History": "Yes",
+    "Municipality": "Norala"
+   },
+   "sklearn_probability": 0.5730309500848711
+  },
+  {
+   "features": {
+    "Age_Years": 44.0,
+    "BMI_kg_m2": 18.7,
+    "Sex": "Male",
+    "Family_History_of_T2D": "Yes",
+    "Physical_Activity": "Moderate",
+    "Hypertension_History": "Yes",
+    "Municipality": "Tantangan"
+   },
+   "sklearn_probability": 0.18922536742900015
+  },
+  {
+   "features": {
+    "Age_Years": 40.0,
+    "BMI_kg_m2": 27.7,
+    "Sex": "Male",
+    "Family_History_of_T2D": "No",
+    "Physical_Activity": "Moderate",
+    "Hypertension_History": "No",
+    "Municipality": "Tampakan"
+   },
+   "sklearn_probability": 0.3057724889854048
+  },
+  {
+   "features": {
+    "Age_Years": 55.0,
+    "BMI_kg_m2": 26.0,
+    "Sex": "Male",
+    "Family_History_of_T2D": "No",
+    "Physical_Activity": "High",
+    "Hypertension_History": "No",
+    "Municipality": "Lake Sebu"
+   },
+   "sklearn_probability": 0.5165774057618128
+  },
+  {
+   "features": {
+    "Age_Years": 26.0,
+    "BMI_kg_m2": 20.6,
+    "Sex": "Male",
+    "Family_History_of_T2D": "Yes",
+    "Physical_Activity": "Low",
+    "Hypertension_History": "No",
+    "Municipality": "Banga"
+   },
+   "sklearn_probability": 0.19844810150366257
+  },
+  {
+   "features": {
+    "Age_Years": 46.0,
+    "BMI_kg_m2": 31.8,
+    "Sex": "Female",
+    "Family_History_of_T2D": "Yes",
+    "Physical_Activity": "Moderate",
+    "Hypertension_History": "Yes",
+    "Municipality": "Santo Ni\u00f1o"
+   },
+   "sklearn_probability": 0.7293772479383205
+  },
+  {
+   "features": {
+    "Age_Years": 31.0,
+    "BMI_kg_m2": 29.3,
+    "Sex": "Female",
+    "Family_History_of_T2D": "No",
+    "Physical_Activity": "High",
+    "Hypertension_History": "Yes",
+    "Municipality": "T'boli"
+   },
+   "sklearn_probability": 0.27314226347920445
+  },
+  {
+   "features": {
+    "Age_Years": 41.0,
+    "BMI_kg_m2": 25.1,
+    "Sex": "Female",
+    "Family_History_of_T2D": "No",
+    "Physical_Activity": "High",
+    "Hypertension_History": "No",
+    "Municipality": "Tampakan"
+   },
+   "sklearn_probability": 0.2786132629628875
+  },
+  {
+   "features": {
+    "Age_Years": 70.0,
+    "BMI_kg_m2": 36.4,
+    "Sex": "Female",
+    "Family_History_of_T2D": "Yes",
+    "Physical_Activity": "Moderate",
+    "Hypertension_History": "Yes",
+    "Municipality": "Tupi"
+   },
+   "sklearn_probability": 0.7768379636919635
+  },
+  {
+   "features": {
+    "Age_Years": 49.0,
+    "BMI_kg_m2": 31.1,
+    "Sex": "Female",
+    "Family_History_of_T2D": "No",
+    "Physical_Activity": "High",
+    "Hypertension_History": "No",
+    "Municipality": "T'boli"
+   },
+   "sklearn_probability": 0.4278562551182273
+  },
+  {
+   "features": {
+    "Age_Years": 70.0,
+    "BMI_kg_m2": 32.7,
+    "Sex": "Female",
+    "Family_History_of_T2D": "No",
+    "Physical_Activity": "Moderate",
+    "Hypertension_History": "Yes",
+    "Municipality": "Tampakan"
+   },
+   "sklearn_probability": 0.6461674991740166
+  },
+  {
+   "features": {
+    "Age_Years": 51.0,
+    "BMI_kg_m2": 25.2,
+    "Sex": "Male",
+    "Family_History_of_T2D": "No",
+    "Physical_Activity": "Moderate",
+    "Hypertension_History": "No",
+    "Municipality": "Tantangan"
+   },
+   "sklearn_probability": 0.22442646538117744
+  },
+  {
+   "features": {
+    "Age_Years": 40.0,
+    "BMI_kg_m2": 34.2,
+    "Sex": "Male",
+    "Family_History_of_T2D": "No",
+    "Physical_Activity": "High",
+    "Hypertension_History": "Yes",
+    "Municipality": "Norala"
+   },
+   "sklearn_probability": 0.48188371053127393
+  },
+  {
+   "features": {
+    "Age_Years": 40.0,
+    "BMI_kg_m2": 27.0,
+    "Sex": "Male",
+    "Family_History_of_T2D": "No",
+    "Physical_Activity": "High",
+    "Hypertension_History": "No",
+    "Municipality": "Norala"
+   },
+   "sklearn_probability": 0.30917585897092753
+  },
+  {
+   "features": {
+    "Age_Years": 30.0,
+    "BMI_kg_m2": 20.1,
+    "Sex": "Female",
+    "Family_History_of_T2D": "No",
+    "Physical_Activity": "Moderate",
+    "Hypertension_History": "No",
+    "Municipality": "Polomolok"
+   },
+   "sklearn_probability": 0.21773955448141136
+  },
+  {
+   "features": {
+    "Age_Years": 42.0,
+    "BMI_kg_m2": 19.6,
+    "Sex": "Female",
+    "Family_History_of_T2D": "Yes",
+    "Physical_Activity": "Low",
+    "Hypertension_History": "Yes",
+    "Municipality": "Santo Ni\u00f1o"
+   },
+   "sklearn_probability": 0.4123984472411611
+  },
+  {
+   "features": {
+    "Age_Years": 26.0,
+    "BMI_kg_m2": 26.7,
+    "Sex": "Female",
+    "Family_History_of_T2D": "No",
+    "Physical_Activity": "Moderate",
+    "Hypertension_History": "No",
+    "Municipality": "T'boli"
+   },
+   "sklearn_probability": 0.21757425886148973
+  },
+  {
+   "features": {
+    "Age_Years": 63.0,
+    "BMI_kg_m2": 23.9,
+    "Sex": "Female",
+    "Family_History_of_T2D": "Yes",
+    "Physical_Activity": "High",
+    "Hypertension_History": "No",
+    "Municipality": "Tantangan"
+   },
+   "sklearn_probability": 0.43775736209418414
+  },
+  {
+   "features": {
+    "Age_Years": 54.0,
+    "BMI_kg_m2": 30.0,
+    "Sex": "Female",
+    "Family_History_of_T2D": "Yes",
+    "Physical_Activity": "Moderate",
+    "Hypertension_History": "Yes",
+    "Municipality": "Polomolok"
+   },
+   "sklearn_probability": 0.7404311326034627
+  },
+  {
+   "features": {
+    "Age_Years": 56.0,
+    "BMI_kg_m2": 28.4,
+    "Sex": "Female",
+    "Family_History_of_T2D": "Yes",
+    "Physical_Activity": "Moderate",
+    "Hypertension_History": "No",
+    "Municipality": "Tupi"
+   },
+   "sklearn_probability": 0.5203270954105113
+  },
+  {
+   "features": {
+    "Age_Years": 57.0,
+    "BMI_kg_m2": 31.0,
+    "Sex": "Female",
+    "Family_History_of_T2D": "No",
+    "Physical_Activity": "Moderate",
+    "Hypertension_History": "No",
+    "Municipality": "Banga"
+   },
+   "sklearn_probability": 0.47541065690912393
+  },
+  {
+   "features": {
+    "Age_Years": 27.0,
+    "BMI_kg_m2": 28.9,
+    "Sex": "Female",
+    "Family_History_of_T2D": "Yes",
+    "Physical_Activity": "Moderate",
+    "Hypertension_History": "No",
+    "Municipality": "Surallah"
+   },
+   "sklearn_probability": 0.5546649820095624
+  },
+  {
+   "features": {
+    "Age_Years": 48.0,
+    "BMI_kg_m2": 17.9,
+    "Sex": "Female",
+    "Family_History_of_T2D": "No",
+    "Physical_Activity": "Low",
+    "Hypertension_History": "No",
+    "Municipality": "Tantangan"
+   },
+   "sklearn_probability": 0.13598161198823436
+  }
+ ]
+}
